@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MovieController!{% endblock %}
+
+{% block body %}
+    <h2>Movie trending page</h2>
+
+    <a href="{{ path('movie.search') }}">Movie search</a>
+    <br>
+    <a href="{{ path('movie.list') }}">Movie list</a>
+    <br>
+    <a href="{{ path('movie.details') }}">Movie deatils</a>
+    <br>
+    <hr>
+    {% for trendingMovie in trendingMovies %}
+        {{ trendingMovie.title }}
+        <br>
+        {{ trendingMovie.release_date }}
+        <br>
+        <a href="{{ path('view.create', {'tmdbMovieId': trendingMovie.id}) }}">Je l'ai vu !</a>
+        <br><br>
+    {% endfor %}
+{% endblock %}
