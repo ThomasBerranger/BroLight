@@ -53,16 +53,6 @@ class User implements UserInterface
     private $rates;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="followers")
-     */
-    private $followings;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="followings")
-     */
-    private $followers;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $email;
@@ -87,13 +77,28 @@ class User implements UserInterface
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="following", orphanRemoval=true)
+     */
+    private $followers;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="follower", orphanRemoval=true)
+     */
+    private $followings;
+
     public function __construct()
     {
         $this->views = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
-        $this->followings = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->followings = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 
     public function getId(): ?int
@@ -215,57 +220,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|self[]
-     */
-    public function getFollowings(): Collection
-    {
-        return $this->followings;
-    }
-
-    public function addFollowings(self $followings): self
-    {
-        if (!$this->followings->contains($followings)) {
-            $this->followings[] = $followings;
-        }
-
-        return $this;
-    }
-
-    public function removeFollowings(self $followings): self
-    {
-        $this->followings->removeElement($followings);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getFollowers(): Collection
-    {
-        return $this->followers;
-    }
-
-    public function addFollower(self $follower): self
-    {
-        if (!$this->followers->contains($follower)) {
-            $this->followers[] = $follower;
-            $follower->addFollowings($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFollower(self $follower): self
-    {
-        if ($this->followers->removeElement($follower)) {
-            $follower->removeFollowings($this);
-        }
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -344,13 +298,80 @@ class User implements UserInterface
         $this->updatedAt = new \DateTime();
     }
 
-    public function getSalt()
-    {
-    }
-
     public function getUsername()
     {
         return $this->firstname.' '.$this->lastname;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFollowers(): array
+    {
+        $followers = [];
+
+        /** @var UserRelationship $userRelation */
+        foreach ($this->followers as $userRelation) {
+            array_push($followers, $userRelation->getFollower());
+        }
+
+        return $followers;
+    }
+
+    public function addFollower(UserRelationship $follower): self
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers[] = $follower;
+            $follower->setFollowing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(UserRelationship $follower): self
+    {
+        if ($this->followers->removeElement($follower)) {
+            // set the owning side to null (unless already changed)
+            if ($follower->getFollowing() === $this) {
+                $follower->setFollowing(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRelationship[]
+     */
+    public function getFollowings(): Collection
+    {
+        return $this->followings;
+    }
+
+    public function addFollowing(UserRelationship $following): self
+    {
+        if (!$this->followings->contains($following)) {
+            $this->followings[] = $following;
+            $following->setFollower($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowing(UserRelationship $following): self
+    {
+        if ($this->followings->removeElement($following)) {
+            // set the owning side to null (unless already changed)
+            if ($following->getFollower() === $this) {
+                $following->setFollower(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSalt()
+    {
     }
 
     public function eraseCredentials()

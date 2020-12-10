@@ -1,10 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} | User list{% endblock %}
+
 {% block body %}
-
-{% endblock %}
-
-{% block title %}
-
+    {% for user in users %}
+        {{ user }}
+        <br>
+        <a role="button" class="btn btn-info" href="{{ path('user.follow', {'id': user.id}) }}">Follow {{ user }}!</a>
+        <br>
+        {{ user }}'s followers: <br>
+        <ul>
+            {% for user in user.followers %}
+                <li>
+                    {{ user }}
+                </li>
+            {% endfor %}
+        </ul>
+        <br><br>
+        <hr>
+    {% endfor %}
 {% endblock %}
 

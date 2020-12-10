@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserRelationship;
 use App\Form\UserType;
+use App\Manager\UserRelationshipManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,14 +41,9 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function follow(User $user): Response
+    public function follow(User $user, UserRelationshipManager $userRelationshipManager): Response
     {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        $user->addFollower($currentUser);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $userRelationshipManager->createUserRelationship($this->getUser(), $user);
 
         return $this->redirectToRoute('user.list');
     }
