@@ -25,6 +25,14 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/feed", name="feed")
+     */
+    public function feed(): Response
+    {
+        return $this->render('user/feed.html.twig');
+    }
+
+    /**
      * @Route("/list", name="list")
      */
     public function list(): Response

@@ -23,6 +23,7 @@ class TMDBService
         $response = $this->client->request('GET', 'https://api.themoviedb.org/3/trending/movie/week', [
             'query' => [
                 'api_key' => $this->params->get('app.tmdb.id'),
+                'language' => 'fr',
             ],
         ]);
 

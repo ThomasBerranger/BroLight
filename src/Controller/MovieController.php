@@ -29,7 +29,7 @@ class MovieController extends AbstractController
     {
         $trendingMovies = $this->TMDBService->getTrendingMovies();
 
-        return $this->render('movie/index.html.twig', [
+        return $this->render('movie/trending.html.twig', [
             'trendingMovies' => $trendingMovies,
         ]);
     }
