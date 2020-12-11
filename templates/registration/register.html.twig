@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row full-page-y center-container">
-        {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-sm-6 center-content security_form'}}) }}
+        {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-md-8 col-md-6 center-content security_form'}}) }}
 
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -13,13 +13,33 @@
         <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
 
         {{ form_label(registrationForm.email, 'Ton email') }}
-        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-constrol'}}) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        <small id="emailHelp" class="form-text text-muted mb-2">Promis ton email ne sera pas diffusé.</small>
 
-        {{ form_row(registrationForm.plainPassword, {label: 'Password'}, {'attr': {'class': 'form-constrol'}}) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_label(registrationForm.firstname, 'Ton prénom') }}
+        {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control mb-2'}}) }}
 
-        <button type="submit" class="btn">Register</button>
-        <a href="{{ path('app_login') }}">Already an account ?</a>
+        {{ form_label(registrationForm.lastname, 'Ton nom') }}
+        {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control mb-2'}}) }}
+
+        {{ form_label(registrationForm.plainPassword, 'Ton mot de passe') }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-2'}}) }}
+
+        <label class="mb-3 pointer-cursor">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            Conditions d'utilisations
+        </label>
+
+        <div class="row">
+            <div class="col-12 col-md-6 text-center text-md-left">
+                <button class="btn btn-md btn-dark" type="submit">Inscription</button>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-right pt-3">
+                <a href="{{ path('app_login') }}">Tu as déjà un compte ?</a>
+            </div>
+        </div>
+
+
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}
