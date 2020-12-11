@@ -10,17 +10,16 @@
 @import 'base/reset';
 @import 'base/typography';
 
-@import 'layout/navigation';
-@import 'layout/grid';
+@import 'layout/offline_base';
 @import 'layout/header';
 @import 'layout/footer';
 @import 'layout/sidebar';
-@import 'layout/forms';
 
 @import 'components/buttons';
 @import 'components/carousel';
 @import 'components/slider';
-@import 'components/security_form';
+@import 'components/forms';
+@import "components/timeline";
 
 @import 'pages/login';
 @import 'pages/about';
