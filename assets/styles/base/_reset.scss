@@ -1,1 +1,12 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
 $info: darken(#17a2b8, 5%);

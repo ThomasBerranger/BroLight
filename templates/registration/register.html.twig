@@ -1,25 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'offline_base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ parent() }} | Inscription{% endblock %}
 
 {% block body %}
-<div class="row justify-content-center center-form-container">
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    <div class="row full-page-y center-container">
+        {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-sm-6 center-content security_form'}}) }}
 
-    <h1>Register</h1>
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+        <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
+
+        {{ form_label(registrationForm.email, 'Ton email') }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-constrol'}}) }}
+
+        {{ form_row(registrationForm.plainPassword, {label: 'Password'}, {'attr': {'class': 'form-constrol'}}) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-</div>
+        <a href="{{ path('app_login') }}">Already an account ?</a>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}
