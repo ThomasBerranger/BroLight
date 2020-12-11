@@ -23,7 +23,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/", name="trending")
+     * @Route("/trending", name="trending")
      */
     public function trending(): Response
     {
