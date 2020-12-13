@@ -1,14 +1,33 @@
 // Colors
-$primary: #0276b4;
-$secondary: #cbcbcb;
-$info: #0296e5;
-$danger: #e82f3e;
-$warning: #fbb540;
+$primary: #67b9e9;
+$secondary: #8f8093;
+$info: #b7d9f2;
+$danger: #833437;
+$warning: #c3af97;
+$white: #fff;
+$dark: #353831;
+
+$light-primary: #b4dcf5;
+$light-secondary: #c7c0c8;
+$light-info: #dbebf8;
+$light-danger: #c19a9b;
+$light-warning: #e1d7cb;
+$light-white: #fff;
+$light-dark: #9a9c97;
+
+$dark-primary: #345c75;
+$dark-secondary: #474048;
+$dark-info: #5b6b78;
+$dark-danger: #411a1b;
+$dark-warning: #61574b;
+$dark-white: #fff;
+$dark-dark: #1a1c17;
 
 // Elements
 body {
   margin: 0;
   padding: 0;
+  color: $dark;
   font-family: 'Roboto', sans-serif;
 }
 

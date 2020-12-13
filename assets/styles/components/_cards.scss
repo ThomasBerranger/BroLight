@@ -31,6 +31,12 @@
 }
 
 .card {
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    box-shadow: 5px 5px 15px $dark;
+  }
 
   &-body {
     padding: 1rem;
@@ -44,8 +50,12 @@
   &-text {
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
+  }
 
-    background: linear-gradient(180deg, black, black 30%, transparent);
+  &-overview {
+    @extend .card-text;
+
+    background: linear-gradient(180deg, $dark, $dark 30%, transparent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
