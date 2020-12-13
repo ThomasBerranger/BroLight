@@ -29,3 +29,24 @@
     column-count: 5;
   }
 }
+
+.card {
+
+  &-body {
+    padding: 1rem;
+  }
+
+  &-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &-text {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+
+    background: linear-gradient(180deg, black, black 30%, transparent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
