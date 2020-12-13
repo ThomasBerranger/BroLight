@@ -4,22 +4,26 @@ namespace App\Manager;
 
 use App\Entity\UserRelationship;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UserRelationshipManager
 {
     private $entityManager;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
-    public function createUserRelationship($follower, $following): UserRelationship
+    public function createFollowRelationship($userSource, $userTarget, $status = UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']): UserRelationship
     {
         $userRelationship = new UserRelationship();
 
-        $userRelationship->setFollower($follower);
-        $userRelationship->setFollowing($following);
+        $userRelationship->setUserSource($userSource);
+        $userRelationship->setUserTarget($userTarget);
+        $userRelationship->setStatus($status);
 
         $this->entityManager->persist($userRelationship);
         $this->entityManager->flush();

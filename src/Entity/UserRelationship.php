@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRelationshipRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,8 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserRelationship
 {
-    const ONGOING_STATUS = 'ONGOING';
-    const ACTIVE_STATUS = 'ACTIVE';
+    const STATUS = [
+        'PENDING_FOLLOW_REQUEST' => 1,
+        'ACCEPTED_FOLLOW_REQUEST' => 2,
+        'REFUSED_FOLLOW_REQUEST' => 3,
+    ];
 
     /**
      * @ORM\Id
@@ -24,7 +25,7 @@ class UserRelationship
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $status;
 
@@ -39,32 +40,28 @@ class UserRelationship
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="followers")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $following;
+    private $userTarget;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="followings")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsSource")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $follower;
-
-    public function __construct()
-    {
-    }
+    private $userSource;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
@@ -102,7 +99,6 @@ class UserRelationship
     {
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->status = self::ONGOING_STATUS;
     }
 
     /**
@@ -113,26 +109,26 @@ class UserRelationship
         $this->updatedAt = new \DateTime();
     }
 
-    public function getFollowing(): ?User
+    public function getUserTarget(): ?User
     {
-        return $this->following;
+        return $this->userTarget;
     }
 
-    public function setFollowing(?User $following): self
+    public function setUserTarget(?User $userTarget): self
     {
-        $this->following = $following;
+        $this->userTarget = $userTarget;
 
         return $this;
     }
 
-    public function getFollower(): ?User
+    public function getUserSource(): ?User
     {
-        return $this->follower;
+        return $this->userSource;
     }
 
-    public function setFollower(?User $follower): self
+    public function setUserSource(?User $userSource): self
     {
-        $this->follower = $follower;
+        $this->userSource = $userSource;
 
         return $this;
     }

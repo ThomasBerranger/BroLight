@@ -19,32 +19,19 @@ class UserRelationshipRepository extends ServiceEntityRepository
         parent::__construct($registry, UserRelationship::class);
     }
 
-    // /**
-    //  * @return UserRelationship[] Returns an array of UserRelationship objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UserRelationship
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+//    /**
+//     * @return UserRelationship[] Returns an array of UserRelationship objects
+//     */
+//    public function findFollowers($user, $status): array
+//    {
+//        return $this->createQueryBuilder('ur')
+//            ->andWhere('ur.userTarget = :userId')
+//            ->setParameter('userId', $user->getId())
+//            ->andWhere('ur.status = :status')
+//            ->setParameter('status', $status)
+//            ->orderBy('ur.id', 'ASC')
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
 }

@@ -8,6 +8,15 @@
         <br>
         <a role="button" class="btn btn-info" href="{{ path('user.follow', {'id': user.id}) }}">Follow {{ user }}!</a>
         <br>
+        {{ user }}'s following: <br>
+        <ul>
+            {% for user in user.followings %}
+                <li>
+                    {{ user }}
+                </li>
+            {% endfor %}
+        </ul>
+        <br>
         {{ user }}'s followers: <br>
         <ul>
             {% for user in user.followers %}

@@ -45,13 +45,14 @@ class UserController extends AbstractController
     /**
      * @Route("/follow/{id}", name="follow")
      *
-     * @param User $user
+     * @param User                    $user
+     * @param UserRelationshipManager $userRelationshipManager
      *
      * @return Response
      */
     public function follow(User $user, UserRelationshipManager $userRelationshipManager): Response
     {
-        $userRelationshipManager->createUserRelationship($this->getUser(), $user);
+        $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 
         return $this->redirectToRoute('user.list');
     }

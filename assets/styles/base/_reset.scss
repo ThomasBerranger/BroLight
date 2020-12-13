@@ -1,3 +1,11 @@
+// Colors
+$primary: #0276b4;
+$secondary: #cbcbcb;
+$info: #0296e5;
+$danger: #e82f3e;
+$warning: #fbb540;
+
+// Elements
 body {
   margin: 0;
   padding: 0;
@@ -16,12 +24,7 @@ p {
   }
 }
 
+// Classes
 .pointer-cursor {
   cursor: pointer;
 }
-
-$primary: #0276b4;
-$secondary: #cbcbcb;
-$info: #0296e5;
-$danger: #e82f3e;
-$warning: #fbb540;

@@ -16,15 +16,15 @@ a.nav-link {
   font-weight: 500;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
   nav {
-    font-size: 25px;
+    font-size: 20px;
 
     &>a.navbar-brand {
-      font-size: 35px;
+      font-size: 25px;
 
       &>img {
-        width: 45px;
+        width: 35px;
       }
     }
   }

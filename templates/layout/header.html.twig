@@ -16,15 +16,19 @@
             <li class="nav-item {{ app.request.get('_route') == 'user.list' ? 'active'}}">
                 <a class="nav-link" href="{{ path('user.list') }}">User</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item {{ app.request.get('_route') == 'admin.home' ? 'active'}}">
+                    <a class="nav-link" href="{{ path('admin.home') }}">Admin</a>
+                </li>
+            {% endif %}
         </ul>
         <div class="my-2 my-lg-0 dropdown">
-            <button class="btn btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-o"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{ path('user.edit') }}">{{ app.user }}</a>
-                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
-                    Logout <i class="fa fa-sign-out"></i></a>
+                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Logout <i class="fa fa-sign-out"></i></a>
             </div>
         </div>
     </div>

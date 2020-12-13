@@ -78,25 +78,25 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="following", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="userSource", orphanRemoval=true)
      */
-    private $followers;
+    private $userRelationsAsSource;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="follower", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="userTarget", orphanRemoval=true)
      */
-    private $followings;
+    private $userRelationsAsTarget;
 
     public function __construct()
     {
         $this->views = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
-        $this->followers = new ArrayCollection();
-        $this->followings = new ArrayCollection();
+        $this->userRelationsAsSource = new ArrayCollection();
+        $this->userRelationsAsTarget = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getUsername();
     }
@@ -244,7 +244,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -298,7 +298,7 @@ class User implements UserInterface
         $this->updatedAt = new \DateTime();
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->firstname.' '.$this->lastname;
     }
@@ -311,67 +311,35 @@ class User implements UserInterface
         $followers = [];
 
         /** @var UserRelationship $userRelation */
-        foreach ($this->followers as $userRelation) {
-            array_push($followers, $userRelation->getFollower());
+        foreach ($this->userRelationsAsTarget as $userRelation) {
+            if ($userRelation->getStatus() === UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+                array_push($followers, $userRelation->getUserSource());
+            }
         }
 
         return $followers;
     }
 
-    public function addFollower(UserRelationship $follower): self
-    {
-        if (!$this->followers->contains($follower)) {
-            $this->followers[] = $follower;
-            $follower->setFollowing($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFollower(UserRelationship $follower): self
-    {
-        if ($this->followers->removeElement($follower)) {
-            // set the owning side to null (unless already changed)
-            if ($follower->getFollowing() === $this) {
-                $follower->setFollowing(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection|UserRelationship[]
+     * @return array
      */
-    public function getFollowings(): Collection
+    public function getFollowings(): array
     {
-        return $this->followings;
-    }
+        $followings = [];
 
-    public function addFollowing(UserRelationship $following): self
-    {
-        if (!$this->followings->contains($following)) {
-            $this->followings[] = $following;
-            $following->setFollower($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFollowing(UserRelationship $following): self
-    {
-        if ($this->followings->removeElement($following)) {
-            // set the owning side to null (unless already changed)
-            if ($following->getFollower() === $this) {
-                $following->setFollower(null);
+        /** @var UserRelationship $userRelation */
+        foreach ($this->userRelationsAsSource as $userRelation) {
+            if ($userRelation->getStatus() === UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+                array_push($followings, $userRelation->getUserTarget());
             }
         }
 
-        return $this;
+        return $followings;
     }
 
-    public function getSalt()
+    public function getSalt(): string
     {
+        return '';
     }
 
     public function eraseCredentials()
