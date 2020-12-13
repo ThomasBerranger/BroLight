@@ -1,3 +1,31 @@
-.header {
-  background-color: $info;
+nav {
+  font-size: 2.5vw;
+  box-shadow: 0 0 15px 1px black;
+
+  &>a.navbar-brand {
+    font-size: 3.5vw;
+
+    &>img {
+      width: 4.5vw;
+      vertical-align: top;
+    }
+  }
+}
+
+a.nav-link {
+  font-weight: 500;
+}
+
+@media screen and (min-width: 992px) {
+  nav {
+    font-size: 25px;
+
+    &>a.navbar-brand {
+      font-size: 35px;
+
+      &>img {
+        width: 45px;
+      }
+    }
+  }
 }

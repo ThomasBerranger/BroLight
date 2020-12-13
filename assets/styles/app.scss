@@ -4,11 +4,11 @@
 @import 'abstracts/functions';
 @import 'abstracts/mixins';
 
+@import 'base/typography';
+@import 'base/reset';
+
 @import "~bootstrap";
 @import "~font-awesome";
-
-@import 'base/reset';
-@import 'base/typography';
 
 @import 'layout/offline_base';
 @import 'layout/header';
@@ -20,6 +20,7 @@
 @import 'components/slider';
 @import 'components/forms';
 @import "components/timeline";
+@import "components/cards";
 
 @import 'pages/login';
 @import 'pages/about';
