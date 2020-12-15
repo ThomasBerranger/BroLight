@@ -8,7 +8,10 @@
 @import 'base/reset';
 
 @import "~bootstrap";
-@import "~font-awesome";
+
+@import "~@fortawesome/fontawesome-free";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/regular";
 
 @import 'layout/offline_base';
 @import 'layout/header';

@@ -15,15 +15,6 @@ class CustomFilterExtension extends AbstractExtension
         ];
     }
 
-    public function pluralize($value): string
-    {
-        if ($value and $value > 0 or $value and is_iterable($value)) {
-            return 's';
-        } else {
-            return '';
-        }
-    }
-
     public function textLimit($text, $charactersNumber): string
     {
         if (strlen($text) >= $charactersNumber) {

@@ -63,7 +63,7 @@ class MovieController extends AbstractController
     {
         $movies = $this->TMDBService->getSearchedMovies($title);
 
-        return $this->render('movie/search_result.html.twig', [
+        return $this->render('movie/_search_result.html.twig', [
             'movies' => $movies
         ]);
     }
