@@ -1,0 +1,48 @@
+.btn-follow {
+  @extend .btn;
+  @extend .btn-info;
+
+  padding: 0.15rem 1.5vw;
+
+  &:after {
+    content: 'Suivre';
+  }
+}
+
+.btn-remove-follow-request {
+  @extend .btn;
+  @extend .btn-info;
+
+  padding: 0.15rem 1.5vw;
+
+  &:after {
+    content: 'Demande en attente';
+  }
+
+  &:hover {
+    @extend .btn-danger;
+
+    &:after{
+      content: 'Annuler ma demande';
+    }
+  }
+}
+
+.btn-remove-follow {
+  @extend .btn;
+  @extend .btn-info;
+
+  padding: 0.15rem 1.5vw;
+
+  &:after {
+    content: 'Suivi';
+  }
+
+  &:hover {
+    @extend .btn-danger;
+
+    &:after{
+      content: 'Arrêter de suivre';
+    }
+  }
+}

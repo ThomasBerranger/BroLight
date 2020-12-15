@@ -17,7 +17,7 @@ class CustomFilterExtension extends AbstractExtension
 
     public function pluralize($value): string
     {
-        if ($value and is_iterable($value)) {
+        if ($value and $value > 0 or $value and is_iterable($value)) {
             return 's';
         } else {
             return '';

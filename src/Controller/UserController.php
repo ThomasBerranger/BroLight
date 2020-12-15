@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\UserRelationship;
 use App\Form\UserType;
-use App\Manager\UserRelationshipManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,31 +31,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="list")
-     */
-    public function list(): Response
-    {
-        return $this->render('user/list.html.twig', [
-            'users' => $this->getDoctrine()->getRepository(User::class)->findAll()
-        ]);
-    }
-
-    /**
-     * @Route("/follow/{id}", name="follow")
-     *
-     * @param User                    $user
-     * @param UserRelationshipManager $userRelationshipManager
-     *
-     * @return Response
-     */
-    public function follow(User $user, UserRelationshipManager $userRelationshipManager): Response
-    {
-        $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
-
-        return $this->redirectToRoute('user.list');
-    }
-
-    /**
      * @Route("/edit", name="edit")
      *
      * @param Request $request
@@ -81,7 +54,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser())
         ]);
     }
 }

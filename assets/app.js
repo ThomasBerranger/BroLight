@@ -14,7 +14,6 @@ import './styles/app.scss';
 import $ from 'jquery';
 import 'bootstrap';
 
-$('.dropdown-toggle').dropdown();
-$(document).ready(function() {
-    console.log("Hello BroLight !");
-});
+import './js/userRelationRequest';
+
+import './js/pages/userEdit';

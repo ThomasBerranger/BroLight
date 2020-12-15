@@ -3,9 +3,76 @@
 {% block title %}{{ parent() }} | User edit{% endblock %}
 
 {% block body %}
-    <p>Edit page</p>
+    <div class="row">
+        <div class="col-6">
+            {{ form_start(form) }}
+
+            {{ form_label(form.firstname, 'Ton prénom') }}
+            {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_label(form.lastname, 'Ton prénom') }}
+            {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_label(form.email, 'Ton email') }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+
+            <br>
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-sm btn-success'}}) }}
+
+            {{ form_end(form) }}
+        </div>
+        <div class="col-6">
+            Followers:
+            {% for user in app.user.followers %}
+                {{ user }}
+            {% endfor %}
+
+            <br><br>
+
+            Pending followers:
+            {% for user in app.user.pendingFollowers %}
+                <a class="btn btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">Accept {{ user }}</a>
+            {% endfor %}
+            <br>
+            <br>
+
+            Followings:
+            {% for user in app.user.followings %}
+                {{ user }}
+            {% endfor %}
+
+            <br><br>
+
+            Pending followings:
+            {% for user in app.user.pendingFollowings %}
+                {{ user }}
+            {% endfor %}
+        </div>
+    </div>
 
     <br>
+    <hr>
 
-    {{ form(form) }}
+    <div class="row">
+        <div class="col-6">
+            <label for="userSearchInput">Qui cherches tu ?</label>
+            <input id="userSearchInput" type="text" class="form-control" placeholder="Steven Spielberg">
+            <br>
+            <ul class="list-group" id="usersList">
+                {% for user in users %}
+                    <li class="list-group-item"> {# style="display-none" #}
+                        {{ user }}
+                        {% if user in app.user.followings %}
+                            <a href="#" role="button" class="btn-remove-follow float-right"></a>
+                        {% elseif user in app.user.pendingFollowings %}
+                            <a href="#" role="button" class="btn-remove-follow-request float-right"></a>
+                        {% else %}
+                            <a href="{{ path('user_relationship.follow', {'id': user.id}) }}" data-user-relationship="create-follow" role="button" class="btn-follow float-right"></a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
 {% endblock %}

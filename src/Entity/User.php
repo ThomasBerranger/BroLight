@@ -323,6 +323,23 @@ class User implements UserInterface
     /**
      * @return array
      */
+    public function getPendingFollowers(): array
+    {
+        $followers = [];
+
+        /** @var UserRelationship $userRelation */
+        foreach ($this->userRelationsAsTarget as $userRelation) {
+            if ($userRelation->getStatus() === UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']) {
+                array_push($followers, $userRelation->getUserSource());
+            }
+        }
+
+        return $followers;
+    }
+
+    /**
+     * @return array
+     */
     public function getFollowings(): array
     {
         $followings = [];
@@ -330,6 +347,23 @@ class User implements UserInterface
         /** @var UserRelationship $userRelation */
         foreach ($this->userRelationsAsSource as $userRelation) {
             if ($userRelation->getStatus() === UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+                array_push($followings, $userRelation->getUserTarget());
+            }
+        }
+
+        return $followings;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPendingFollowings(): array
+    {
+        $followings = [];
+
+        /** @var UserRelationship $userRelation */
+        foreach ($this->userRelationsAsSource as $userRelation) {
+            if ($userRelation->getStatus() === UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']) {
                 array_push($followings, $userRelation->getUserTarget());
             }
         }
