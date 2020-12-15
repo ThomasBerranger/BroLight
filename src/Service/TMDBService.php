@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -18,17 +19,37 @@ class TMDBService
 
     public function getTrendingMovies()
     {
-        // TODO: implement try catch
+        try {
+            $response = $this->client->request('GET', 'https://api.themoviedb.org/3/trending/movie/week', [
+                'query' => [
+                    'api_key' => $this->params->get('app.tmdb.id'),
+                    'language' => 'fr',
+                ],
+            ]);
+            $content = $response->toArray();
 
-        $response = $this->client->request('GET', 'https://api.themoviedb.org/3/trending/movie/week', [
-            'query' => [
-                'api_key' => $this->params->get('app.tmdb.id'),
-                'language' => 'fr',
-            ],
-        ]);
+            return $content['results'];
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 
-        $content = $response->toArray();
+    public function getSearchedMovies(string $title)
+    {
+        try {
+            $response = $this->client->request('GET', 'https://api.themoviedb.org/3/search/movie', [
+                'query' => [
+                    'api_key' => $this->params->get('app.tmdb.id'),
+                    'language' => 'fr',
+                    'query' => $title,
+                ],
+            ]);
 
-        return $content['results'];
+            $content = $response->toArray();
+
+            return $content['results'];
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 }

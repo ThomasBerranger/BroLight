@@ -53,6 +53,22 @@ class MovieController extends AbstractController
     }
 
     /**
+     * @Route("/search_result/{title}", name="search_result")
+     *
+     * @param string  $title
+     *
+     * @return Response
+     */
+    public function search_result(string $title): Response
+    {
+        $movies = $this->TMDBService->getSearchedMovies($title);
+
+        return $this->render('movie/search_result.html.twig', [
+            'movies' => $movies
+        ]);
+    }
+
+    /**
      * @Route("/details", name="details")
      */
     public function details(): Response

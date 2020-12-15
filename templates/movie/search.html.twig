@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
+{% block title %}{{ parent()}} | Movie Search{% endblock %}
 
 {% block body %}
-    <p>Search page</p>
+    <div class="row justify-content-center">
+        <h2 class="col-12 text-center font-title mb-5">Recherche de film</h2>
+
+        <div class="col-6 form-group">
+            <label for="movieSearchInput">Titre du film :</label>
+            <input type="text" class="form-control" data-search-url="{{ path('movie.search_result', {'title': 'replaceMe'}) }}" id="movieSearchInput" placeholder="Inception">
+        </div>
+
+        <div id="moviesResult" class="col-10"></div>
+    </div>
 {% endblock %}
