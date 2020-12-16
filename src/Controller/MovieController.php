@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\TMDBService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,11 +63,16 @@ class MovieController extends AbstractController
     /**
      * @Route("/details/{tmdbId}", name="details")
      *
+     * @param int $tmdbId
+     *
      * @return Response
      */
-    public function details(): Response
+    public function details(int $tmdbId): Response
     {
+        $movie = $this->TMDBService->getMovieById($tmdbId);
 
-        return $this->render('movie/details.html.twig');
+        return $this->render('movie/details.html.twig', [
+            'movie' => $movie
+        ]);
     }
 }

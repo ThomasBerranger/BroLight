@@ -1,7 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
+{% block title %}{{ parent() }} | {{ movie.title is defined ? movie.title }}{% endblock %}
 
 {% block body %}
-    <p>Details page</p>
+
+    <div class="row">
+        <div class="col-12 hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) {% if movie.backdrop_path is defined %}, url(https://image.tmdb.org/t/p/w1280{{ movie.backdrop_path }}); {% endif %}">
+            <div class="hero-text row">
+                {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
+                    <div class="d-none d-md-block col-4">
+                        <img class="card-img-top" src="https://image.tmdb.org/t/p/w780{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                    </div>
+                {% endif %}
+                <div class="col">
+                    <h2 class="font-title mb-1">{{ movie.title is defined ? movie.title }}</h2>
+                    <p><em>{{ movie.tagline is defined ? movie.tagline }}</em></p>
+                    <p>{{ movie.overview is defined ? movie.overview }}</p>
+                    <p>{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</p>
+                    <p>{{ movie.vote_average is defined ? movie.vote_average~'/10' }}</p>
+                    <p>{% for genre in movie.genres %}{{ genre.name }}{{ loop.revindex0 == 0 ? null :  ', ' }}{% endfor %}</p>
+                </div>
+            </div>
+        </div>
+        <span id="movieActionButtonContainer{{ movie.id }}">
+            {% if movie.id not in app.user.watchedMoviesTmdbIds %}
+                <i class="fas fa-eye-slash pointer-cursor text-danger" data-movie-action="create-view" data-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
+            {% else %}
+                <i class="fas fa-eye pointer-cursor text-primary"></i>
+            {% endif %}
+            <i class="fas fa-comment-slash pointer-cursor text-danger"></i>
+        </span>
+    </div>
+
 {% endblock %}

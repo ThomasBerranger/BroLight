@@ -1,9 +1,9 @@
 div.center-container {
-  position: relative;
+  position: relative !important;;
 }
 
-form.center-content {
-  position: absolute;
+.center-content {
+  position: absolute !important;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -12,7 +12,7 @@ form.center-content {
     left: 50%;
     transform: translate(-50%, 0)
   }
-  &-verticaly {
+  &-vertically {
     top: 50%;
     transform: translate(0, -50%)
   }

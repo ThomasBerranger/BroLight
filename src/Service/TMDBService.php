@@ -52,4 +52,22 @@ class TMDBService
             return $exception->getMessage();
         }
     }
+
+    public function getMovieById(int $tmdbId)
+    {
+        try {
+            $response = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/'.$tmdbId, [
+                'query' => [
+                    'api_key' => $this->params->get('app.tmdb.id'),
+                    'language' => 'fr',
+                ],
+            ]);
+
+            $content = $response->toArray();
+
+            return $content;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 }
