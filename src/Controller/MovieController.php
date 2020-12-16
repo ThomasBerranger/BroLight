@@ -35,15 +35,6 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/list", name="list")
-     */
-    public function list(): Response
-    {
-
-        return $this->render('movie/list.html.twig');
-    }
-
-    /**
      * @Route("/search", name="search")
      */
     public function search(): Response
@@ -69,7 +60,9 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/details", name="details")
+     * @Route("/details/{tmdbId}", name="details")
+     *
+     * @return Response
      */
     public function details(): Response
     {

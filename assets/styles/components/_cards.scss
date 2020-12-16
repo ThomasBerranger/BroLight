@@ -31,12 +31,7 @@
 }
 
 .card {
-  cursor: pointer;
   transition: 0.3s;
-
-  &:hover {
-    box-shadow: 5px 5px 15px $dark;
-  }
 
   &-body {
     padding: 1rem;

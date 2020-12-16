@@ -8,6 +8,7 @@ use App\Entity\UserRelationship;
 use App\Manager\UserRelationshipManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,11 +30,11 @@ class UserRelationshipController extends AbstractController
      * @param User $user
      * @param UserRelationshipManager $userRelationshipManager
      *
-     * @return Response
+     * @return JsonResponse
      *
      * @throws Exception
      */
-    public function follow(User $user, UserRelationshipManager $userRelationshipManager): Response
+    public function follow(User $user, UserRelationshipManager $userRelationshipManager): JsonResponse
     {
         $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 

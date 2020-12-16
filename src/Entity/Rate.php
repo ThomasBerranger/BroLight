@@ -24,10 +24,9 @@ class Rate
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="rates")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $movie;
+    private $tmdbId;
 
     /**
      * @ORM\Column(type="integer")
@@ -61,14 +60,14 @@ class Rate
         return $this;
     }
 
-    public function getMovie(): ?Movie
+    public function getTmdbId(): ?int
     {
-        return $this->movie;
+        return $this->tmdbId;
     }
 
-    public function setMovie(?Movie $movie): self
+    public function setTmdbId(int $tmdbId): self
     {
-        $this->movie = $movie;
+        $this->tmdbId = $tmdbId;
 
         return $this;
     }

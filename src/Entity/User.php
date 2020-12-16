@@ -161,6 +161,20 @@ class User implements UserInterface
     }
 
     /**
+     * @return array
+     */
+    public function getWatchedMoviesTmdbIds(): array
+    {
+        $watchedMoviesTmdbIds = [];
+
+        foreach ($this->views as $view) {
+            array_push($watchedMoviesTmdbIds, $view->getTmdbId());
+        }
+
+        return $watchedMoviesTmdbIds;
+    }
+
+    /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection

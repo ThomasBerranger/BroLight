@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Entity\View;
 use App\Manager\MovieManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,26 +27,22 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @Route("/create/{tmdbMovieId}", name="create")
+     * @Route("/create/{tmdbId}", name="create")
      *
-     * @param int $tmdbMovieId
+     * @param int $tmdbId
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function createView(int $tmdbMovieId): Response
+    public function createView(int $tmdbId): JsonResponse
     {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        $movie = $this->movieManager->findOrCreate($tmdbMovieId);
-
         $view = new View();
-        $view->setAuthor($currentUser);
-        $view->setMovie($movie);
+
+        $view->setAuthor($this->getUser());
+        $view->setTmdbId($tmdbId);
 
         $this->entityManager->persist($view);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('movie.list');
+        return $this->json($view, 202);
     }
 }

@@ -12,7 +12,8 @@ import './styles/app.scss';
 
 import 'bootstrap';
 
-import './js/userRelationRequest';
+import './js/request/userRelationRequest';
+import './js/request/movieRequest';
 
 import './js/pages/userEdit';
 import './js/pages/movieSearch';
