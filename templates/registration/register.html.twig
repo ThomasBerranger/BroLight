@@ -14,6 +14,9 @@
 
         {{ form_label(registrationForm.email, 'Ton email') }}
         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert-danger">
+            {{ form_errors(registrationForm.email) }}
+        </div>
         <small id="emailHelp" class="form-text text-muted mb-2">Promis ton email ne sera pas diffusé.</small>
 
         {{ form_label(registrationForm.firstname, 'Ton prénom') }}
@@ -22,13 +25,23 @@
         {{ form_label(registrationForm.lastname, 'Ton nom') }}
         {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control mb-2'}}) }}
 
-        {{ form_label(registrationForm.plainPassword, 'Ton mot de passe') }}
-        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control mb-2'}}) }}
+        {{ form_label(registrationForm.plainPassword.first, 'Ton mot de passe') }}
+        {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control mb-2'}}) }}
 
-        <label class="mb-3 pointer-cursor">
+        {{ form_label(registrationForm.plainPassword.second, 'Encore une fois') }}
+        {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert-danger">
+            {{ form_errors(registrationForm.plainPassword.first) }}
+        </div>
+
+        <label class="mb-3 pointer-cursor w-100">
             {{ form_widget(registrationForm.agreeTerms) }}
             Conditions d'utilisations
+            <div class="alert-danger">
+                {{ form_errors(registrationForm.agreeTerms) }}
+            </div>
         </label>
+
 
         <div class="row">
             <div class="col-12 col-md-6 text-center text-md-left">

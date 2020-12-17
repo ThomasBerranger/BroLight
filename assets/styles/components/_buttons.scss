@@ -5,7 +5,7 @@
   padding: 0.15rem 1.5vw;
 
   &:after {
-    content: 'Suivre';
+    content: 'S\'abboner';
   }
 }
 
@@ -35,14 +35,14 @@
   padding: 0.15rem 1.5vw;
 
   &:after {
-    content: 'Suivi';
+    content: 'Abonné';
   }
 
   &:hover {
     @extend .btn-danger;
 
     &:after{
-      content: 'Arrêter de suivre';
+      content: 'Se désabonner';
     }
   }
 }

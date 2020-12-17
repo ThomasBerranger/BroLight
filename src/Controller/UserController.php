@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\User;
+use App\Form\AvatarType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,17 +46,24 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserType::class, $currentUser);
 
+        if ($this->getUser()->getAvatar()) {
+            $avatarForm = $this->createForm(AvatarType::class, $this->getUser()->getAvatar());
+        } else {
+            $avatarForm = $this->createForm(AvatarType::class, new Avatar());
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $currentUser = $form->getData();
 
-             $this->entityManager->persist($currentUser);
-             $this->entityManager->flush();
+            $this->entityManager->persist($currentUser);
+            $this->entityManager->flush();
         }
 
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
+            'avatarForm' => $avatarForm->createView(),
             'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser())
         ]);
     }

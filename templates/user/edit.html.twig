@@ -4,30 +4,113 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-6">
-            {{ form_start(form) }}
+        <div class="col-12 row">
+            <div class="col-6">
+                {{ form_start(form) }}
 
-            {{ form_label(form.firstname, 'Ton prénom') }}
-            {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.firstname, 'Ton prénom') }}
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
 
-            {{ form_label(form.lastname, 'Ton prénom') }}
-            {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.lastname, 'Ton prénom') }}
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
 
-            {{ form_label(form.email, 'Ton email') }}
-            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.email, 'Ton email') }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="alert-danger">
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <br>
+                <button class="btn btn-sm btn-success">Sauvegarder mes informations</button>
+
+                {{ form_end(form) }}
+
+                <br>
+                <hr>
+                <br>
+
+                <div id="avatar-container">
+                    <img class="img-fluid" alt="{{ app.user }} avatar" src='https://avataaars.io/?avatarStyle=Transparent&topType=Hijab&accessoriesType=Blank&hatColor=Gray01&clotheType=GraphicShirt&clotheColor=Heather&graphicType=Cumbia&eyeType=Wink&eyebrowType=SadConcerned&mouthType=Serious&skinColor=DarkBrown'/>
+                </div>
+
+            </div>
+            <div class="col-6">
+                {{ form_start(avatarForm) }}
+
+                {{ form_label(avatarForm.accessoriesType) }}
+                {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.clotheColor) }}
+                {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.clotheType) }}
+                {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.eyeType) }}
+                {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.eyebrowType) }}
+                {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.facialHairColor) }}
+                {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.facialHairType) }}
+                {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.graphicType) }}
+                {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.hairColor) }}
+                {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.hatColor) }}
+                {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.mouthType) }}
+                {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.skinColor) }}
+                {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(avatarForm.topType) }}
+                {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_end(avatarForm) }}
+
+                <br>
+                <button class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+            </div>
+
+            <hr class="w-100">
+        </div>
+
+        <div class="col-6 mt-2">
+
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#followersCollapse" aria-expanded="false" aria-controls="followers">{{ app.user.followers|length }} Abonné{{ app.user.followers|length > 1 ? 's' }}</button>
+                    <div class="collapse multi-collapse" id="followersCollapse">
+                        <ul class="list-group">
+                            {% for user in app.user.followers %}
+                                <li class="list-group-item">{{ user }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#followingsCollapse" aria-expanded="false" aria-controls="followings">{{ app.user.followings|length }} Abonnement{{ app.user.followings|length > 1 ? 's' }}</button>
+                    <div class="collapse multi-collapse" id="followingsCollapse">
+                        {% for user in app.user.followings %}
+                            <li class="list-group-item">{{ user }}</li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
             <br>
-            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-sm btn-success'}}) }}
-
-            {{ form_end(form) }}
-        </div>
-        <div class="col-6">
-            Followers:
-            {% for user in app.user.followers %}
-                {{ user }}
-            {% endfor %}
-
-            <br><br>
+            <hr>
+            <br>
 
             Pending followers:
             {% for user in app.user.pendingFollowers %}
@@ -36,27 +119,14 @@
             <br>
             <br>
 
-            Followings:
-            {% for user in app.user.followings %}
-                {{ user }}
-            {% endfor %}
-
-            <br><br>
-
             Pending followings:
             {% for user in app.user.pendingFollowings %}
                 {{ user }}
             {% endfor %}
         </div>
-    </div>
-
-    <br>
-    <hr>
-
-    <div class="row">
         <div class="col-6">
             <label for="userSearchInput">Qui cherches tu ?</label>
-            <input id="userSearchInput" type="text" class="form-control" placeholder="Steven Spielberg">
+            <input id="userSearchInput" type="text" class="form-control form-control-sm" placeholder="Steven Spielberg">
             <br>
             <ul class="list-group" id="usersList">
                 {% for user in users %}

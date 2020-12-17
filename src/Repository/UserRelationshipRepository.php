@@ -19,19 +19,17 @@ class UserRelationshipRepository extends ServiceEntityRepository
         parent::__construct($registry, UserRelationship::class);
     }
 
-//    /**
-//     * @return UserRelationship[] Returns an array of UserRelationship objects
-//     */
-//    public function findFollowers($user, $status): array
-//    {
-//        return $this->createQueryBuilder('ur')
-//            ->andWhere('ur.userTarget = :userId')
-//            ->setParameter('userId', $user->getId())
-//            ->andWhere('ur.status = :status')
-//            ->setParameter('status', $status)
-//            ->orderBy('ur.id', 'ASC')
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
+    public function findPendingFollowFor($user): array
+    {
+        return $this->createQueryBuilder('ur')
+            ->where('ur.userTarget = :userId')
+            ->andWhere('ur.status = :status')
+            ->setParameters([
+                'userId' => $user->getId(),
+                'status' => UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']
+            ])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Un compte est déjà enregistré avec cet email.")
  */
 class User implements UserInterface
 {
@@ -86,6 +86,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="userTarget", orphanRemoval=true)
      */
     private $userRelationsAsTarget;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="author", cascade={"persist", "remove"})
+     */
+    private $avatar;
 
     public function __construct()
     {
@@ -294,24 +299,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-        $this->roles = [User::ROLE_USER];
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
     public function getUsername(): string
     {
         return $this->firstname.' '.$this->lastname;
@@ -383,6 +370,41 @@ class User implements UserInterface
         }
 
         return $followings;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(Avatar $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        // set the owning side of the relation if necessary
+        if ($avatar->getAuthor() !== $this) {
+            $avatar->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreateDefaultValues()
+    {
+        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->roles = [User::ROLE_USER];
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function setUpdateDefaultValues()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getSalt(): string

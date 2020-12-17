@@ -4,10 +4,10 @@
 @import 'abstracts/functions';
 @import 'abstracts/mixins';
 
+@import "~bootstrap";
+
 @import 'base/typography';
 @import 'base/reset';
-
-@import "~bootstrap";
 
 @import "~@fortawesome/fontawesome-free";
 @import "~@fortawesome/fontawesome-free/scss/solid";
