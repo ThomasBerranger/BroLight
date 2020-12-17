@@ -17,7 +17,7 @@
                         <div class="timeline-widget ">
                             <div class="widget-header d-flex align-items-center">
                                 <div class="user-image">
-                                    <img class="rounded-circle" src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Default&eyebrowType=UpDownNatural&mouthType=Smile&skinColor=Light' alt="..."/>
+                                    <img class="rounded-circle" src='{{ app.user.avatar|formatAvatarData }}' alt="{{ app.user }} avatar"/>
                                 </div>
                                 <div class="d-flex flex-column mr-auto">
                                     <div class="title">
@@ -53,7 +53,7 @@
                         <div class="timeline-widget">
                             <div class="widget-header d-flex align-items-center">
                                 <div class="user-image">
-                                    <img class="rounded-circle" src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairBigHair&accessoriesType=Kurt&hairColor=Blonde&facialHairType=Blank&clotheType=ShirtVNeck&clotheColor=Red&eyeType=Default&eyebrowType=UpDownNatural&mouthType=Smile&skinColor=Light' alt="..."/>
+                                    <img class="rounded-circle" src='{{ app.user.avatar|formatAvatarData }}' alt="{{ app.user }} avatar"/>
                                 </div>
                                 <div class="d-flex flex-column mr-auto">
                                     <div class="title">

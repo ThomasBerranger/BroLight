@@ -11,7 +11,6 @@ $(document).ready(function(){
         }
     });
 
-
     $("form[name='avatar'] select").on("change", function () {
         const accessoriesType = $('#avatar_accessoriesType').val();
         const clotheColor = $('#avatar_clotheColor').val();

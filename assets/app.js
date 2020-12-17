@@ -14,6 +14,7 @@ import 'bootstrap';
 
 import './js/request/userRelationRequest';
 import './js/request/movieRequest';
+import './js/request/avatarRequest';
 
 import './js/pages/userEdit';
 import './js/pages/movieSearch';

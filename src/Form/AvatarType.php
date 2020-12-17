@@ -66,8 +66,6 @@ class AvatarType extends AbstractType
                 'label' => 'Type de chapeau',
                 'choices' => Avatar::TOP_TYPE
             ])
-            ->add('avatarStyle', HiddenType::class)
-            ->add('author', HiddenType::class)
         ;
     }
 

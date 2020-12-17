@@ -24,7 +24,7 @@
         </ul>
         <div class="my-2 my-lg-0 dropdown">
             <div class="btn-group">
-                <button class="btn btn-sm btn-info" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-sm {{ notifications > 1 ? 'btn-danger' : 'btn-info' }}" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-bell"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">

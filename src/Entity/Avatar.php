@@ -516,7 +516,6 @@ class Avatar
      */
     public function setCreateDefaultValues()
     {
-//        $this->setAuthor($this->container->get('security.token_storage')->getToken()->getUser());
         $this->accessoriesType = array_rand(self::ACCESSORIES_TYPE);
         $this->clotheColor = array_rand(self::CLOTHE_COLOR);
         $this->clotheType = array_rand(self::CLOTHE_TYPE);
@@ -530,7 +529,7 @@ class Avatar
         $this->mouthType = array_rand(self::MOUTH_TYPE);
         $this->skinColor = array_rand(self::SKIN_COLOR);
         $this->topType = array_rand(self::TOP_TYPE);
-        $this->avatarStyle = 'transparent';
+        $this->avatarStyle = 'Transparent';
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
     }

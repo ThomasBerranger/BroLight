@@ -30,12 +30,12 @@
                 <br>
 
                 <div id="avatar-container">
-                    <img class="img-fluid" alt="{{ app.user }} avatar" src='https://avataaars.io/?avatarStyle=Transparent&topType=Hijab&accessoriesType=Blank&hatColor=Gray01&clotheType=GraphicShirt&clotheColor=Heather&graphicType=Cumbia&eyeType=Wink&eyebrowType=SadConcerned&mouthType=Serious&skinColor=DarkBrown'/>
+                    <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
                 </div>
 
             </div>
             <div class="col-6">
-                {{ form_start(avatarForm) }}
+                {{ form_start(avatarForm, {'action': path('avatar.edit')}) }}
 
                 {{ form_label(avatarForm.accessoriesType) }}
                 {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -76,10 +76,10 @@
                 {{ form_label(avatarForm.topType) }}
                 {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
 
-                {{ form_end(avatarForm) }}
-
                 <br>
-                <button class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+
+                <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+                {{ form_end(avatarForm) }}
             </div>
 
             <hr class="w-100">
