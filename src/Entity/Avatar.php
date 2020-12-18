@@ -516,19 +516,19 @@ class Avatar
      */
     public function setCreateDefaultValues()
     {
-        $this->accessoriesType = array_rand(self::ACCESSORIES_TYPE);
-        $this->clotheColor = array_rand(self::CLOTHE_COLOR);
-        $this->clotheType = array_rand(self::CLOTHE_TYPE);
-        $this->eyeType = array_rand(self::EYE_TYPE);
-        $this->eyebrowType = array_rand(self::EYEBROW_TYPE);
-        $this->facialHairColor = array_rand(self::FACIAL_HAIR_COLOR);
-        $this->facialHairType = array_rand(self::FACIAL_HAIR_TYPE);
-        $this->graphicType = array_rand(self::GRAPHIC_TYPE);
-        $this->hairColor = array_rand(self::HAT_COLOR);
-        $this->hatColor = array_rand(self::HAT_COLOR);
-        $this->mouthType = array_rand(self::MOUTH_TYPE);
-        $this->skinColor = array_rand(self::SKIN_COLOR);
-        $this->topType = array_rand(self::TOP_TYPE);
+        $this->accessoriesType = self::ACCESSORIES_TYPE[array_rand(self::ACCESSORIES_TYPE)];
+        $this->clotheColor = self::CLOTHE_COLOR[array_rand(self::CLOTHE_COLOR)];
+        $this->clotheType = self::CLOTHE_TYPE[array_rand(self::CLOTHE_TYPE)];
+        $this->eyeType = self::EYE_TYPE[array_rand(self::EYE_TYPE)];
+        $this->eyebrowType = self::EYEBROW_TYPE[array_rand(self::EYEBROW_TYPE)];
+        $this->facialHairColor = self::FACIAL_HAIR_COLOR[array_rand(self::FACIAL_HAIR_COLOR)];
+        $this->facialHairType = self::FACIAL_HAIR_TYPE[array_rand(self::FACIAL_HAIR_TYPE)];
+        $this->graphicType = self::GRAPHIC_TYPE[array_rand(self::GRAPHIC_TYPE)];
+        $this->hairColor = self::HAT_COLOR[array_rand(self::HAT_COLOR)];
+        $this->hatColor = self::HAT_COLOR[array_rand(self::HAT_COLOR)];
+        $this->mouthType = self::MOUTH_TYPE[array_rand(self::MOUTH_TYPE)];
+        $this->skinColor = self::SKIN_COLOR[array_rand(self::SKIN_COLOR)];
+        $this->topType = self::TOP_TYPE[array_rand(self::TOP_TYPE)];
         $this->avatarStyle = 'Transparent';
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();

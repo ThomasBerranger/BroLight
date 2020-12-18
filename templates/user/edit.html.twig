@@ -35,50 +35,79 @@
 
             </div>
             <div class="col-6">
-                {{ form_start(avatarForm, {'action': path('avatar.edit')}) }}
+                {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
 
-                {{ form_label(avatarForm.accessoriesType) }}
-                {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyeType) }}
+                    {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.clotheColor) }}
-                {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyebrowType) }}
+                    {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.clotheType) }}
-                {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.mouthType) }}
+                    {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.eyeType) }}
-                {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.skinColor) }}
+                    {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.eyebrowType) }}
-                {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-12">
+                    {{ form_label(avatarForm.topType) }}
+                    {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.facialHairColor) }}
-                {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.accessoriesType) }}
+                    {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.facialHairType) }}
-                {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.hatColor) }}
+                    {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.graphicType) }}
-                {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.hairColor) }}
+                    {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.hairColor) }}
-                {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6"></div>
 
-                {{ form_label(avatarForm.hatColor) }}
-                {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairType) }}
+                    {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.mouthType) }}
-                {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairColor) }}
+                    {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.skinColor) }}
-                {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-12">
+                    {{ form_label(avatarForm.clotheType) }}
+                    {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                {{ form_label(avatarForm.topType) }}
-                {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.clotheColor) }}
+                    {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                <br>
+                <div class="col-6">
+                    {{ form_label(avatarForm.graphicType) }}
+                    {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
 
-                <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+                <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+                </div>
+
                 {{ form_end(avatarForm) }}
             </div>
 
@@ -117,12 +146,7 @@
                 <a class="btn btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">Accept {{ user }}</a>
             {% endfor %}
             <br>
-            <br>
 
-            Pending followings:
-            {% for user in app.user.pendingFollowings %}
-                {{ user }}
-            {% endfor %}
         </div>
         <div class="col-6">
             <label for="userSearchInput">Qui cherches tu ?</label>
@@ -130,7 +154,7 @@
             <br>
             <ul class="list-group" id="usersList">
                 {% for user in users %}
-                    <li class="list-group-item"> {# style="display-none" #}
+                    <li class="list-group-item" style="display: none">
                         {{ user }}
                         {% if user in app.user.followings %}
                             <a href="#" role="button" class="btn-remove-follow float-right"></a>
