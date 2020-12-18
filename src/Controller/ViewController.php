@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\View;
-use App\Manager\MovieManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,12 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ViewController extends AbstractController
 {
     private $entityManager;
-    private $movieManager;
 
-    public function __construct(EntityManagerInterface $entityManager, MovieManager $movieManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->movieManager = $movieManager;
     }
 
     /**

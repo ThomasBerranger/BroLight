@@ -22,19 +22,19 @@ class TwigEventSubscriber implements EventSubscriberInterface
         $this->security = $security;
     }
 
-    public function onControllerEvent(ControllerEvent $event)
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ControllerEvent::class => 'onControllerEvent',
+        ];
+    }
+
+    public function onControllerEvent()
     {
         $currentUser = $this->security->getUser();
 
         if($currentUser instanceof User) {
             $this->twig->addGlobal('notifications', count($this->userRelationshipRepository->findPendingFollowFor($currentUser)));
         }
-    }
-
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            ControllerEvent::class => 'onControllerEvent',
-        ];
     }
 }
