@@ -93,20 +93,20 @@ function editInputsDisplay() {
     function enable(elements) {
         if (Array.isArray(elements)) {
             elements.forEach(function(element){
-                element.removeClass('d-none');
+                element.prop('disabled', false);
             });
         } else {
-            elements.removeClass('d-none');
+            elements.prop('disabled', false);
         }
     }
 
     function disable(elements) {
         if (Array.isArray(elements)) {
             elements.forEach(function (element) {
-                element.addClass('d-none');
+                element.prop('disabled', true);
             });
         } else {
-            elements.addClass('d-none');
+            elements.prop('disabled', true);
         }
     }
 }

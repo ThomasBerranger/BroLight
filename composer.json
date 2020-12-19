@@ -23,10 +23,11 @@
         "symfony/http-client": "5.2.*",
         "symfony/http-foundation": "5.2.*",
         "symfony/security-bundle": "5.2.*",
+        "symfony/serializer": "5.2.*",
         "symfony/translation": "5.2.*",
         "symfony/validator": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.8",
-        "symfony/yaml": "5.2.*",
+        "symfony/yaml": "5.2.*"
     },
     "config": {
         "optimize-autoloader": true,

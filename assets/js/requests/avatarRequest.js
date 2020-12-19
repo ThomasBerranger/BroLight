@@ -6,11 +6,11 @@ $(document).ready(function() {
 
         $.ajax({
             url: $(this).attr('action'),
-            method: "post",
-            data: $(this).serialize(),
+            method: "put",
+            data: $(this).serializePrefixedFormJSON(),
             dataType: "json",
-            success: function (data) {
-                console.log(data);
+            success: function () {
+                $('#alert').trigger("trigger-alert", ["success", "Avatar sauvegardé !"]);
             },
             error: function (error) {
                 console.log(error);

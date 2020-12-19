@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AvatarRepository::class)
@@ -213,92 +214,110 @@ class Avatar
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"avatar:read"})
      */
     private $id;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="avatar", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $accessoriesType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $avatarStyle;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $clotheColor;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $clotheType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $eyeType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $eyebrowType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $facialHairColor;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $facialHairType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $graphicType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $hairColor;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $hatColor;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $mouthType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $skinColor;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"avatar:read", "user:read"})
      */
     private $topType;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"avatar:read", "user:read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"avatar:read", "user:read"})
      */
     private $updatedAt;
 

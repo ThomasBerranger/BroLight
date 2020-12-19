@@ -21,7 +21,7 @@ function createFollowRequest(element) {
         console.log("fail");
     }).done(function() {
         element.removeClass('btn-follow');
-        element.addClass('btn-remove-follow-request');
+        element.addClass('btn-remove-follow-requests');
     });
 }
 

@@ -12,9 +12,13 @@ import './styles/app.scss';
 
 import 'bootstrap';
 
-import './js/request/userRelationRequest';
-import './js/request/movieRequest';
-import './js/request/avatarRequest';
+import './js/functions/serializePrefixedFormJSON';
+
+import './js/components/alert';
+
+import './js/requests/userRelationRequest';
+import './js/requests/movieRequest';
+import './js/requests/avatarRequest';
 
 import './js/pages/userEdit';
 import './js/pages/movieSearch';
