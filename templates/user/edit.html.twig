@@ -155,6 +155,7 @@
             <ul class="list-group" id="usersList">
                 {% for user in users %}
                     <li class="list-group-item" style="display: none">
+                        <img style="max-height: 20px" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
                         {{ user }}
                         {% if user in app.user.followings %}
                             <a href="#" role="button" class="btn-remove-follow float-right"></a>
