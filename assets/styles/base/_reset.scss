@@ -2,12 +2,17 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #e2e8f0;
 }
 
 p {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+}
+
+hr {
+  margin: 0;
 }
 
 @for $i from 1 through 6 {

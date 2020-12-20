@@ -20,5 +20,4 @@ import './js/requests/userRelationRequest';
 import './js/requests/movieRequest';
 import './js/requests/avatarRequest';
 
-import './js/pages/userEdit';
 import './js/pages/movieSearch';

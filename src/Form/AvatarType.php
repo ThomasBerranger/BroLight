@@ -26,7 +26,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::CLOTHE_TYPE,
             ])
             ->add('eyeType', ChoiceType::class, [
-                'label' => 'Type d\'œil',
+                'label' => 'Type d\'œils',
                 'choices' => Avatar::EYE_TYPE,
             ])
             ->add('eyebrowType', ChoiceType::class, [
@@ -46,7 +46,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::GRAPHIC_TYPE,
             ])
             ->add('hairColor', ChoiceType::class, [
-                'label' => 'Couleur de cheveux',
+                'label' => 'Couleur de cheveux / chapeaux',
                 'choices' => Avatar::HAIR_COLOR,
             ])
             ->add('hatColor', ChoiceType::class, [

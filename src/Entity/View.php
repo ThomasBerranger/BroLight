@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ViewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ViewRepository::class)
@@ -15,29 +16,36 @@ class View
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"view:read", "user:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="views")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"view:read"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"view:read", "user:read"})
      */
     private $tmdbId;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"view:read", "user:read"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"view:read", "user:read"})
      */
     private $createdAt;
+
+    private $movie;
 
     public function getId(): ?int
     {
@@ -107,5 +115,17 @@ class View
     public function setUpdateDefaultValues()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getMovie(): ?array
+    {
+        return $this->movie;
+    }
+
+    public function setMovie(array $movie): self
+    {
+        $this->movie = $movie;
+
+        return $this;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\UserRelationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,7 +20,18 @@ class UserRelationshipRepository extends ServiceEntityRepository
         parent::__construct($registry, UserRelationship::class);
     }
 
-    public function findPendingFollowFor($user): array
+    public function findAllUserRelationships(User $user): array
+    {
+        return $this->createQueryBuilder('ur')
+            ->where('ur.userSource = :userId')
+            ->orWhere('ur.userTarget = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findPendingFollowFor(User $user): array
     {
         return $this->createQueryBuilder('ur')
             ->where('ur.userTarget = :userId')

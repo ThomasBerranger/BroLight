@@ -4,170 +4,186 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12 row">
-            <div class="col-6">
-                {{ form_start(form) }}
-
-                {{ form_label(form.firstname, 'Ton prénom') }}
-                {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
-
-                {{ form_label(form.lastname, 'Ton prénom') }}
-                {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
-
-                {{ form_label(form.email, 'Ton email') }}
-                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                <div class="alert-danger">
-                    {{ form_errors(form.email) }}
-                </div>
-
-                <br>
-                <button class="btn btn-sm btn-success">Sauvegarder mes informations</button>
-
-                {{ form_end(form) }}
-
-                <br>
-                <hr>
-                <br>
-
-                <div id="avatar-container">
+        <div class="col-12 col-md-5">
+            <div class="card">
+                <div id="avatar-container" class="card-body text-center">
+                    <button class="btn btn-sm btn-info modal-avatar-edit" type="button" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fa fa-edit"></i>
+                    </button>
                     <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
                 </div>
-
             </div>
-            <div class="col-6">
-                {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.eyeType) }}
-                    {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.eyebrowType) }}
-                    {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.mouthType) }}
-                    {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.skinColor) }}
-                    {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-12">
-                    {{ form_label(avatarForm.topType) }}
-                    {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.accessoriesType) }}
-                    {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.hatColor) }}
-                    {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.hairColor) }}
-                    {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6"></div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.facialHairType) }}
-                    {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.facialHairColor) }}
-                    {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-12">
-                    {{ form_label(avatarForm.clotheType) }}
-                    {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.clotheColor) }}
-                    {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-6">
-                    {{ form_label(avatarForm.graphicType) }}
-                    {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-
-                <div class="col-12 text-center mt-4">
-                    <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
-                </div>
-
-                {{ form_end(avatarForm) }}
-            </div>
-
-            <hr class="w-100">
-        </div>
-
-        <div class="col-6 mt-2">
-
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#followersCollapse" aria-expanded="false" aria-controls="followers">{{ app.user.followers|length }} Abonné{{ app.user.followers|length > 1 ? 's' }}</button>
-                    <div class="collapse multi-collapse" id="followersCollapse">
-                        <ul class="list-group">
-                            {% for user in app.user.followers %}
-                                <li class="list-group-item">{{ user }}</li>
-                            {% endfor %}
-                        </ul>
+            <div class="card mt-4">
+                <div class="card-body row text-center">
+                    <div class="col-12 col-lg-6">
+                        <p>Abonnés</p>
+                        <hr class="mb-2">
+                        {% for user in app.user.followers %}
+                            <div class="w-100">
+                                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                {{ user }}
+                            </div>
+                        {% endfor %}
                     </div>
-                </div>
-                <div class="col">
-                    <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#followingsCollapse" aria-expanded="false" aria-controls="followings">{{ app.user.followings|length }} Abonnement{{ app.user.followings|length > 1 ? 's' }}</button>
-                    <div class="collapse multi-collapse" id="followingsCollapse">
+                    <div class="col-12 col-lg-6 mt-2 mt-lg-0">
+                        <p>Abonements</p>
+                        <hr class="mb-2">
                         {% for user in app.user.followings %}
-                            <li class="list-group-item">{{ user }}</li>
+                            <div class="w-100">
+                                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                {{ user }}
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
-
-            <br>
-            <hr>
-            <br>
-
-            Pending followers:
-            {% for user in app.user.pendingFollowers %}
-                <a class="btn btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">Accept {{ user }}</a>
-            {% endfor %}
-            <br>
-
+            <div class="card my-4">
+                <div class="card-body">
+                    <p>Demandes en attente</p>
+                    <hr class="mb-2 w-75">
+                    {% for user in app.user.pendingFollowers %}
+                        <a class="btn btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">Accept {{ user }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-            <label for="userSearchInput">Qui cherches tu ?</label>
-            <input id="userSearchInput" type="text" class="form-control form-control-sm" placeholder="Steven Spielberg">
-            <br>
-            <ul class="list-group" id="usersList">
-                {% for user in users %}
-                    <li class="list-group-item" style="display: none">
-                        <img style="max-height: 20px" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
-                        {{ user }}
-                        {% if user in app.user.followings %}
-                            <a href="#" role="button" class="btn-remove-follow float-right"></a>
-                        {% elseif user in app.user.pendingFollowings %}
-                            <a href="#" role="button" class="btn-remove-follow-request float-right"></a>
-                        {% else %}
-                            <a href="{{ path('user_relationship.follow', {'id': user.id}) }}" data-user-relationship="create-follow" role="button" class="btn-follow float-right"></a>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+
+        <div class="col-12 col-md-7">
+            <div class="card mb-4 collapse" id="collapseAvatarEdit">
+                <div class="card-body">
+
+                    {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.eyeType) }}
+                        {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.eyebrowType) }}
+                        {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.mouthType) }}
+                        {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.skinColor) }}
+                        {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-12">
+                        {{ form_label(avatarForm.topType) }}
+                        {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.accessoriesType) }}
+                        {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.hatColor) }}
+                        {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.hairColor) }}
+                        {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6"></div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.facialHairType) }}
+                        {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.facialHairColor) }}
+                        {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-12">
+                        {{ form_label(avatarForm.clotheType) }}
+                        {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.clotheColor) }}
+                        {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_label(avatarForm.graphicType) }}
+                        {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+                        <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false" aria-controls="collapseExample">
+                            Fermer
+                        </button>
+                    </div>
+
+                    {{ form_end(avatarForm) }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(form) }}
+
+                    {{ form_label(form.firstname, 'Ton prénom') }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                    {{ form_label(form.lastname, 'Ton prénom') }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                    {{ form_label(form.email, 'Ton email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    <div class="alert-danger">
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="w-100 text-center mt-4">
+                        <button class="btn btn-sm btn-success">Sauvegarder mes informations</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <label for="userSearchInput">Qui cherches tu ?</label>
+                    <input id="userSearchInput" type="text" class="form-control form-control-sm" placeholder="Steven Spielberg">
+                    <div id="usersList" class="mt-3">
+                        {% for user in users %}
+                            <div class="w-100 justify-content-between align-items-center mt-2 d-none">
+                                <span>
+                                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                {{ user }}
+                                </span>
+                                {% if user in app.user.followings %}
+                                    <a href="#" role="button" class="btn-remove-follow"></a>
+                                {% elseif user in app.user.pendingFollowings %}
+                                    <a href="#" role="button" class="btn-remove-follow-request"></a>
+                                {% else %}
+                                    <a href="{{ path('user_relationship.follow', {'id': user.id}) }}" data-user-relationship="create-follow" role="button" class="btn-follow"></a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('userEdit') }}
 {% endblock %}

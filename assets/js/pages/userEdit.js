@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 $(document).ready(function() {
     editInputsDisplay();
 
@@ -7,12 +5,19 @@ $(document).ready(function() {
         const value = $(this).val().toLowerCase();
 
         if (value.length > 1) {
-            $("#usersList li").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $("#usersList div").filter(function() {
+                if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                    $(this).addClass('d-flex');
+                    $(this).removeClass('d-none');
+                } else {
+                    $(this).addClass('d-none');
+                    $(this).removeClass('d-flex');
+                }
             });
         } else {
-            $("#usersList li").each(function () {
-                $(this).hide();
+            $("#usersList div").each(function () {
+                $(this).addClass('d-none');
+                $(this).removeClass('d-flex');
             });
         }
     });

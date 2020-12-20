@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Avatar;
 use App\Entity\User;
-use App\Event\UserEvent;
-use App\Form\AvatarType;
+use App\Entity\Avatar;
 use App\Form\UserType;
+use App\Form\AvatarType;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private $entityManager;
+    private $userService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, UserService $userService)
     {
         $this->entityManager = $entityManager;
+        $this->userService = $userService;
     }
 
     /**
@@ -31,7 +32,15 @@ class UserController extends AbstractController
      */
     public function feed(): Response
     {
-        return $this->render('user/feed.html.twig');
+        $timeline = [];
+
+        $views = $this->userService->getUserTimeline($this->getUser());
+
+        $timeline = $views;
+
+        return $this->render('user/feed.html.twig', [
+            'timeline' => $timeline
+        ]);
     }
 
     /**
@@ -41,7 +50,7 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function edit(Request $request, EventDispatcherInterface $eventDispatcher): Response
+    public function edit(Request $request): Response
     {
         /** @var User $currentUser */
         $currentUser = $this->getUser();

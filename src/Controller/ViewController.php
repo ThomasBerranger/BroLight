@@ -29,14 +29,18 @@ class ViewController extends AbstractController
      */
     public function createView(int $tmdbId): JsonResponse
     {
-        $view = new View();
+        try {
+            $view = new View();
 
-        $view->setAuthor($this->getUser());
-        $view->setTmdbId($tmdbId);
+            $view->setAuthor($this->getUser());
+            $view->setTmdbId($tmdbId);
 
-        $this->entityManager->persist($view);
-        $this->entityManager->flush();
+            $this->entityManager->persist($view);
+            $this->entityManager->flush();
 
-        return $this->json($view, 202);
+            return $this->json($view, 201, [], ['groups' => 'view:read']);
+        } catch (\Exception $exception) {
+            return $this->json($exception, 500);
+        }
     }
 }

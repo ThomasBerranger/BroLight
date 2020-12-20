@@ -14,42 +14,42 @@ class Avatar
 {
     const ACCESSORIES_TYPE = [
         'Aucun' => 'Blank',
-        'Lunettes 1' => 'Kurt',
-        'Lunettes 2' => 'Prescription01',
-        'Lunettes 3' => 'Prescription02',
-        'Lunettes 4' => 'Round',
-        'Lunettes 5' => 'Sunglasses',
-        'Lunettes 6' => 'Wayfarers',
+        'Lunette 1' => 'Kurt',
+        'Lunette 2' => 'Prescription01',
+        'Lunette 3' => 'Prescription02',
+        'Lunette 4' => 'Round',
+        'Lunette 5' => 'Sunglasses',
+        'Lunette 6' => 'Wayfarers',
     ];
 
     const CLOTHE_COLOR = [
-        'Black' => 'Black',
-        'Blue01' => 'Blue01',
-        'Blue02' => 'Blue02',
-        'Blue03' => 'Blue03',
-        'Gray01' => 'Gray01',
-        'Gray02' => 'Gray02',
-        'Heather' => 'Heather',
-        'PastelBlue' => 'PastelBlue',
-        'PastelGreen' => 'PastelGreen',
-        'PastelOrange' => 'PastelOrange',
-        'PastelRed' => 'PastelRed',
-        'PastelYellow' => 'PastelYellow',
-        'Pink' => 'Pink',
-        'Red' => 'Red',
-        'White' => 'White',
+        'Noir' => 'Black',
+        'Gris clair' => 'Gray01',
+        'Gris' => 'Gray02',
+        'Blue Pastel' => 'PastelBlue',
+        'Bleu clair' => 'Blue01',
+        'Bleu marin' => 'Blue02',
+        'Bleu foncé' => 'Blue03',
+        'Bleu Oxford' => 'Heather',
+        'Vert' => 'PastelGreen',
+        'Orange' => 'PastelOrange',
+        'Rouge' => 'Red',
+        'Rouge Pastel' => 'PastelRed',
+        'Jaune' => 'PastelYellow',
+        'Rose' => 'Pink',
+        'Blanc' => 'White',
     ];
 
     const CLOTHE_TYPE = [
-        'BlazerShirt' => 'BlazerShirt',
-        'BlazerSweater' => 'BlazerSweater',
-        'CollarSweater' => 'CollarSweater',
-        'GraphicShirt' => 'GraphicShirt',
-        'Hoodie' => 'Hoodie',
-        'Overall' => 'Overall',
-        'ShirtCrewNeck' => 'ShirtCrewNeck',
-        'ShirtScoopNeck' => 'ShirtScoopNeck',
-        'ShirtVNeck' => 'ShirtVNeck',
+        'Veste' => 'BlazerShirt',
+        'Veste et colle' => 'BlazerSweater',
+        'Colle' => 'CollarSweater',
+        'T-shirt avec graphique' => 'GraphicShirt',
+        'Pull à capuche' => 'Hoodie',
+        'Salopette' => 'Overall',
+        'T-shirt' => 'ShirtCrewNeck',
+        'T-shirt colle large' => 'ShirtScoopNeck',
+        'T-shirt colle en V' => 'ShirtVNeck',
     ];
 
     const FACIAL_HAIR_TYPE = [
@@ -62,114 +62,114 @@ class Avatar
     ];
 
     const EYE_TYPE = [
-        'Close' => 'Close',
-        'Cry' => 'Cry',
-        'Default' => 'Default',
-        'Dizzy' => 'Dizzy',
-        'EyeRoll' => 'EyeRoll',
-        'Happy' => 'Happy',
-        'Hearts' => 'Hearts',
-        'Side' => 'Side',
-        'Squint' => 'Squint',
-        'Surprised' => 'Surprised',
-        'Wink' => 'Wink',
-        'WinkWacky' => 'WinkWacky',
+        'Fermés' => 'Close',
+        'Tristes' => 'Cry',
+        'Normaux' => 'Default',
+        'En croix' => 'Dizzy',
+        'Levés' => 'EyeRoll',
+        'Heureux' => 'Happy',
+        'En coeur' => 'Hearts',
+        'Sournois' => 'Side',
+        'Louches' => 'Squint',
+        'Supris' => 'Surprised',
+        'Clinc d\'œil' => 'Wink',
+        'Clinc d\'œil 2' => 'WinkWacky',
     ];
 
     const EYEBROW_TYPE = [
-        'Angry' => 'Angry',
-        'AngryNatural' => 'AngryNatural',
-        'Default' => 'Default',
-        'DefaultNatural' => 'DefaultNatural',
-        'FlatNatural' => 'FlatNatural',
-        'RaisedExcited' => 'RaisedExcited',
-        'RaisedExcitedNatural' => 'RaisedExcitedNatural',
-        'SadConcerned' => 'SadConcerned',
-        'SadConcernedNatural' => 'SadConcernedNatural',
-        'UnibrowNatural' => 'UnibrowNatural',
-        'UpDown' => 'UpDown',
-        'UpDownNatural' => 'UpDownNatural',
+        'Fachés' => 'Angry',
+        'Fachés 2' => 'AngryNatural',
+        'Normaux' => 'Default',
+        'Normaux 2' => 'DefaultNatural',
+        'Plats' => 'FlatNatural',
+        'Excités' => 'RaisedExcited',
+        'Excités 2' => 'RaisedExcitedNatural',
+        'Tristes' => 'SadConcerned',
+        'Tristes 2' => 'SadConcernedNatural',
+        'Mono' => 'UnibrowNatural',
+        'En haut en bas' => 'UpDown',
+        'En haut en bas 2' => 'UpDownNatural',
     ];
 
     const FACIAL_HAIR_COLOR = [
         'Auburn' => 'Auburn',
-        'Black' => 'Black',
+        'Noire' => 'Black',
         'Blonde' => 'Blonde',
-        'BlondeGolden' => 'BlondeGolden',
-        'Brown' => 'Brown',
-        'BrownDark' => 'BrownDark',
-        'Platinum' => 'Platinum',
-        'Red' => 'Red',
+        'Blonde or' => 'BlondeGolden',
+        'Marron' => 'Brown',
+        'Marron foncée' => 'BrownDark',
+        'Platine' => 'Platinum',
+        'Rouge' => 'Red',
     ];
 
     const GRAPHIC_TYPE = [
-        'Bat' => 'Bat',
+        'Chauve souris' => 'Bat',
         'Cumbia' => 'Cumbia',
-        'Deer' => 'Deer',
-        'Diamond' => 'Diamond',
+        'Cerf' => 'Deer',
+        'Diamant' => 'Diamond',
         'Hola' => 'Hola',
         'Pizza' => 'Pizza',
         'Resist' => 'Resist',
         'Selena' => 'Selena',
-        'Bear' => 'Bear',
-        'SkullOutline' => 'SkullOutline',
-        'Skull' => 'Skull',
+        'Ours' => 'Bear',
+        'Crâne' => 'SkullOutline',
+        'Crâne 2' => 'Skull',
     ];
 
     const HAIR_COLOR =[
         'Auburn' => 'Auburn',
-        'Black' => 'Black',
-        'Blonde' => 'Blonde',
-        'BlondeGolden' => 'BlondeGolden',
-        'Brown' => 'Brown',
-        'BrownDark' => 'BrownDark',
-        'PastelPink' => 'PastelPink',
-        'Platinum' => 'Platinum',
-        'Red' => 'Red',
-        'SilverGray' => 'SilverGray',
+        'Noir' => 'Black',
+        'Blonds' => 'Blonde',
+        'Blonds Or' => 'BlondeGolden',
+        'Marrons' => 'Brown',
+        'Marrons foncés' => 'BrownDark',
+        'Roses' => 'PastelPink',
+        'Platines' => 'Platinum',
+        'Rouges' => 'Red',
+        'Gris argent' => 'SilverGray',
     ];
 
     const HAT_COLOR =[
-        'Black' => 'Black',
-        'Blue01' => 'Blue01',
-        'Blue02' => 'Blue02',
-        'Blue03' => 'Blue03',
-        'Gray01' => 'Gray01',
-        'Gray02' => 'Gray02',
-        'Heather' => 'Heather',
-        'PastelBlue' => 'PastelBlue',
-        'PastelGreen' => 'PastelGreen',
-        'PastelOrange' => 'PastelOrange',
-        'PastelRed' => 'PastelRed',
-        'PastelYellow' => 'PastelYellow',
-        'Pink' => 'Pink',
-        'Red' => 'Red',
+        'Noir' => 'Black',
+        'Gris clair' => 'Gray01',
+        'Gris' => 'Gray02',
+        'Blue Pastel' => 'PastelBlue',
+        'Bleu clair' => 'Blue01',
+        'Bleu marin' => 'Blue02',
+        'Bleu foncé' => 'Blue03',
+        'Bleu Oxford' => 'Heather',
+        'Vert' => 'PastelGreen',
+        'Orange' => 'PastelOrange',
+        'Rouge' => 'Red',
+        'Rouge Pastel' => 'PastelRed',
+        'Jaune' => 'PastelYellow',
+        'Rose' => 'Pink',
         'White' => 'White',
     ];
 
     const MOUTH_TYPE = [
-        'Concerned' => "Concerned",
-        'Default' => "Default",
-        'Disbelief' => "Disbelief",
-        'Eating' => "Eating",
+        'Bouche bée' => "Concerned",
+        'Normale' => "Default",
+        'Normale inversée' => "Disbelief",
+        'Gosses joues' => "Eating",
         'Grimace' => "Grimace",
-        'Sad' => "Sad",
-        'ScreamOpen' => "ScreamOpen",
-        'Serious' => "Serious",
-        'Smile' => "Smile",
-        'Tongue' => "Tongue",
-        'Twinkle' => "Twinkle",
-        'Vomit' => "Vomit",
+        'Triste' => "Sad",
+        'Hurlement' => "ScreamOpen",
+        'Sérieuse' => "Serious",
+        'Souriante 1' => "Twinkle",
+        'Souriante 2' => "Smile",
+        'Tire langue' => "Tongue",
+        'Vomis' => "Vomit",
     ];
 
     const SKIN_COLOR = [
-        'Tanned' => 'Tanned',
-        'Yellow' => 'Yellow',
-        'Pale' => 'Pale',
-        'Light' => 'Light',
-        'Brown' => 'Brown',
-        'DarkBrown' => 'DarkBrown',
-        'Black' => 'Black',
+        'Tannée' => 'Tanned',
+        'Jaune' => 'Yellow',
+        'Blanche' => 'Pale',
+        'Bronzée' => 'Light',
+        'Marron' => 'Brown',
+        'Marron foncée' => 'DarkBrown',
+        'Noire' => 'Black',
     ];
 
     const TOP_TYPE = [
@@ -214,14 +214,14 @@ class Avatar
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"avatar:read"})
+     * @Groups({"avatar:read", "user:read"})
      */
     private $id;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="avatar", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"avatar:read", "user:read"})
+     * @Groups({"avatar:read"})
      */
     private $author;
 
