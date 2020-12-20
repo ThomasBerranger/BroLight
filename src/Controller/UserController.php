@@ -32,11 +32,7 @@ class UserController extends AbstractController
      */
     public function feed(): Response
     {
-        $timeline = [];
-
-        $views = $this->userService->getUserTimeline($this->getUser());
-
-        $timeline = $views;
+        $timeline = $this->userService->getUserTimeline($this->getUser());
 
         return $this->render('user/feed.html.twig', [
             'timeline' => $timeline

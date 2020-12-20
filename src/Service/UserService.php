@@ -40,11 +40,11 @@ class UserService
             array_push($timeline, $this->formatEventToTimeline($view));
         }
 
-        $userRelationships = $this->userRelationshipManager->getAllUserRelationships($user);
-
-        foreach ($userRelationships as $userRelationship) {
-            array_push($timeline, $this->formatEventToTimeline($userRelationship));
-        }
+//        $userRelationships = $this->userRelationshipManager->getAllUserRelationships($user);
+//
+//        foreach ($userRelationships as $userRelationship) {
+//            array_push($timeline, $this->formatEventToTimeline($userRelationship));
+//        }
 
         usort($timeline, function($a, $b)
         {
@@ -61,7 +61,9 @@ class UserService
         if ($event instanceof View) {
             $formattedEvent['type'] = 'view';
             $formattedEvent['poster_path'] = $event->getMovie()['poster_path'];
+            $formattedEvent['backdrop_path'] = $event->getMovie()['backdrop_path'];
             $formattedEvent['title'] = $event->getMovie()['title'];
+            $formattedEvent['overview'] = $event->getMovie()['overview'];
             $formattedEvent['date'] = $event->getCreatedAt();
             $formattedEvent['author'] = $event->getAuthor();
         } elseif ($event instanceof UserRelationship) {

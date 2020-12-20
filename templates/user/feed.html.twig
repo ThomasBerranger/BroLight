@@ -3,7 +3,51 @@
 {% block title %}{{ parent() }} | Feed{% endblock %}
 
 {% block body %}
-    <h2>feed</h2>
+    <ul class="timeline">
 
-    <a href="{{ path('user.show', {'slug': app.user.slug}) }}">{{ app.user }}</a>
+        {% for event in timeline %}
+            <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
+                {% if event['type'] == 'view' %}
+
+                    <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="w-100">
+                                <img class="avatar-small m-1" src="{{ event['author'].avatar|formatAvatarData }}" alt="{{ event['author'] }} avatar">
+                                {{ event['author'] }}
+                            </div>
+                            <img class="img-fluid" src="https://image.tmdb.org/t/p/w780{{ event['backdrop_path'] }}" alt="{{ event['title'] }} poster">
+                        </div>
+                        <div class="mt-2 p-2">
+                            <h5>{{ event['title'] }}</h5>
+                            <p>{{ event['overview'] }}</p>
+                        </div>
+                        <div class="text-right p-2">
+                            footer
+                        </div>
+                    </div>
+
+{#                {% elseif event['type'] == 'userRelationship' %}#}
+{#                    <div class="timeline-badge primary"><i class="fa fa-circle"></i></div>#}
+{#                    <div class="timeline-panel">#}
+{#                        <div class="timeline-body">#}
+{#                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>#}
+{#                        </div>#}
+{#                        <div class="timeline-footer">#}
+{#                            footer#}
+{#                        </div>#}
+{#                    </div>#}
+                {% endif %}
+            </li>
+
+        {% endfor %}
+
+
+        <li class="clearfix" style="float: none;"></li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('feed') }}
 {% endblock %}
