@@ -19,20 +19,24 @@
                         <p class="text-center">Abonné{{ app.user.followers|length > 1 ? 's' }}</p>
                         <hr class="mb-2">
                         {% for user in app.user.followers %}
-                            <div class="w-100">
-                                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
-                                {{ user }}
-                            </div>
+                            <a href="{{ path('user.show', {'slug': user.slug}) }}">
+                                <div class="w-100">
+                                    <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                    {{ user }}
+                                </div>
+                            </a>
                         {% endfor %}
                     </div>
                     <div class="col-12 col-lg-6 mt-2 mt-lg-0">
                         <p class="text-center">Abonement{{ app.user.followings|length > 1 ? 's' }}</p>
                         <hr class="mb-2">
                         {% for user in app.user.followings %}
-                            <div class="w-100">
-                                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
-                                {{ user }}
-                            </div>
+                            <a href="{{ path('user.show', {'slug': user.slug}) }}">
+                                <div class="w-100">
+                                    <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                    {{ user }}
+                                </div>
+                            </a>
                         {% endfor %}
                     </div>
                 </div>

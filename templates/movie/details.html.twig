@@ -13,11 +13,11 @@
                     </div>
                 {% endif %}
                 <div class="col">
-                    <h2 class="font-title mb-1">{{ movie.title is defined ? movie.title }}</h2>
-                    <p class="mb-1"><em>"{{ movie.tagline is defined ? movie.tagline }}"</em></p>
-                    <p class="mb-1">{{ movie.overview is defined ? movie.overview }}</p>
-                    <p class="mb-1">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</p>
-                    <p class="mb-1">{{ movie.vote_average is defined ? movie.vote_average~'/10' }}</p>
+                    <h2 class="font-title">{{ movie.title is defined ? movie.title }}</h2>
+                    <p class="mb-3"><em>"{{ movie.tagline is defined ? movie.tagline }}"</em></p>
+                    <p class="mb-3">{{ movie.overview is defined ? movie.overview }}</p>
+                    <p class="mb-3">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</p>
+                    <p class="mb-3">{{ movie.vote_average is defined ? movie.vote_average~'/10' }}</p>
                     <p>{% for genre in movie.genres %}{{ genre.name }}{{ loop.revindex0 == 0 ? null :  ', ' }}{% endfor %}</p>
                 </div>
             </div>

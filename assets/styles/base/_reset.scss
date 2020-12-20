@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #e2e8f0;
+  background-color: $light-info;
 }
 
 p {
@@ -13,6 +13,16 @@ p {
 
 hr {
   margin: 0;
+}
+
+a {
+  color: $dark;
+  text-decoration: none;
+
+  &:hover, &:active, &:visited {
+    color: $dark;
+    text-decoration: none;
+  }
 }
 
 @for $i from 1 through 6 {

@@ -4,4 +4,6 @@
 
 {% block body %}
     <h2>feed</h2>
+
+    <a href="{{ path('user.show', {'slug': app.user.slug}) }}">{{ app.user }}</a>
 {% endblock %}

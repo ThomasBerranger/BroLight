@@ -92,6 +92,11 @@ class User implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->views = new ArrayCollection();
@@ -397,6 +402,7 @@ class User implements UserInterface
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
         $this->roles = [User::ROLE_USER];
+        $this->slug = strtolower($this->firstname.$this->lastname);
     }
 
     /**
@@ -405,6 +411,7 @@ class User implements UserInterface
     public function setUpdateDefaultValues()
     {
         $this->updatedAt = new \DateTime();
+        $this->slug = strtolower($this->firstname.$this->lastname);
     }
 
     public function getSalt(): string
@@ -414,5 +421,17 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
