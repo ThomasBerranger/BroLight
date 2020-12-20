@@ -25,7 +25,7 @@ class UserRelationshipController extends AbstractController
     }
 
     /**
-     * @Route("/follow/{id}", name="follow")
+     * @Route("/follow/{id}", name="follow", methods={"GET"})
      *
      * @param User $user
      * @param UserRelationshipManager $userRelationshipManager
@@ -36,13 +36,17 @@ class UserRelationshipController extends AbstractController
      */
     public function follow(User $user, UserRelationshipManager $userRelationshipManager): JsonResponse
     {
-        $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
+        try {
+            $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 
-        return $this->json(null);
+            return $this->json(null);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
     }
 
     /**
-     * @Route("/accept_follow/{id}", name="accept_follow")
+     * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
      *
      * @param User $user
      * @param UserRelationshipManager $userRelationshipManager
@@ -53,8 +57,12 @@ class UserRelationshipController extends AbstractController
      */
     public function acceptFollow(User $user, UserRelationshipManager $userRelationshipManager): Response
     {
-        $userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
+        try {
+            $userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
 
-        return $this->json(null);
+            return $this->json(null);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
     }
 }

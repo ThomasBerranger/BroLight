@@ -28,7 +28,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/feed", name="feed")
+     * @Route("/feed", name="feed", methods={"GET"})
      */
     public function feed(): Response
     {
@@ -88,7 +88,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('user/details.html.twig', [
             'user' => $user
         ]);
     }

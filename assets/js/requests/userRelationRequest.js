@@ -17,6 +17,7 @@ $(document).ready(function() {
 function createFollowRequest(element) {
     $.ajax({
         url: element.attr('href'),
+        method: "get",
     }).fail(function() {
         console.log("fail");
     }).done(function() {
@@ -28,9 +29,12 @@ function createFollowRequest(element) {
 function acceptFollowRequest(element) {
     $.ajax({
         url: element.attr('href'),
+        method: "get",
     }).fail(function() {
         console.log("fail");
     }).done(function() {
-        element.fadeOut();
+        $('#alert').trigger("trigger-alert", ["success", "Demande acceptée !"]);
+        element.fadeOut(200);
+        $("#followers-container").append(element.prev()).children(':last').hide().fadeIn(500);
     });
 }

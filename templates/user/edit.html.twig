@@ -15,28 +15,28 @@
             </div>
             <div class="card mt-4">
                 <div class="card-body row">
-                    <div class="col-12 col-lg-6">
+                    <div id="followers-container" class="col-12 col-lg-6">
                         <p class="text-center">Abonné{{ app.user.followers|length > 1 ? 's' }}</p>
                         <hr class="mb-2">
                         {% for user in app.user.followers %}
-                            <a href="{{ path('user.show', {'slug': user.slug}) }}">
-                                <div class="w-100">
+                            <div class="w-100">
+                                <a href="{{ path('user.show', {'slug': user.slug}) }}">
                                     <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
                                     {{ user }}
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         {% endfor %}
                     </div>
-                    <div class="col-12 col-lg-6 mt-2 mt-lg-0">
+                    <div id="followings-container" class="col-12 col-lg-6 mt-2 mt-lg-0">
                         <p class="text-center">Abonement{{ app.user.followings|length > 1 ? 's' }}</p>
                         <hr class="mb-2">
                         {% for user in app.user.followings %}
-                            <a href="{{ path('user.show', {'slug': user.slug}) }}">
-                                <div class="w-100">
+                            <div class="w-100">
+                                <a href="{{ path('user.show', {'slug': user.slug}) }}">
                                     <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
                                     {{ user }}
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -44,9 +44,17 @@
             <div class="card my-4">
                 <div class="card-body">
                     <p>Demande{{ app.user.pendingFollowers|length > 1 ? 's' }} en attente</p>
-                    <hr class="mb-2 w-75">
+                    <hr class="mb-2 w-50">
                     {% for user in app.user.pendingFollowers %}
-                        <a class="btn btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">Accept {{ user }}</a>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <div class="w-100">
+                                <a href="{{ path('user.show', {'slug': user.slug}) }}">
+                                    <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                                    {{ user }}
+                                </a>
+                            </div>
+                            <a class="btn btn-sm btn-info" data-user-relationship="accept-follow" href="{{ path('user_relationship.accept_follow', {'id': user.id}) }}"><i class="fa fa-user-check"></i></a>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
