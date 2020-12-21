@@ -40,7 +40,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/my_account", name="edit", methods={"GET", "POST"})
+     * @Route("/my-account", name="edit", methods={"GET", "POST"})
      *
      * @param Request $request
      *
