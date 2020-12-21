@@ -37,7 +37,7 @@ class UserService
         foreach ($views as $view) {
             $this->viewService->getMovieData($view);
 
-            array_push($timeline, $this->formatEventToTimeline($view));
+            array_push($timeline, $view);
         }
 
 //        $userRelationships = $this->userRelationshipManager->getAllUserRelationships($user);
@@ -48,7 +48,7 @@ class UserService
 
         usort($timeline, function($a, $b)
         {
-            return $a['date']->getTimestamp() < $b['date']->getTimestamp();
+            return $a->getCreatedAt()->getTimestamp() < $b->getCreatedAt()->getTimestamp();
         });
 
         return $timeline;
@@ -59,13 +59,12 @@ class UserService
         $formattedEvent = [];
 
         if ($event instanceof View) {
-            $formattedEvent['type'] = 'view';
-            $formattedEvent['poster_path'] = $event->getMovie()['poster_path'];
-            $formattedEvent['backdrop_path'] = $event->getMovie()['backdrop_path'];
-            $formattedEvent['title'] = $event->getMovie()['title'];
-            $formattedEvent['overview'] = $event->getMovie()['overview'];
             $formattedEvent['date'] = $event->getCreatedAt();
             $formattedEvent['author'] = $event->getAuthor();
+            $formattedEvent['tmdb_id'] = $event->getTmdbId();
+            $formattedEvent['title'] = $event->getMovie()['title'];
+            $formattedEvent['poster_path'] = $event->getMovie()['poster_path'];
+            $formattedEvent['overview'] = $event->getMovie()['overview'];
         } elseif ($event instanceof UserRelationship) {
             $formattedEvent['type'] = 'userRelationship';
 
