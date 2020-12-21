@@ -11,9 +11,13 @@
                 <div class="timeline-panel">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}">
+                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
                                 <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
-                                <span class="font-weight-bold">{{ event.author }}</span>
+                                <div>
+                                    <span class="font-weight-bold">{{ event.author }}</span>
+                                    <br>
+                                    <span class="font-weight-light">J'ai vu {{ event.movie['title'] }} !</span>
+                                </div>
                             </a>
                         </h5>
 

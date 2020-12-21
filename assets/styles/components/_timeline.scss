@@ -78,17 +78,13 @@ ul.timeline {
     }
 
     &:nth-child(2) {
-      margin-top: 60px;
+      margin-top: 40px;
     }
 
     &.timeline-inverted > .timeline-badge {
       left: -12px;
     }
   }
-}
-
-.timeline-badge > a {
-  color: $white;
 }
 
 @media (max-width: 767px) {
