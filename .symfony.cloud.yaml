@@ -46,6 +46,14 @@ hooks:
         
         (>&2 symfony-build)
 
+        (>&2
+            # Setup everything to use the Node installation
+            unset NPM_CONFIG_PREFIX
+            export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
+            set +x && . "${NVM_DIR}/nvm.sh" use --lts && set -x
+            # Starting from here, everything is setup to use the same Node
+            yarn run build
+        )
     deploy: |
         set -x -e
 
