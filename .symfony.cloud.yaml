@@ -42,7 +42,6 @@ hooks:
         curl -s https://get.symfony.com/cloud/configurator | (>&2 bash)
         (>&2 symfony-build)
         (>&2
-            cd web/js_app
             unset NPM_CONFIG_PREFIX
             export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
 
