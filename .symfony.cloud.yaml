@@ -50,3 +50,5 @@ hooks:
         set -x -e
 
         (>&2 symfony-deploy)
+
+        yarn run build
