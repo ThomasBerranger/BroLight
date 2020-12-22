@@ -45,7 +45,7 @@ hooks:
             unset NPM_CONFIG_PREFIX
             export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
 
-            NODE_VERSION=8 yarn-install
+            NODE_VERSION=14 yarn-install
 
             # Setup everything to use the Node installation
             set +x && . "${NVM_DIR}/nvm.sh" use 8 && set -x
