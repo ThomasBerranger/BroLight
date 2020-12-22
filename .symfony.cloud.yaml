@@ -40,23 +40,19 @@ hooks:
         set -x -e
 
         curl -s https://get.symfony.com/cloud/configurator | (>&2 bash)
-
         (>&2 symfony-build)
         (>&2
-            # Setup everything to use the Node installation
+            cd web/js_app
             unset NPM_CONFIG_PREFIX
             export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
-            mkdir "${NVM_DIR}"
-            touch "${NVM_DIR}/nvm.sh"
 
-            NODE_VERSION=14.15.1 yarn-install
+            NODE_VERSION=8 yarn-install
 
             # Setup everything to use the Node installation
-            set +x && . "${NVM_DIR}/nvm.sh" use 14.15.1 && set -x
+            set +x && . "${NVM_DIR}/nvm.sh" use 8 && set -x
 
-            # Starting from here, everything is setup to use the same Node
-            yarn install
-            yarn build
+            # Starting from here, everything is setup to use Node 8
+            yarn build --environment=prod
         )
     deploy: |
         set -x -e
