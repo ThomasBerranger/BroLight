@@ -13,9 +13,12 @@ $(document).ready(function() {
 function createViewRequest(element) {
     $.ajax({
         url: element.data('url'),
-    }).fail(function(error) {
-        // console.log(error);
-    }).done(function() {
-        element.parent().load(` #${element.parent().attr('id')}`);
+        success: function () {
+            element.parent().load(` #${element.parent().attr('id')}`);
+            $('#alert').trigger("trigger-alert", ["success", "Visionnage sauvegardé !"]);
+        },
+        error: function (error) {
+            console.log(error);
+        }
     });
 }
