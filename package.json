@@ -15,7 +15,7 @@
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
-        "build": "encore production --progress"
+        "build": "npm install && encore production --progress"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",

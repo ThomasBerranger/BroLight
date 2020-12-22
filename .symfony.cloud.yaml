@@ -48,7 +48,12 @@ hooks:
             export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
             mkdir "${NVM_DIR}"
             touch "${NVM_DIR}/nvm.sh"
-            set +x && . "${NVM_DIR}/nvm.sh" use --lts && set -x
+
+            NODE_VERSION=8 npm-install
+
+            # Setup everything to use the Node installation
+            set +x && . "${NVM_DIR}/nvm.sh" use 8 && set -x
+
             # Starting from here, everything is setup to use the same Node
             npm install
             npm run build
