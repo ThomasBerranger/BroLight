@@ -14,7 +14,6 @@ runtime:
         - iconv
         - json
         - pdo_mysql
-        
 
 #variables:
 #    php:
@@ -33,8 +32,6 @@ web:
             expires: 1h
             passthru: "/index.php"
 
-
-
 mounts:
     "/var": { source: local, source_path: var }
 
@@ -49,14 +46,12 @@ hooks:
         (>&2
             # Setup everything to use the Node installation
             unset NPM_CONFIG_PREFIX
-            export NVM_DIR=BroLight/.nvm
+            export NVM_DIR=${SYMFONY_APP_DIR}/.nvm
             set +x && . "${NVM_DIR}/nvm.sh" use --lts && set -x
             # Starting from here, everything is setup to use the same Node
-            yarn encore dev
+            yarn run build
         )
     deploy: |
         set -x -e
 
         (>&2 symfony-deploy)
-
-        yarn run build
