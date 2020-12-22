@@ -51,7 +51,7 @@ hooks:
             set +x && . "${NVM_DIR}/nvm.sh" use 8 && set -x
 
             # Starting from here, everything is setup to use Node 8
-            yarn build --environment=prod
+            yarn build
         )
     deploy: |
         set -x -e
