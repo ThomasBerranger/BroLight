@@ -25,9 +25,12 @@
         "symfony/security-bundle": "5.2.*",
         "symfony/serializer": "5.2.*",
         "symfony/translation": "5.2.*",
+        "symfony/twig-bundle": "^5.2",
         "symfony/validator": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.8",
-        "symfony/yaml": "5.2.*"
+        "symfony/yaml": "5.2.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -76,7 +79,6 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/maker-bundle": "^1.24",
         "symfony/stopwatch": "^5.2",
-        "symfony/twig-bundle": "^5.2",
         "symfony/web-profiler-bundle": "^5.2"
     }
 }
