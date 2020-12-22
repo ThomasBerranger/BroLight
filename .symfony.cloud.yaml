@@ -49,14 +49,14 @@ hooks:
             mkdir "${NVM_DIR}"
             touch "${NVM_DIR}/nvm.sh"
 
-            NODE_VERSION=14.15.1 npm-install
+            NODE_VERSION=14.15.1 yarn-install
 
             # Setup everything to use the Node installation
             set +x && . "${NVM_DIR}/nvm.sh" use 14.15.1 && set -x
 
             # Starting from here, everything is setup to use the same Node
-            npm install
-            npm run build
+            yarn install
+            yarn build
         )
     deploy: |
         set -x -e
