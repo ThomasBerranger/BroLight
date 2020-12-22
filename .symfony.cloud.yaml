@@ -50,6 +50,7 @@ hooks:
             touch "${NVM_DIR}/nvm.sh"
             set +x && . "${NVM_DIR}/nvm.sh" use --lts && set -x
             # Starting from here, everything is setup to use the same Node
+            npm install
             npm run build
         )
     deploy: |
