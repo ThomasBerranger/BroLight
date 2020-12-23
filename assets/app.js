@@ -19,5 +19,3 @@ import './js/components/alert';
 import './js/requests/userRelationRequest';
 import './js/requests/movieRequest';
 import './js/requests/avatarRequest';
-
-import './js/pages/movieSearch';
