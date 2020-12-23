@@ -1,5 +1,6 @@
 .btn-follow {
   @extend .btn;
+  @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
@@ -11,6 +12,7 @@
 
 .btn-remove-follow-request {
   @extend .btn;
+  @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
@@ -30,6 +32,7 @@
 
 .btn-remove-follow {
   @extend .btn;
+  @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;

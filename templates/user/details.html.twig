@@ -16,7 +16,16 @@
         <div class="col-12 col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <h2>{{ user }}</h2>
+                    <div class="d-flex justify-content-between">
+                        <h2>{{ user }}</h2>
+                        {% if user in app.user.followings %}
+                            <a href="#" role="button" class="btn-remove-follow"></a>
+                        {% elseif user in app.user.pendingFollowings %}
+                            <a href="#" role="button" class="btn-remove-follow-request"></a>
+                        {% elseif user != app.user%}
+                            <a href="{{ path('user_relationship.follow', {'id': user.id}) }}" data-user-relationship="create-follow" role="button" class="btn-follow"></a>
+                        {% endif %}
+                    </div>
                     <p>{{ user.views|length }} Film{{ user.views|length > 1 ? 's' }} vu{{ user.views|length > 1 ? 's' }}</p>
                     <p>{{ user.followings|length }} Abonnement{{ user.followings|length > 1 ? 's' }}</p>
                     <p>{{ user.followers|length }} Abonné{{ user.followers|length > 1 ? 's' }}</p>
