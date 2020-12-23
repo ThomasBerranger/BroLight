@@ -48,6 +48,8 @@ class RegistrationController extends AbstractController
             $event = new UserEvent($user);
             $this->eventDispatcher->dispatch($event, UserEvent::USER_CREATE_EVENT);
 
+            $this->addFlash('firstTime','Bienvenue');
+
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
