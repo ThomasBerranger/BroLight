@@ -28,13 +28,13 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/feed", name="feed", methods={"GET"})
+     * @Route("/", name="history", methods={"GET"})
      */
-    public function feed(): Response
+    public function history(): Response
     {
         $timeline = $this->userService->getUserTimeline($this->getUser());
 
-        return $this->render('user/feed.html.twig', [
+        return $this->render('user/history.html.twig', [
             'timeline' => $timeline
         ]);
     }
