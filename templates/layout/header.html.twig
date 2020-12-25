@@ -1,12 +1,11 @@
 <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
     <a class="navbar-brand font-title" href="{{ path('home') }}">
         <img src="{{ asset('images/popcorn.png') }}" class="d-inline-block" alt="{{ project_title }} logo">
-        {{ project_title }}
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <h1 class="font-title">{{ project_title }}</h1>
+
+    <button class="btn-header-sidebar"><i class="fa fa-bars"></i></button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -22,7 +21,7 @@
                 </li>
             {% endif %}
         </ul>
-        <div class="my-2 my-lg-0 dropdown">
+        <div class="dropdown">
             <div class="btn-group">
                 <button class="btn btn-sm {{ notifications > 0 ? 'btn-info' : 'btn-light' }}" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-bell"></i>
@@ -37,7 +36,7 @@
             </div>
             <div class="btn-group">
                 <button class="btn btn-sm btn-light btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="img-fluid" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
+                    <img class="avatar-header" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ path('user.edit') }}"><i class="fa fa-user-edit mr-2"></i>Mon profil</a>

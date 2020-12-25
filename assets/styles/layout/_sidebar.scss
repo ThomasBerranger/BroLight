@@ -1,0 +1,12 @@
+#sidebar {
+  @extend .center-container;
+
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin-left: 100vw;
+  background-color: $white;
+  z-index: 2;
+}

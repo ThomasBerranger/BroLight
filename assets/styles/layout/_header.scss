@@ -1,36 +1,40 @@
 nav {
-  font-size: 2.5vw;
-  box-shadow: 0 0 15px 1px $dark;
-
-  &>a.navbar-brand {
-    font-size: 3.5vw;
-
-    &>img {
-      width: 4.5vw;
-      vertical-align: top;
-    }
-  }
-}
-
-a.nav-link {
   font-weight: 500;
-}
 
-@media screen and (min-width: 768px) {
-  nav {
-    font-size: 20px;
+  & > a.navbar-brand > img {
+    max-height: 30px;
+  }
 
-    &>a.navbar-brand {
-      font-size: 25px;
+  & > h1 {
+    font-size: 1.6rem;
+    margin: 0;
+  }
 
-      &>img {
-        width: 35px;
-      }
-    }
+  & > button.btn-header-sidebar {
+    @extend .btn;
+    @extend .btn-sm;
+
+    font-size: 15px;
   }
 }
 
-nav button {
-  height: 45px;
-  width: 45px;
+@media screen and (min-width: 576px) {
+  nav {
+    & > a.navbar-brand > img {
+      max-height: 30px;
+    }
+
+    & > h1 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+    & > div > ul {
+      margin-left: 1vw;
+    }
+
+    & > button.btn-header-sidebar {
+      display: none;
+    }
+  }
 }

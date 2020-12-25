@@ -17,11 +17,15 @@ hr {
 
 a {
   color: $dark;
-  text-decoration: none;
 
   &:hover, &:active, &:visited {
     color: $dark;
-    text-decoration: none;
+  }
+}
+
+button {
+  &:active {
+    box-shadow: none;
   }
 }
 
