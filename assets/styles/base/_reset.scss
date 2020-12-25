@@ -19,13 +19,14 @@ a {
   color: $dark;
 
   &:hover, &:active, &:visited {
+    text-decoration: none;
     color: $dark;
   }
 }
 
 button {
-  &:active {
-    box-shadow: none;
+  &:active, &:focus {
+    box-shadow: none !important;
   }
 }
 

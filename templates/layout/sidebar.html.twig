@@ -1,13 +1,13 @@
 <div id="sidebar">
     <div class="center-content text-center">
-        <a role="button" class="btn btn-sm btn-info" href="{{ path('movie.trending') }}">Tendances</a>
+        <a role="button" class="btn btn-sm px-4 btn-info" href="{{ path('movie.trending') }}">Tendances</a>
         <br>
         <br>
-        <a role="button" class="btn btn-sm btn-info" href="{{ path('movie.search') }}">Recherche</a>
+        <a role="button" class="btn btn-sm px-4 btn-info" href="{{ path('movie.search') }}">Recherche</a>
         <br>
         <br>
         {% if is_granted('ROLE_ADMIN') %}
-            <a role="button" class="btn btn-sm btn-info" href="{{ path('admin.home') }}">Admin</a>
+            <a role="button" class="btn btn-sm px-4 btn-outline-info" href="{{ path('admin.home') }}">Admin</a>
         {% endif %}
         </ul>
     </div>

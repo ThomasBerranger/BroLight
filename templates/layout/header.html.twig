@@ -3,7 +3,9 @@
         <img src="{{ asset('images/popcorn.png') }}" class="d-inline-block" alt="{{ project_title }} logo">
     </a>
 
-    <h1 class="font-title">{{ project_title }}</h1>
+    <h1 class="font-title">
+        <a href="{{ path('home') }}">{{ project_title }}</a>
+    </h1>
 
     <button class="btn-header-sidebar"><i class="fa fa-bars"></i></button>
 
