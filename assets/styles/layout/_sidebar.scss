@@ -1,12 +1,28 @@
 #sidebar {
-  @extend .center-container;
-
-  display: none;
+  position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;
+  left: 100vw;
+  width: 0;
   height: 100vh;
-  margin-left: 100vw;
+
   background-color: $white;
-  z-index: 2;
+  z-index: 1;
+  opacity: 0;
+
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+
+  & > div {
+    display: none;
+  }
+
+  &.open{
+    left: 0;
+    opacity: 1;
+    width: 100vw;
+
+    & > div {
+      display: block;
+    }
+  }
 }
