@@ -10,16 +10,19 @@
                 <div class="timeline-badge"><i class="fa fa-circle"></i></div>
                 <div class="timeline-panel">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
-                                <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
-                                <div>
-                                    <span class="font-weight-bold">{{ event.author }}</span>
-                                    <br>
-                                    <span class="font-weight-light">J'ai vu {{ event.movie['title'] }} !</span>
-                                </div>
-                            </a>
-                        </h5>
+
+                        <div class="card-title d-flex justify-content-between">
+                            <div>
+                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
+                                    <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                                    <p>{{ event.author }}</p>
+                                </a>
+                            </div>
+
+                            {% if app.user == event.author %}
+                                <i class="fa fa-trash text-danger pointer-cursor" data-movie-action="remove-view" data-url="{{ absolute_url(path('view.remove', {'id': event.id})) }}"></i>
+                            {% endif %}
+                        </div>
 
                         <p class="card-text">{{ event.movie['overview'] }}</p>
 

@@ -19,5 +19,5 @@ import './js/components/modal';
 import './js/components/sidebar';
 
 import './js/requests/userRelationRequest';
-import './js/requests/movieRequest';
+import './js/requests/viewRequest';
 import './js/requests/avatarRequest';

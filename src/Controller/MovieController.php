@@ -40,14 +40,13 @@ class MovieController extends AbstractController
      */
     public function search(): Response
     {
-
         return $this->render('movie/search.html.twig');
     }
 
     /**
      * @Route("/search_result/{title}", name="search_result")
      *
-     * @param string  $title
+     * @param string $title
      *
      * @return Response
      */

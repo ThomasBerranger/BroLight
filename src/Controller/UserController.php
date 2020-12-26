@@ -53,11 +53,7 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserType::class, $currentUser);
 
-        if ($this->getUser()->getAvatar()) {
-            $avatarForm = $this->createForm(AvatarType::class, $this->getUser()->getAvatar());
-        } else {
-            $avatarForm = $this->createForm(AvatarType::class, new Avatar());
-        }
+        $avatarForm = $this->createForm(AvatarType::class, $this->getUser()->getAvatar());
 
         $form->handleRequest($request);
 
