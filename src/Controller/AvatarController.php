@@ -49,6 +49,5 @@ class AvatarController extends AbstractController
         } catch (Exception $exception) {
             return $this->json(['message' => $exception->getMessage()], 500);
         }
-
     }
 }

@@ -1,21 +1,21 @@
 import $ from "jquery";
 
 $(document).ready(function() {
-    $('body').on('click', '[data-movie-action]', function () {
+    $('body').on('click', '[data-view-action]', function () {
         const element = $(this);
 
-        switch (element.data('movie-action')) {
-            case 'create-view':
-                createViewRequest(element);
+        switch (element.data('view-action')) {
+            case 'create':
+                createRequest(element);
                 break;
-            case 'remove-view':
-                removeViewRequest(element);
+            case 'remove':
+                removeRequest(element);
                 break;
         }
     })
 });
 
-function createViewRequest(element) {
+function createRequest(element) {
     $.ajax({
         url: element.data('url'),
         success: function () {
@@ -28,7 +28,7 @@ function createViewRequest(element) {
     });
 }
 
-function removeViewRequest(element) {
+function removeRequest(element) {
     $.ajax({
         url: element.data('url'),
         success: function () {

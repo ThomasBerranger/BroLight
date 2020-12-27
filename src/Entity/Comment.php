@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -17,42 +18,50 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"comment:read", "user:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"comment:read"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"comment:read", "user:read"})
      */
     private $tmdbId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="comments")
+     * @Groups({"comment:read", "user:read"})
      */
     private $relatedComment;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="relatedComment")
+     * @Groups({"comment:read", "user:read"})
      */
     private $comments;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"comment:read", "user:read"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"comment:read", "user:read"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"comment:read", "user:read"})
      */
     private $createdAt;
 

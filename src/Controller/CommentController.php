@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Entity\Comment;
-use App\Entity\User;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/comment", name="comment.")
@@ -17,26 +18,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     private $entityManager;
+    private $serializer;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer)
     {
         $this->entityManager = $entityManager;
+        $this->serializer = $serializer;
     }
 
     /**
-     * @Route("/list", name="list")
+     * @Route("/form/{tmdbId}", name="form", methods={"GET"})
+     *
+     * @param int $tmdbId
+     *
+     * @return Response
      */
-    public function list(): Response
+    public function form(int $tmdbId): Response
     {
-        $allComments = $this->entityManager->getRepository(Comment::class)->findAll();
+        $comment = new Comment();
 
-        return $this->render('comment/index.html.twig', [
-            'allComments' => $allComments,
+        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId]);
+
+        return $this->render('comment/form.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/create", name="create")
+     * @Route("/create", name="create", methods={"POST"})
      *
      * @param Request $request
      *
@@ -44,25 +53,20 @@ class CommentController extends AbstractController
      */
     public function create(Request $request): Response
     {
-        $comment = new Comment();
+        try {
+            $data = $request->getContent();
 
-        $form = $this->createForm(CommentType::class, $comment);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment = $form->getData();
+            /** @var Comment $comment */
+            $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true]);
 
             $comment->setAuthor($this->getUser());
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('comment.list');
+            return $this->json($comment, 201, [], ['groups' => 'comment:read']);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
         }
-
-        return $this->render('comment/create.html.twig', [
-            'form' => $form->createView()
-        ]);
     }
 }

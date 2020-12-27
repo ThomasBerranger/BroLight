@@ -1,0 +1,12 @@
+{% block body %}
+    {{ form_start(form, {'action': path('comment.create'), 'attr': {'class': 'row'}}) }}
+
+    {{ form_label(form.content, 'Alors ! Pépite ou navet ?') }}
+    {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+    <div class="w-100 text-center mt-4">
+        <button class="btn btn-sm btn-success" type="submit">Valider</button>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

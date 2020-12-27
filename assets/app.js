@@ -20,4 +20,5 @@ import './js/components/sidebar';
 
 import './js/requests/userRelationRequest';
 import './js/requests/viewRequest';
+import './js/requests/commentRequest';
 import './js/requests/avatarRequest';

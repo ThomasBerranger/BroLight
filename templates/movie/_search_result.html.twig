@@ -13,7 +13,7 @@
                 <p class="card-text d-flex justify-content-between align-items-center">
                      <span id="movieActionButtonContainer{{ movie.id }}">
                         {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-                            <i class="fas fa-eye-slash pointer-cursor text-danger" data-movie-action="create-view" data-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
+                            <i class="fas fa-eye-slash pointer-cursor text-danger" data-view-action="create" data-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
                         {% else %}
                             <i class="fas fa-eye pointer-cursor text-primary"></i>
                         {% endif %}
