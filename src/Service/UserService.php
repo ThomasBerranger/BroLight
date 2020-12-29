@@ -6,42 +6,24 @@ use App\Entity\User;
 use App\Entity\UserRelationship;
 use App\Entity\View;
 use App\Manager\UserRelationshipManager;
+use App\Manager\ViewManager;
 
 class UserService
 {
-    private $viewService;
-    private $userRelationshipManager;
+    private $viewManager;
 
-    public function __construct(ViewService $viewService, UserRelationshipManager $userRelationshipManager)
+    public function __construct(ViewManager $viewManager)
     {
-        $this->viewService = $viewService;
-        $this->userRelationshipManager = $userRelationshipManager;
+        $this->viewManager = $viewManager;
     }
 
-    public function getUserTimeline(User $user): array
+    public function getTimeline(User $user): array
     {
         $timeline = [];
-        $views = [];
 
-        foreach ($user->getViews() as $view) { // Current user views
-            array_push($views, $view);
-        }
+        $views = $this->viewManager->getFollowingsViews($user);
 
-        foreach ($user->getFollowings() as $follower) { // Current user friends views
-            foreach ($follower->getViews() as $view) {
-                array_push($views, $view);
-            }
-        }
-
-        foreach ($views as $view) {
-            $this->viewService->getMovieData($view);
-
-            array_push($timeline, $view);
-        }
-
-        usort($timeline, function($a, $b) {
-            return $a->getCreatedAt()->getTimestamp() < $b->getCreatedAt()->getTimestamp();
-        });
+        $timeline = $views;
 
         return $timeline;
     }

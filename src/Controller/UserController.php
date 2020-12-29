@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\View;
 use App\Form\UserType;
 use App\Form\AvatarType;
+use App\Manager\ViewManager;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +33,7 @@ class UserController extends AbstractController
      */
     public function history(): Response
     {
-        $timeline = $this->userService->getUserTimeline($this->getUser());
+        $timeline = $this->userService->getTimeline($this->getUser());
 
         return $this->render('user/history.html.twig', [
             'timeline' => $timeline
