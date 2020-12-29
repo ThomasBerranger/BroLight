@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Avatar;
 use App\Form\UserType;
 use App\Form\AvatarType;
 use App\Service\UserService;

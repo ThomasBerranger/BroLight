@@ -14,55 +14,55 @@ class AvatarType extends AbstractType
     {
         $builder
             ->add('accessoriesType', ChoiceType::class, [
-                'label' => 'Accessoire',
+                'label' => 'Accessoire :',
                 'choices' => Avatar::ACCESSORIES_TYPE,
             ])
             ->add('clotheColor', ChoiceType::class, [
-                'label' => 'Couleur des vêtements',
+                'label' => 'Couleur des vêtements :',
                 'choices' => Avatar::CLOTHE_COLOR,
             ])
             ->add('clotheType', ChoiceType::class, [
-                'label' => 'Type de vêtements',
+                'label' => 'Type de vêtements :',
                 'choices' => Avatar::CLOTHE_TYPE,
             ])
             ->add('eyeType', ChoiceType::class, [
-                'label' => 'Type d\'œils',
+                'label' => 'Type d\'œils :',
                 'choices' => Avatar::EYE_TYPE,
             ])
             ->add('eyebrowType', ChoiceType::class, [
-                'label' => 'Type de sourcils',
+                'label' => 'Type de sourcils :',
                 'choices' => Avatar::EYEBROW_TYPE,
             ])
             ->add('facialHairColor', ChoiceType::class, [
-                'label' => 'Couleur de barbe',
+                'label' => 'Couleur de barbe :',
                 'choices' => Avatar::FACIAL_HAIR_COLOR,
             ])
             ->add('facialHairType', ChoiceType::class, [
-                'label' => 'Type de barbe',
+                'label' => 'Type de barbe :',
                 'choices' => Avatar::FACIAL_HAIR_TYPE,
             ])
             ->add('graphicType', ChoiceType::class, [
-                'label' => 'Type de graphisme',
+                'label' => 'Type de graphisme :',
                 'choices' => Avatar::GRAPHIC_TYPE,
             ])
             ->add('hairColor', ChoiceType::class, [
-                'label' => 'Couleur de cheveux / chapeaux',
+                'label' => 'Couleur de cheveux / chapeaux :',
                 'choices' => Avatar::HAIR_COLOR,
             ])
             ->add('hatColor', ChoiceType::class, [
-                'label' => 'Couleur de chapeau',
+                'label' => 'Couleur de chapeau :',
                 'choices' => Avatar::HAT_COLOR,
             ])
             ->add('mouthType', ChoiceType::class, [
-                'label' => 'Type de bouche',
+                'label' => 'Type de bouche :',
                 'choices' => Avatar::MOUTH_TYPE,
             ])
             ->add('skinColor', ChoiceType::class, [
-                'label' => 'Couleur de peau',
+                'label' => 'Couleur de peau :',
                 'choices' => Avatar::SKIN_COLOR,
             ])
             ->add('topType', ChoiceType::class, [
-                'label' => 'Type de chapeau',
+                'label' => 'Type de cheveux / chapeaux :',
                 'choices' => Avatar::TOP_TYPE,
             ])
         ;
