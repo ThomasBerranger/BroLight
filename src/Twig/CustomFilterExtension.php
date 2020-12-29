@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\Entity\Avatar;
 use App\Entity\User;
 use App\Entity\UserRelationship;
+use DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -15,7 +16,7 @@ class CustomFilterExtension extends AbstractExtension
         return [
             new TwigFilter('textLimit', [$this, 'textLimit']),
             new TwigFilter('formatAvatarData', [$this, 'formatAvatarData']),
-            new TwigFilter('getUserRelationshipMessage', [$this, 'getUserRelationshipMessage']),
+            new TwigFilter('historyDateFormat', [$this, 'historyDateFormat']),
         ];
     }
 
@@ -50,5 +51,21 @@ class CustomFilterExtension extends AbstractExtension
         }
 
         return $message;
+    }
+
+    public function historyDateFormat(DateTime $date): string
+    {
+        $now = new DateTime();
+        $interval = $now->getTimestamp() - $date->getTimestamp();
+
+        if ($interval <= 60) {
+            return 'Il y a '.$interval.' seconde'.($interval > 1?'s':'');
+        } elseif ($interval <= 60 * 60) {
+            return 'Il y a '.intdiv($interval, 60).' minute'.(intdiv($interval, 60) > 1 ? 's' : '');
+        } elseif ($interval <= 24 * 60 * 60) {
+            return 'Il y a '.intdiv($interval, 60 * 60).' heure'.(intdiv($interval, 60 * 60) > 1 ? 's' : '');
+        } else  {
+            return $date->format('Y-m-d');
+        }
     }
 }
