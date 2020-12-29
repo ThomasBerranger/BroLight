@@ -47,6 +47,8 @@ class View
 
     private $movie;
 
+    private $associatedComment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +127,18 @@ class View
     public function setMovie(array $movie): self
     {
         $this->movie = $movie;
+
+        return $this;
+    }
+
+    public function getAssociatedComment()
+    {
+        return $this->associatedComment;
+    }
+
+    public function setAssociatedComment(?Comment $comment): self
+    {
+        $this->associatedComment = $comment;
 
         return $this;
     }

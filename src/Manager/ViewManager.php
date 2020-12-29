@@ -10,21 +10,23 @@ use Doctrine\ORM\EntityManagerInterface;
 class ViewManager
 {
     private $entityManager;
+    private $commentManager;
     private $tmdbService;
 
-    public function __construct(EntityManagerInterface $entityManager, TMDBService $tmdbService)
+    public function __construct(EntityManagerInterface $entityManager, CommentManager $commentManager, TMDBService $tmdbService)
     {
         $this->entityManager = $entityManager;
+        $this->commentManager = $commentManager;
         $this->tmdbService = $tmdbService;
     }
 
-    public function getFollowingsViews(User $user, bool $isMovieData = true): array
+    public function getFollowingsViews(User $user): array
     {
         $followingsViews = $this->entityManager->getRepository(View::class)->findFollowingsViews($user);
 
-        /** @var View $followingsView */
         foreach ($followingsViews as $followingsView) {
-            $followingsView->setMovie($this->tmdbService->getMovieById($followingsView->getId()));
+            $followingsView->setMovie($this->tmdbService->getMovieById($followingsView->getTmdbId()));
+            $followingsView->setAssociatedComment($this->commentManager->getAssociatedComment($followingsView));
         }
 
         return $followingsViews;

@@ -2,7 +2,8 @@
 
 namespace App\Manager;
 
-use App\Entity\Movie;
+use App\Entity\Comment;
+use App\Entity\View;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CommentManager
@@ -14,18 +15,8 @@ class CommentManager
         $this->entityManager = $entityManager;
     }
 
-    public function findOrCreate(int $tmdbMovieId): Movie
+    public function getAssociatedComment(View $view)
     {
-        $movie = $this->entityManager->getRepository(Movie::class)->findOneBy(['tmdbMovieId' => $tmdbMovieId]);
-
-        if (!$movie) {
-            $movie = new Movie();
-            $movie->setTmdbMovieId($tmdbMovieId);
-
-            $this->entityManager->persist($movie);
-            $this->entityManager->flush();
-        }
-
-        return $movie;
+        return $this->entityManager->getRepository(Comment::class)->findAssociatedComment($view);
     }
 }

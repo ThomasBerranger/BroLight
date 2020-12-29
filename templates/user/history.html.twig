@@ -24,7 +24,14 @@
                             {% endif %}
                         </div>
 
-                        <p class="card-text">{{ event.movie['overview'] }}</p>
+                        <div class="card-text d-flex justify-content-between">
+                            <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
+                                <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
+                            </a>
+                            <div class="w-100 text-left p-2">
+                                <p>{{ event.associatedComment ? event.associatedComment.content }}</p>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="card-footer text-right">
