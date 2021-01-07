@@ -14,9 +14,4 @@ class CommentManager
     {
         $this->entityManager = $entityManager;
     }
-
-    public function getAssociatedComment(View $view)
-    {
-        return $this->entityManager->getRepository(Comment::class)->findAssociatedComment($view);
-    }
 }

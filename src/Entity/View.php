@@ -47,7 +47,10 @@ class View
 
     private $movie;
 
-    private $associatedComment;
+    /**
+     * @ORM\OneToOne(targetEntity=Comment::class, inversedBy="view", cascade={"persist", "remove"})
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -131,14 +134,14 @@ class View
         return $this;
     }
 
-    public function getAssociatedComment()
+    public function getComment(): ?Comment
     {
-        return $this->associatedComment;
+        return $this->comment;
     }
 
-    public function setAssociatedComment(?Comment $comment): self
+    public function setComment(?Comment $comment): self
     {
-        $this->associatedComment = $comment;
+        $this->comment = $comment;
 
         return $this;
     }

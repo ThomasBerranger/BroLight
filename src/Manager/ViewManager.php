@@ -26,7 +26,6 @@ class ViewManager
 
         foreach ($followingsViews as $followingsView) {
             $followingsView->setMovie($this->tmdbService->getMovieById($followingsView->getTmdbId()));
-            $followingsView->setAssociatedComment($this->commentManager->getAssociatedComment($followingsView));
         }
 
         return $followingsViews;

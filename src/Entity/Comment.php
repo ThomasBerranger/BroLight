@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @UniqueEntity(fields={"author"}, message="author already")
  * @ORM\HasLifecycleCallbacks()
  */
 class Comment
@@ -36,18 +36,6 @@ class Comment
     private $tmdbId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="comments")
-     * @Groups({"comment:read", "user:read"})
-     */
-    private $relatedComment;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="relatedComment")
-     * @Groups({"comment:read", "user:read"})
-     */
-    private $comments;
-
-    /**
      * @ORM\Column(type="text")
      * @Groups({"comment:read", "user:read"})
      */
@@ -65,9 +53,18 @@ class Comment
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=View::class, mappedBy="comment", cascade={"persist", "remove"})
+     */
+    private $view;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $spoiler;
+
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,48 +92,6 @@ class Comment
     public function setTmdbId(int $tmdbId): self
     {
         $this->tmdbId = $tmdbId;
-
-        return $this;
-    }
-
-    public function getRelatedComment(): ?self
-    {
-        return $this->relatedComment;
-    }
-
-    public function setRelatedComment(?self $relatedComment): self
-    {
-        $this->relatedComment = $relatedComment;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(self $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setRelatedComment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(self $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getRelatedComment() === $this) {
-                $comment->setRelatedComment(null);
-            }
-        }
 
         return $this;
     }
@@ -192,5 +147,39 @@ class Comment
     public function setUpdateDefaultValues()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getView(): ?View
+    {
+        return $this->view;
+    }
+
+    public function setView(?View $view): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($view === null && $this->view !== null) {
+            $this->view->setComment(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($view !== null && $view->getComment() !== $this) {
+            $view->setComment($this);
+        }
+
+        $this->view = $view;
+
+        return $this;
+    }
+
+    public function getSpoiler(): ?bool
+    {
+        return $this->spoiler;
+    }
+
+    public function setSpoiler(bool $spoiler): self
+    {
+        $this->spoiler = $spoiler;
+
+        return $this;
     }
 }

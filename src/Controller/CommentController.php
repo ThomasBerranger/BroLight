@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -19,11 +20,13 @@ class CommentController extends AbstractController
 {
     private $entityManager;
     private $serializer;
+    private $viewService;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
+        $this->viewService = $viewService;
     }
 
     /**
@@ -61,8 +64,12 @@ class CommentController extends AbstractController
 
             $comment->setAuthor($this->getUser());
 
+            !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null;
+
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
+
+            isset(json_decode($data)->viewed) ? $this->viewService->createViewFromComment($comment) : null;
 
             return $this->json($comment, 201, [], ['groups' => 'comment:read']);
         } catch (Exception $exception) {

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row full-page-y center-container">
-        {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-sm-8 col-md-6 center-content security_form'}}) }}
+        {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-sm-8 col-md-6 center-content security-form'}}) }}
 
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>

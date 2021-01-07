@@ -19,26 +19,4 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
-
-    /**
-     * @param View $view
-     *
-     * @return Comment Returns an array of Comment objects
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findAssociatedComment(View $view)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.author = :author')
-            ->andWhere('c.tmdbId = :tmdbId')
-            ->setParameters([
-                'author' => $view->getAuthor(),
-                'tmdbId' => $view->getTmdbId()
-            ])
-            ->orderBy('c.createdAt', 'DESC')
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
-    }
 }

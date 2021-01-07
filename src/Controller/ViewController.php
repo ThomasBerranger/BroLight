@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\View;
+use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ViewController extends AbstractController
 {
     private $entityManager;
+    private $viewService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ViewService $viewService)
     {
         $this->entityManager = $entityManager;
+        $this->viewService = $viewService;
     }
 
     /**
@@ -38,6 +41,8 @@ class ViewController extends AbstractController
 
             $this->entityManager->persist($view);
             $this->entityManager->flush();
+
+            $this->viewService->associateComment($view);
 
             return $this->json($view, 201, [], ['groups' => 'view:read']);
         } catch (Exception $exception) {

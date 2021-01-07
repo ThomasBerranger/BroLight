@@ -1,11 +1,27 @@
 {% block body %}
     {{ form_start(form, {'action': path('comment.create'), 'attr': {'class': 'row'}}) }}
 
-    {{ form_label(form.content, 'Alors ! Pépite ou navet ?') }}
-    {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm'}}) }}
+    <div class="col-12">
+        {{ form_label(form.content, 'Alors ! Pépite ou navet ?') }}
+        {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm mb-2'}}) }}
+    </div>
 
-    <div class="w-100 text-center mt-4">
-        <button class="btn btn-sm btn-success" type="submit">Valider</button>
+    <div class="col-6">
+        <label class="pointer-cursor">
+            {{ form_widget(form.spoiler) }}
+            Attention je spoil !
+        </label>
+    </div>
+
+    <div class="col-6">
+        <label class="pointer-cursor">
+            {{ form_widget(form.viewed) }}
+            J'ai vu ce film
+        </label>
+    </div>
+
+    <div class="col-12 text-center pointer-cursor mt-2">
+        <button class="btn btn-sm btn-success px-4" type="submit">Valider</button>
     </div>
 
     {{ form_end(form) }}

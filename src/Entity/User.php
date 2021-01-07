@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"email"}, message="Un compte est déjà enregistré avec cet email.")
+ *
  */
 class User implements UserInterface
 {
