@@ -9,8 +9,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
- * @UniqueEntity(fields={"author"}, message="author already")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"author", "tmdbId"}, message="Cet utilisateur a déjà rédigé un commentaire à propos de ce film.")
  */
 class Comment
 {
@@ -30,7 +30,7 @@ class Comment
     private $author;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="tmdb_id", type="integer")
      * @Groups({"comment:read", "user:read"})
      */
     private $tmdbId;

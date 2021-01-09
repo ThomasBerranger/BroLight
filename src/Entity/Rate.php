@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\RateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=RateRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"author", "tmdbId"}, message="Cet utilisateur a déjà noté ce film.")
  */
 class Rate
 {
@@ -106,5 +109,22 @@ class Rate
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreateDefaultValues()
+    {
+        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function setUpdateDefaultValues()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use App\Repository\ViewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ViewRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"author", "tmdbId"}, message="Cet utilisateur a déjà vu ce film.")
  */
 class View
 {

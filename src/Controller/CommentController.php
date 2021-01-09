@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/comment", name="comment.")
@@ -51,10 +53,10 @@ class CommentController extends AbstractController
      * @Route("/create", name="create", methods={"POST"})
      *
      * @param Request $request
-     *
+     * @param ValidatorInterface $validator
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, ValidatorInterface $validator): Response
     {
         try {
             $data = $request->getContent();
@@ -66,6 +68,11 @@ class CommentController extends AbstractController
 
             !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null;
 
+            $errors = $validator->validate($comment);
+            if (count($errors) > 0) {
+                throw new Exception((string) $errors);
+            }
+
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
 
@@ -73,7 +80,7 @@ class CommentController extends AbstractController
 
             return $this->json($comment, 201, [], ['groups' => 'comment:read']);
         } catch (Exception $exception) {
-            return $this->json($exception, 500);
+            return $this->json($exception->getMessage(), 500);
         }
     }
 }
