@@ -5,19 +5,49 @@ namespace App\Manager;
 use App\Entity\User;
 use App\Entity\View;
 use App\Service\TMDBService;
+use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ViewManager
 {
     private $entityManager;
+    private $security;
+    private $validator;
     private $commentManager;
     private $tmdbService;
+    private $viewService;
 
-    public function __construct(EntityManagerInterface $entityManager, CommentManager $commentManager, TMDBService $tmdbService)
+    public function __construct(EntityManagerInterface $entityManager, Security $security, ValidatorInterface $validator, CommentManager $commentManager, TMDBService $tmdbService, ViewService $viewService)
     {
         $this->entityManager = $entityManager;
+        $this->security = $security;
+        $this->validator = $validator;
         $this->commentManager = $commentManager;
         $this->tmdbService = $tmdbService;
+        $this->viewService = $viewService;
+    }
+
+    public function createView(int $tmdbId)
+    {
+        $view = new View();
+
+        $view->setAuthor($this->security->getUser());
+        $view->setTmdbId($tmdbId);
+
+        $errors = $this->validator->validate($view);
+        if (count($errors) > 0) {
+            throw new Exception((string) $errors);
+        }
+
+        $this->entityManager->persist($view);
+        $this->entityManager->flush();
+
+        $this->viewService->associateComment($view);
+
+        return $view;
     }
 
     public function getFollowingsViews(User $user): array

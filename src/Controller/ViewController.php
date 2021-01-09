@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\View;
+use App\Manager\ViewManager;
 use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -16,11 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ViewController extends AbstractController
 {
     private $entityManager;
+    private $viewManager;
     private $viewService;
 
-    public function __construct(EntityManagerInterface $entityManager, ViewService $viewService)
+    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService)
     {
         $this->entityManager = $entityManager;
+        $this->viewManager = $viewManager;
         $this->viewService = $viewService;
     }
 
@@ -34,20 +37,12 @@ class ViewController extends AbstractController
     public function createView(int $tmdbId): JsonResponse
     {
         try {
-            $view = new View();
-
-            $view->setAuthor($this->getUser());
-            $view->setTmdbId($tmdbId);
-
-            $this->entityManager->persist($view);
-            $this->entityManager->flush();
-
-            $this->viewService->associateComment($view);
-
-            return $this->json($view, 201, [], ['groups' => 'view:read']);
+            $view = $this->viewManager->createView($tmdbId);
         } catch (Exception $exception) {
-            return $this->json($exception, 500);
+            return $this->json($exception->getMessage(), 500);
         }
+
+        return $this->json($view, 201, [], ['groups' => 'view:read']);
     }
 
     /**
