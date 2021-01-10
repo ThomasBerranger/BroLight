@@ -92,7 +92,7 @@ class User implements UserInterface
     private $userRelationsAsTarget;
 
     /**
-     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="author", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="author", cascade={"remove"})
      */
     private $avatar;
 

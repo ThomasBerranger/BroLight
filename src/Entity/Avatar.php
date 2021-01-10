@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -220,9 +219,8 @@ class Avatar
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="avatar", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="avatar")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\Unique
      * @Groups({"avatar:read"})
      */
     private $author;
