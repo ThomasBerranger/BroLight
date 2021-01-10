@@ -40,17 +40,17 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity=View::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=View::class, mappedBy="author", cascade={"remove"})
      */
     private $views;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", cascade={"remove"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="author", cascade={"remove"})
      */
     private $rates;
 

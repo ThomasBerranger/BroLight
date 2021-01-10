@@ -9,28 +9,34 @@
             <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
                 <div class="timeline-badge"><i class="fa fa-circle"></i></div>
                 <div class="timeline-panel">
-                    <div class="card-body">
+                    <div class="card-body row">
 
-                        <div class="card-title d-flex justify-content-between">
-                            <div>
-                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
-                                    <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
-                                    <p>{{ event.author }}</p>
-                                </a>
-                            </div>
-
-                            {% if app.user == event.author %}
-                                <i class="fa fa-trash text-danger pointer-cursor" data-view-action="remove" data-url="{{ absolute_url(path('view.remove', {'id': event.id})) }}"></i>
-                            {% endif %}
-                        </div>
-
-                        <div class="card-text d-flex justify-content-between">
+                        <div class="col-4">
                             <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
                                 <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
                             </a>
-                            <div class="w-100 text-left p-2">
-                                <p>{{ event.comment ? event.comment.content }}</p>
+                        </div>
+                        <div class="col-8">
+
+                            <div class="card-title d-flex justify-content-between">
+                                <div>
+                                    <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
+                                        <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                                        <p>{{ event.author }}</p>
+                                    </a>
+                                </div>
+
+                                {% if app.user == event.author %}
+                                    <i class="fa fa-trash text-danger pointer-cursor" data-view-action="remove" data-url="{{ absolute_url(path('view.remove', {'id': event.id})) }}"></i>
+                                {% endif %}
                             </div>
+
+                            <div class="card-text">
+                                <div class="w-100 text-left p-2">
+                                    <p>{{ event.comment ? event.comment.content }}</p>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
