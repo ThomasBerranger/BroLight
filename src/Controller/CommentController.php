@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Manager\ViewManager;
 use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
@@ -23,12 +24,14 @@ class CommentController extends AbstractController
     private $entityManager;
     private $serializer;
     private $viewService;
+    private $viewManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, ViewManager $viewManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->viewService = $viewService;
+        $this->viewManager = $viewManager;
     }
 
     /**
@@ -52,8 +55,9 @@ class CommentController extends AbstractController
     /**
      * @Route("/create", name="create", methods={"POST"})
      *
-     * @param Request $request
+     * @param Request            $request
      * @param ValidatorInterface $validator
+     *
      * @return Response
      */
     public function create(Request $request, ValidatorInterface $validator): Response
@@ -73,10 +77,10 @@ class CommentController extends AbstractController
                 throw new Exception((string) $errors);
             }
 
+            isset(json_decode($data)->viewed) ? $this->viewManager->createViewFromCommentIfNotExist($comment) : null;
+
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
-
-            isset(json_decode($data)->viewed) ? $this->viewService->createViewFromComment($comment) : null;
 
             return $this->json($comment, 201, [], ['groups' => 'comment:read']);
         } catch (Exception $exception) {

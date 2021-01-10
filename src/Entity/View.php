@@ -50,7 +50,7 @@ class View
     private $movie;
 
     /**
-     * @ORM\OneToOne(targetEntity=Comment::class, inversedBy="view", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Comment::class, inversedBy="view")
      */
     private $comment;
 

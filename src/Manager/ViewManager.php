@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Entity\Comment;
 use App\Entity\User;
 use App\Entity\View;
 use App\Service\TMDBService;
@@ -46,6 +47,24 @@ class ViewManager
         $this->entityManager->flush();
 
         $this->viewService->associateComment($view);
+
+        return $view;
+    }
+
+    public function createViewFromCommentIfNotExist(Comment $comment): View
+    {
+        $view = $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$comment->getAuthor(), 'tmdbId'=>$comment->getTmdbId()]);
+
+        if (!$view instanceof View) {
+            $view = new View();
+
+            $view->setAuthor($comment->getAuthor());
+            $view->setTmdbId($comment->getTmdbId());
+        }
+
+        $view->setComment($comment);
+
+        $this->entityManager->persist($view);
 
         return $view;
     }

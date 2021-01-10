@@ -54,7 +54,7 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=View::class, mappedBy="comment", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=View::class, mappedBy="comment")
      */
     private $view;
 
