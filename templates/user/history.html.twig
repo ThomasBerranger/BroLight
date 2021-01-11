@@ -31,15 +31,13 @@
                                 {% endif %}
                             </div>
 
-                            <div class="card-text">
-                                <div class="w-100 text-left p-2">
-                                    <p>{{ event.comment ? event.comment.content }}</p>
-                                    {% if event.rate %}
-                                    <p class="text-center">
-                                        <img style="height: 30px" src="{{ event.rate.rate|rateAssociatedEmojiURL }}" alt="rate emoji">
+                            <div class="card-text text-left p-2">
+                                <p>{{ event.comment ? event.comment.content }}</p>
+                                {% if event.rate %}
+                                    <p class="text-center mt-2">
+                                        <img style="height: 30px" src="{{ event.rate.rate|associatedEmojiURL }}" alt="rate emoji">
                                     </p>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
 
                         </div>

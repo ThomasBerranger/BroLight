@@ -19,7 +19,7 @@ class CustomFilterExtension extends AbstractExtension
             new TwigFilter('textLimit', [$this, 'textLimit']),
             new TwigFilter('formatAvatarData', [$this, 'formatAvatarData']),
             new TwigFilter('historyDateFormat', [$this, 'historyDateFormat']),
-            new TwigFilter('rateAssociatedEmojiURL', [$this, 'rateAssociatedEmojiURL']),
+            new TwigFilter('associatedEmojiURL', [$this, 'associatedEmojiURL']),
         ];
     }
 
@@ -48,12 +48,14 @@ class CustomFilterExtension extends AbstractExtension
             return 'Il y a '.intdiv($interval, 60).' minute'.(intdiv($interval, 60) > 1 ? 's' : '');
         } elseif ($interval <= 24 * 60 * 60) {
             return 'Il y a '.intdiv($interval, 60 * 60).' heure'.(intdiv($interval, 60 * 60) > 1 ? 's' : '');
-        } else  {
+        } elseif ($interval <= 24 * 60 * 60 * 2) {
+            return 'Hier';
+        } else {
             return $date->format('Y-m-d');
         }
     }
 
-    public function rateAssociatedEmojiURL(int $rate): string
+    public function associatedEmojiURL(int $rate): string
     {
         $package = new Package(new EmptyVersionStrategy());
         $url = "";
