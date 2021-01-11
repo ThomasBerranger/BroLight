@@ -33,6 +33,14 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/test", name="test")
+     */
+    public function test(): Response
+    {
+        return $this->render('admin/test.html.twig');
+    }
+
+    /**
      * @Route("/delete/user/{id}", name="delete.user")
      * @param User $user
      * @return Response

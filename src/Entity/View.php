@@ -54,6 +54,11 @@ class View
      */
     private $comment;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Rate::class, inversedBy="view", cascade={"remove"})
+     */
+    private $rate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -144,6 +149,18 @@ class View
     public function setComment(?Comment $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getRate(): ?Rate
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?Rate $rate): self
+    {
+        $this->rate = $rate;
 
         return $this;
     }

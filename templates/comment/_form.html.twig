@@ -1,0 +1,47 @@
+{% block body %}
+    {{ form_start(form, {'action': path('comment.create'), 'attr': {'class': 'row'}}) }}
+
+    <div class="col-12 mb-2">
+        {{ form_label(form.content, 'Alors ! Pépite ou navet ?') }}
+        {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm mb-2'}}) }}
+    </div>
+
+    <div class="col-12">
+        <label class="pointer-cursor">
+            {{ form_widget(form.spoiler) }}
+            Attention je spoil !
+        </label>
+    </div>
+
+    <div class="col-12 rating">
+
+        <input type="radio" name="rating" id="rating-5">
+        <label for="rating-5"></label>
+        <input type="radio" name="rating" id="rating-4">
+        <label for="rating-4"></label>
+        <input type="radio" name="rating" id="rating-3">
+        <label for="rating-3"></label>
+        <input type="radio" name="rating" id="rating-2">
+        <label for="rating-2"></label>
+        <input type="radio" name="rating" id="rating-1">
+        <label for="rating-1"></label>
+
+        <div class="emoji-wrapper">
+            <div class="emoji">
+                <img class="rating-0" src="{{ asset('images/emojis/thinking.svg') }}" alt="thinking emoji">
+                <img src="{{ asset('images/emojis/dizzy.svg') }}" alt="dizzy emoji">
+                <img src="{{ asset('images/emojis/sad.svg') }}" alt="sad emoji">
+                <img src="{{ asset('images/emojis/happy.svg') }}" alt="happy emoji">
+                <img src="{{ asset('images/emojis/3d-glasses.svg') }}" alt="3d-glasses emoji">
+                <img src="{{ asset('images/emojis/love.svg') }}" alt="love emoji">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-12 text-center pointer-cursor mt-3">
+        <button class="btn btn-sm btn-success px-4" type="submit">Valider</button>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

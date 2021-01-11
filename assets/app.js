@@ -17,6 +17,7 @@ import './js/functions/serializePrefixedFormJSON';
 import './js/components/alert';
 import './js/components/modal';
 import './js/components/sidebar';
+import './js/components/rate';
 
 import './js/requests/userRelationRequest';
 import './js/requests/viewRequest';

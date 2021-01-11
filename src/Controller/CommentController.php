@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Manager\RateManager;
 use App\Manager\ViewManager;
 use App\Service\ViewService;
 use Exception;
@@ -25,13 +26,15 @@ class CommentController extends AbstractController
     private $serializer;
     private $viewService;
     private $viewManager;
+    private $rateManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, ViewManager $viewManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, ViewManager $viewManager, RateManager $rateManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->viewService = $viewService;
         $this->viewManager = $viewManager;
+        $this->rateManager = $rateManager;
     }
 
     /**
@@ -47,7 +50,7 @@ class CommentController extends AbstractController
 
         $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId]);
 
-        return $this->render('comment/form.html.twig', [
+        return $this->render('comment/_form.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -77,7 +80,11 @@ class CommentController extends AbstractController
                 throw new Exception((string) $errors);
             }
 
-            isset(json_decode($data)->viewed) ? $this->viewManager->createViewFromCommentIfNotExist($comment) : null;
+            $view = $this->viewManager->createViewFromCommentIfNotExist($comment);
+
+            if(isset(json_decode($data)->rate) and json_decode($data)->rate != "") {
+                $this->rateManager->createRateFromView($view, (int) json_decode($data)->rate);
+            }
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();

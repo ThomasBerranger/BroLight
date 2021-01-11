@@ -6,6 +6,8 @@ use App\Entity\Avatar;
 use App\Entity\User;
 use App\Entity\UserRelationship;
 use DateTime;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -17,6 +19,7 @@ class CustomFilterExtension extends AbstractExtension
             new TwigFilter('textLimit', [$this, 'textLimit']),
             new TwigFilter('formatAvatarData', [$this, 'formatAvatarData']),
             new TwigFilter('historyDateFormat', [$this, 'historyDateFormat']),
+            new TwigFilter('rateAssociatedEmojiURL', [$this, 'rateAssociatedEmojiURL']),
         ];
     }
 
@@ -34,25 +37,6 @@ class CustomFilterExtension extends AbstractExtension
         return 'https://avataaars.io/?avatarStyle='.$avatar->getAvatarStyle().'&topType='.$avatar->getTopType().'&mouthType='.$avatar->getMouthType().'&facialHairColor='.$avatar->getFacialHairColor().'&facialHairType='.$avatar->getFacialHairType().'&accessoriesType='.$avatar->getAccessoriesType().'&hatColor='.$avatar->getHatColor().'&clotheType='.$avatar->getClotheType().'&eyeType='.$avatar->getEyeType().'&eyebrowType='.$avatar->getEyebrowType().'&clotheColor='.$avatar->getClotheColor().'&graphicType='.$avatar->getGraphicType().'&skinColor='.$avatar->getSkinColor().'&hairColor='.$avatar->getHairColor();
     }
 
-    public function getUserRelationshipMessage(int $status, User $user): string
-    {
-        $message = '';
-
-        switch ($status) {
-            case UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']:
-                $message = 'Tu as demandé à suivre '.$user->getUsername().'.';
-                break;
-            case UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']:
-                $message = 'Vous êtes désormais abonné à '.$user->getUsername().'.';
-                break;
-            case UserRelationship::STATUS['REFUSED_FOLLOW_REQUEST']:
-                $message = '';
-                break;
-        }
-
-        return $message;
-    }
-
     public function historyDateFormat(DateTime $date): string
     {
         $now = new DateTime();
@@ -67,5 +51,31 @@ class CustomFilterExtension extends AbstractExtension
         } else  {
             return $date->format('Y-m-d');
         }
+    }
+
+    public function rateAssociatedEmojiURL(int $rate): string
+    {
+        $package = new Package(new EmptyVersionStrategy());
+        $url = "";
+
+        switch ($rate) {
+            case 1:
+                $url = $package->getUrl('images/emojis/dizzy.svg');
+                break;
+            case 2:
+                $url = $package->getUrl('images/emojis/sad.svg');
+                break;
+            case 3:
+                $url = $package->getUrl('images/emojis/happy.svg');
+                break;
+            case 4:
+                $url = $package->getUrl('images/emojis/3d-glasses.svg');
+                break;
+            case 5:
+                $url = $package->getUrl('images/emojis/love.svg');
+                break;
+        }
+
+        return $url;
     }
 }

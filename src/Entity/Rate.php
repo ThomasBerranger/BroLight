@@ -46,6 +46,11 @@ class Rate
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=View::class, mappedBy="rate", cascade={"remove"})
+     */
+    private $view;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,5 +131,27 @@ class Rate
     public function setUpdateDefaultValues()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getView(): ?View
+    {
+        return $this->view;
+    }
+
+    public function setView(?View $view): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($view === null && $this->view !== null) {
+            $this->view->setRate(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($view !== null && $view->getRate() !== $this) {
+            $view->setRate($this);
+        }
+
+        $this->view = $view;
+
+        return $this;
     }
 }
