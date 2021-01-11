@@ -189,6 +189,20 @@ class User implements UserInterface
     }
 
     /**
+     * @return array
+     */
+    public function getCommentedMoviesTmdbIds(): array
+    {
+        $commentedMoviesTmdbIds = [];
+
+        foreach ($this->comments as $comment) {
+            array_push($commentedMoviesTmdbIds, $comment->getTmdbId());
+        }
+
+        return $commentedMoviesTmdbIds;
+    }
+
+    /**
      * @return Collection|Comment[]
      */
     public function getComments(): Collection

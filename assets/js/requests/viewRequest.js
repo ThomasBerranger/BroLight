@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 function createRequest(element) {
     $.ajax({
-        url: element.data('url'),
+        url: element.data('view-url'),
         success: function () {
             element.parent().load(` #${element.parent().attr('id')}`);
             $('#alert').trigger("trigger-alert", ["success", "Visionnage sauvegardé !"]);
