@@ -28,15 +28,19 @@
                                    data-view-action="create"
                                    data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"
                                    data-comment-action="open-form"
-                                   data-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
+                                   data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
                             {% elseif movie.id not in app.user.commentedMoviesTmdbIds %}
                                 <i class="fas fa-comment-slash pointer-cursor text-danger"
                                    data-tmdb-id="{{ movie.id }}"
                                    data-title="{{ movie.title }}"
                                    data-comment-action="open-form"
-                                   data-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
+                                   data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
                             {% else %}
-                                <i class="fas fa-comment pointer-cursor text-success"></i>
+                                <i class="fas fa-comment pointer-cursor text-success"
+                                   data-tmdb-id="{{ movie.id }}"
+                                   data-title="{{ movie.title }}"
+                                   data-comment-action="open-form"
+                                   data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
                             {% endif %}
                          </span>
                             <small class="text-muted">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</small>

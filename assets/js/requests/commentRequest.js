@@ -41,7 +41,7 @@ function openFormRequest(element) {
 
     $('#headerModal').trigger("trigger-header-modal", [
         element.data('title'),
-        formDiv.load(element.data('url'))
+        formDiv.load(element.data('comment-url'))
     ]);
 }
 

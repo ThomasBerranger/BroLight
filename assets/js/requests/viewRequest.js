@@ -29,13 +29,5 @@ function createRequest(element) {
 }
 
 function removeRequest(element) {
-    $.ajax({
-        url: element.data('url'),
-        success: function () {
-            $('#alert').trigger("trigger-alert", ["success", "Visionnage supprimé !"]);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
+    console.log("En cours");
 }

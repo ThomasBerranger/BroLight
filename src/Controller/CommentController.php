@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Manager\CommentManager;
 use App\Manager\RateManager;
 use App\Manager\ViewManager;
 use App\Service\ViewService;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -25,14 +27,16 @@ class CommentController extends AbstractController
     private $entityManager;
     private $serializer;
     private $viewService;
+    private $commentManager;
     private $viewManager;
     private $rateManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, ViewManager $viewManager, RateManager $rateManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->viewService = $viewService;
+        $this->commentManager = $commentManager;
         $this->viewManager = $viewManager;
         $this->rateManager = $rateManager;
     }
@@ -46,7 +50,10 @@ class CommentController extends AbstractController
      */
     public function form(int $tmdbId): Response
     {
-        $comment = new Comment();
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
+
+        if (!$comment instanceof Comment)
+            $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId]);
 
@@ -68,8 +75,13 @@ class CommentController extends AbstractController
         try {
             $data = $request->getContent();
 
+            $comment = $this->commentManager->getCommentFrom([
+                'author'=>$this->getUser(),
+                'tmdbId'=>json_decode($data)->tmdbId
+            ]);
+
             /** @var Comment $comment */
-            $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true]);
+            $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $comment]);
 
             $comment->setAuthor($this->getUser());
 
