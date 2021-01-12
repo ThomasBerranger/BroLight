@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,20 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
+
 <body>
 {% include 'layout/sidebar.html.twig' %}
 {% include 'layout/header.html.twig' %}
 {% include 'layout/alert.html.twig' %}
-<div class="container mt-5 pt-5">
+<div class="container pb-5">
     {% block body %}{% endblock %}
 </div>
+{% include 'layout/footer.html.twig' %}
 {% include 'layout/modal.html.twig' %}
+
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 </body>
+
 </html>
