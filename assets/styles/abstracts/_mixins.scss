@@ -1,0 +1,41 @@
+@mixin all-directions-spacer($property, $value, $unit) {
+  @if($property == 'margin') {
+    .m {
+      &-#{$value}-#{$unit} {
+        margin: #{$value}#{$unit};
+      }
+
+      &t-#{$value}-#{$unit} {
+        margin-top: #{$value}#{$unit};
+      }
+      &r-#{$value}-#{$unit} {
+        margin-right: #{$value}#{$unit};
+      }
+      &b-#{$value}-#{$unit} {
+        margin-bottom: #{$value}#{$unit};
+      }
+      &l-#{$value}-#{$unit} {
+        margin-left: #{$value}#{$unit};
+      }
+    }
+  } @else if($property == 'padding') {
+    .p {
+      &-#{$value}-#{$unit} {
+        padding: #{$value}#{$unit};
+      }
+
+      &t-#{$value}-#{$unit} {
+        padding-top: #{$value}#{$unit};
+      }
+      &r-#{$value}-#{$unit} {
+        padding-right: #{$value}#{$unit};
+      }
+      &b-#{$value}-#{$unit} {
+        padding-bottom: #{$value}#{$unit};
+      }
+      &l-#{$value}-#{$unit} {
+        padding-left: #{$value}#{$unit};
+      }
+    }
+  }
+}

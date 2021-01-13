@@ -32,7 +32,7 @@
                         {{ comment.content }} <br>
                         {% if comment.view.rate is defined %}
                             {% if comment.view.rate %}
-                                <img style="height: 20px" src="{{ comment.view.rate.rate|associatedEmojiURL }}" alt="rate emoji">
+                                <img style="height: 20px" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
                             {% endif %}
                         {% endif %}
                     </div>
