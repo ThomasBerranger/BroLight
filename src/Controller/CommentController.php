@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Rate;
 use App\Entity\User;
+use App\Entity\View;
 use App\Manager\CommentManager;
 use App\Manager\RateManager;
 use App\Manager\ViewManager;
@@ -57,8 +59,15 @@ class CommentController extends AbstractController
 
         $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId]);
 
+        if ($comment->getView() instanceof View and $comment->getView()->getRate() instanceof Rate) {
+            $rate = $comment->getView()->getRate();
+        } else {
+            $rate = 0;
+        }
+
         return $this->render('comment/_form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'rate' => $rate
         ]);
     }
 

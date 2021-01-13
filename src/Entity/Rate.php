@@ -34,7 +34,7 @@ class Rate
     /**
      * @ORM\Column(type="integer")
      */
-    private $rate;
+    private $value;
 
     /**
      * @ORM\Column(type="datetime")
@@ -50,6 +50,15 @@ class Rate
      * @ORM\OneToOne(targetEntity=View::class, mappedBy="rate", cascade={"remove"})
      */
     private $view;
+
+    public function __construct()
+    {
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->value;
+    }
 
     public function getId(): ?int
     {
@@ -80,14 +89,14 @@ class Rate
         return $this;
     }
 
-    public function getRate(): ?int
+    public function getValue(): ?int
     {
-        return $this->rate;
+        return $this->value;
     }
 
-    public function setRate(int $rate): self
+    public function setValue(int $value): self
     {
-        $this->rate = $rate;
+        $this->value = $value;
 
         return $this;
     }

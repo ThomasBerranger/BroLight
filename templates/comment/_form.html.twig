@@ -44,4 +44,13 @@
     </div>
 
     {{ form_end(form) }}
+
+    <span id="rateValue" data-rate-value="{{ rate }}"></span>
+
+    <script>
+        rateValue = {{ rate }};
+        if (rateValue > 0) {
+            document.getElementById(`rating-${ rateValue }`).click();
+        }
+    </script>
 {% endblock %}

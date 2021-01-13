@@ -25,7 +25,7 @@ class RateManager
         $rate->setView($view);
         $rate->setAuthor($this->security->getUser());
         $rate->setTmdbId($view->getTmdbId());
-        $rate->setRate($rateValue);
+        $rate->setValue($rateValue);
 
         $this->entityManager->persist($rate);
 

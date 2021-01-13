@@ -14,6 +14,9 @@
                         <div class="col-4">
                             <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
                                 <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
+                                {% if event.rate %}
+                                    <img class="float-right" style="position: absolute; bottom: -5px; right: -5px; height: 40px" src="{{ event.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                {% endif %}
                             </a>
                         </div>
                         <div class="col-8">
@@ -33,11 +36,6 @@
 
                             <div class="card-text text-left p-2">
                                 <p>{{ event.comment ? event.comment.content }}</p>
-                                {% if event.rate %}
-                                    <p class="text-center mt-2">
-                                        <img style="height: 30px" src="{{ event.rate.rate|associatedEmojiURL }}" alt="rate emoji">
-                                    </p>
-                                {% endif %}
                             </div>
 
                         </div>
@@ -56,5 +54,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('feed') }}
+    {{ encore_entry_script_tags('userRelationshipHistory') }}
 {% endblock %}

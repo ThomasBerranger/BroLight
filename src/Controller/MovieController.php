@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Service\TMDBService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,8 +72,14 @@ class MovieController extends AbstractController
     {
         $movie = $this->TMDBService->getMovieById($tmdbId);
 
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['tmdbId'=>$tmdbId]);
+
+        $form = $this->createForm(CommentType::class, new Comment(), ['tmdbId' => $tmdbId]);
+
         return $this->render('movie/details.html.twig', [
-            'movie' => $movie
+            'movie' => $movie,
+            'comments' => $comments,
+            'form' => $form->createView(),
         ]);
     }
 }

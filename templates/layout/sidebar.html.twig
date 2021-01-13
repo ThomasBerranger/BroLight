@@ -1,5 +1,10 @@
 <div id="sidebar">
     <div class="center-content text-center">
+        <a href="{{ path('user.edit') }}">
+            <img class="avatar-medium" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
+        </a>
+        <br>
+        <br>
         <a role="button" class="btn btn-sm px-4 btn-info" href="{{ path('movie.trending') }}">Tendances</a>
         <br>
         <br>

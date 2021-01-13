@@ -3,16 +3,20 @@
 namespace App\Twig;
 
 use App\Entity\Avatar;
-use App\Entity\User;
-use App\Entity\UserRelationship;
 use DateTime;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Symfony\Component\Asset\Packages;
 
 class CustomFilterExtension extends AbstractExtension
 {
+    private $assetManager;
+
+    public function __construct(Packages $assetManager)
+    {
+        $this->assetManager = $assetManager;
+    }
+
     public function getFilters(): array
     {
         return [
@@ -57,24 +61,23 @@ class CustomFilterExtension extends AbstractExtension
 
     public function associatedEmojiURL(int $rate): string
     {
-        $package = new Package(new EmptyVersionStrategy());
         $url = "";
 
         switch ($rate) {
             case 1:
-                $url = $package->getUrl('images/emojis/dizzy.svg');
+                $url = $this->assetManager->getUrl('images/emojis/dizzy.svg');
                 break;
             case 2:
-                $url = $package->getUrl('images/emojis/sad.svg');
+                $url = $this->assetManager->getUrl('images/emojis/sad.svg');
                 break;
             case 3:
-                $url = $package->getUrl('images/emojis/happy.svg');
+                $url = $this->assetManager->getUrl('images/emojis/happy.svg');
                 break;
             case 4:
-                $url = $package->getUrl('images/emojis/3d-glasses.svg');
+                $url = $this->assetManager->getUrl('images/emojis/3d-glasses.svg');
                 break;
             case 5:
-                $url = $package->getUrl('images/emojis/love.svg');
+                $url = $this->assetManager->getUrl('images/emojis/love.svg');
                 break;
         }
 

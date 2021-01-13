@@ -5,7 +5,7 @@
 {% block body %}
 
     <div class="row">
-        <div class="col-12 hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) {% if movie.backdrop_path is defined %}, url(https://image.tmdb.org/t/p/w1280{{ movie.backdrop_path }}); {% endif %}">
+        <div class="col-12 hero-image mb-3" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) {% if movie.backdrop_path is defined %}, url(https://image.tmdb.org/t/p/w1280{{ movie.backdrop_path }}); {% endif %}">
             <div class="hero-text row">
                 {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
                     <div class="d-none d-md-block col-4">
@@ -22,14 +22,28 @@
                 </div>
             </div>
         </div>
-        <span id="movieActionButtonContainer{{ movie.id }}">
-            {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-                <i class="fas fa-eye-slash pointer-cursor text-danger" data-view-action="create" data-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
-            {% else %}
-                <i class="fas fa-eye pointer-cursor text-primary"></i>
-            {% endif %}
-            <i class="fas fa-comment-slash pointer-cursor text-danger"></i>
-        </span>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-title text-center py-2">Commentaires :</div>
+                {% for comment in comments %}
+                    <div class="card-text p-4">
+                        By : {{ comment.author }} <br>
+                        {{ comment.content }} <br>
+                        {% if comment.view.rate is defined %}
+                            {% if comment.view.rate %}
+                                <img style="height: 20px" src="{{ comment.view.rate.rate|associatedEmojiURL }}" alt="rate emoji">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="card-footer">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
