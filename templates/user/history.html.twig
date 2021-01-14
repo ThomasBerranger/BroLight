@@ -22,12 +22,10 @@
                         <div class="col-8">
 
                             <div class="card-title d-flex justify-content-between">
-                                <div>
-                                    <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
-                                        <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
-                                        <p>{{ event.author }}</p>
-                                    </a>
-                                </div>
+                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
+                                    <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                                    <p>{{ event.author }}</p>
+                                </a>
 
                                 {% if app.user == event.author %}
                                     <i class="fa fa-trash text-danger pointer-cursor" data-view-action="remove" data-url="{{ absolute_url(path('view.remove', {'id': event.id})) }}"></i>

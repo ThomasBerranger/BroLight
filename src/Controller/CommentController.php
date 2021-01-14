@@ -96,14 +96,17 @@ class CommentController extends AbstractController
 
             !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null;
 
+            $view = $this->getDoctrine()->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$comment->getTmdbId()]);
+            if ($view instanceof View) {
+                $comment->setView($view);
+            }
+
             $errors = $validator->validate($comment);
             if (count($errors) > 0) {
                 throw new Exception((string) $errors);
             }
 
-            $view = $this->viewManager->createViewFromCommentIfNotExist($comment);
-
-            if(isset(json_decode($data)->rate) and json_decode($data)->rate != "") {
+            if($view instanceof View and isset(json_decode($data)->rate) and json_decode($data)->rate != "") {
                 $this->rateManager->createRateFromView($view, (int) json_decode($data)->rate);
             }
 

@@ -20,11 +20,16 @@ class CommentType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'attr' => [
-                    'rows' => 5
+                    'rows' => 3
                 ]
             ])
             ->add('spoiler', CheckboxType::class, [
                 'required' => false
+            ])
+            ->add('viewed', CheckboxType::class, [
+                'required' => false,
+                'mapped' => false,
+                'data' => true
             ])
             ->add('rate', HiddenType::class, [
                 'required' => false,

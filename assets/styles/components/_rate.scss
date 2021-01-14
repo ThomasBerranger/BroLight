@@ -87,3 +87,9 @@
 #rating-3:checked ~ .emoji-wrapper > .emoji { transform: translateY(-240px); }
 #rating-4:checked ~ .emoji-wrapper > .emoji { transform: translateY(-320px); }
 #rating-5:checked ~ .emoji-wrapper > .emoji { transform: translateY(-400px); }
+
+.rate-emoji {
+  &-sm {
+    height: 20px;
+  }
+}

@@ -8,8 +8,8 @@ $(document).ready(function() {
             case 'create':
                 createRequest(element);
                 break;
-            case 'remove':
-                removeRequest(element);
+            case 'delete':
+                deleteRequest(element);
                 break;
         }
     })
@@ -28,6 +28,15 @@ function createRequest(element) {
     });
 }
 
-function removeRequest(element) {
-    console.log("En cours");
+function deleteRequest(element) {
+    $.ajax({
+        url: element.data('view-url'),
+        success: function () {
+            element.parent().load(` #${element.parent().attr('id')}`);
+            $('#alert').trigger("trigger-alert", ["success", "Visionnage Supprimé !"]);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }

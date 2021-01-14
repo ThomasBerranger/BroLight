@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\View;
 use App\Manager\ViewManager;
 use App\Service\ViewService;
@@ -46,23 +47,20 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @Route("/remove/{id}", name="remove")
+     * @Route("/delete/{tmdbId}", name="delete")
      *
-     * @param View $view
+     * @param int $tmdbId
      *
      * @return JsonResponse
      */
-    public function removeView(View $view): JsonResponse
+    public function deleteView(int $tmdbId): JsonResponse
     {
         try {
-            $this->denyAccessUnlessGranted('remove', $view);
-
-            $this->entityManager->remove($view);
-            $this->entityManager->flush();
+            $this->viewManager->deleteView($tmdbId);
 
             return $this->json(null);
         } catch (Exception $exception) {
-            return $this->json($exception, 500);
+            return $this->json($exception->getMessage(), 500);
         }
     }
 }

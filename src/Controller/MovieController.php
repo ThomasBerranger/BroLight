@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Manager\CommentManager;
 use App\Service\TMDBService;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +18,13 @@ class MovieController extends AbstractController
 {
     private $client;
     private $TMDBService;
+    private $commentManager;
 
-    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService)
+    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService, CommentManager $commentManager)
     {
         $this->client = $httpClient;
         $this->TMDBService = $TMDBService;
+        $this->commentManager = $commentManager;
     }
 
     /**
@@ -74,7 +76,9 @@ class MovieController extends AbstractController
 
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['tmdbId'=>$tmdbId]);
 
-        $form = $this->createForm(CommentType::class, new Comment(), ['tmdbId' => $tmdbId]);
+        $currentUserComment = $this->commentManager->getCommentFrom(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
+        !$currentUserComment instanceof Comment ? $currentUserComment = new Comment() : null;
+        $form = $this->createForm(CommentType::class, $currentUserComment, ['tmdbId' => $tmdbId]);
 
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,

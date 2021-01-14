@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 class ViewVoter extends Voter
 {
     const EDIT = 'edit';
-    const REMOVE = 'remove';
+    const DELETE = 'delete';
 
     private $security;
 
@@ -22,7 +22,7 @@ class ViewVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        if (!in_array($attribute, [self::EDIT, self::REMOVE])) {
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 
@@ -51,8 +51,8 @@ class ViewVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 return $this->canEdit($view, $user);
-            case self::REMOVE:
-                return $this->canRemove($view, $user);
+            case self::DELETE:
+                return $this->canDelete($view, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -63,7 +63,7 @@ class ViewVoter extends Voter
         return $view->getAuthor() === $user;
     }
 
-    private function canRemove(View $view, User$user): bool
+    private function canDelete(View $view, User$user): bool
     {
         return $this->canEdit($view, $user);
     }

@@ -24,6 +24,7 @@ Encore
     .addEntry('userEdit', './assets/js/pages/userEdit.js')
     .addEntry('userRelationshipHistory', './assets/js/pages/userRelationshipHistory.js')
     .addEntry('movieSearch', './assets/js/pages/movieSearch.js')
+    .addEntry('movieDetails', './assets/js/pages/movieDetails.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
