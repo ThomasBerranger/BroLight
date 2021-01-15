@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Helper\DoctrinePersistLifecycleTrait;
+use App\Helper\DoctrineUpdateLifecycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommentRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,6 +16,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Comment
 {
+    use DoctrinePersistLifecycleTrait;
+    use DoctrineUpdateLifecycleTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,18 +45,6 @@ class Comment
      * @Groups({"comment:read", "user:read"})
      */
     private $content;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"comment:read", "user:read"})
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"comment:read", "user:read"})
-     */
-    private $createdAt;
 
     /**
      * @ORM\OneToOne(targetEntity=View::class, mappedBy="comment")
@@ -130,23 +123,6 @@ class Comment
         $this->createdAt = $createdAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getView(): ?View

@@ -17,7 +17,7 @@
         </label>
     </div>
 
-    <div class="col-12 rating">
+    <div id="ratingDiv" class="col-12 rating">
         {{ include('rate/_inputs.html.twig') }}
     </div>
 
@@ -27,10 +27,20 @@
 
     {{ form_end(form) }}
 
-    <script>
+    <script type="text/javascript">
         rateValue = {{ rate }};
         if (rateValue > 0) {
             document.getElementById(`rating-${ rateValue }`).click();
+        }
+
+        viewedInput = document.getElementById('comment_viewed');
+        ratingDiv = document.getElementById('ratingDiv');
+        viewedInput.onclick = () => {
+            if (viewedInput.checked  === true) {
+                ratingDiv.style.display = "block";
+            } else {
+                ratingDiv.style.display = "none";
+            }
         }
     </script>
 {% endblock %}

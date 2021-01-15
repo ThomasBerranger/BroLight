@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Helper\DoctrinePersistLifecycleTrait;
+use App\Helper\DoctrineUpdateLifecycleTrait;
 use App\Repository\UserRelationshipRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserRelationship
 {
+    use DoctrinePersistLifecycleTrait;
+    use DoctrineUpdateLifecycleTrait;
+
     const STATUS = [
         'PENDING_FOLLOW_REQUEST' => 1,
         'ACCEPTED_FOLLOW_REQUEST' => 2,
@@ -28,16 +33,6 @@ class UserRelationship
      * @ORM\Column(type="integer")
      */
     private $status;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
@@ -90,23 +85,6 @@ class UserRelationship
         $this->createdAt = $createdAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getUserTarget(): ?User

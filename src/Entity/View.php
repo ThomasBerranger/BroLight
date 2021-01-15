@@ -119,6 +119,8 @@ class View
     {
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
+
+        // Comment ? Rate ?
     }
 
     /**
@@ -127,6 +129,8 @@ class View
     public function setUpdateDefaultValues()
     {
         $this->updatedAt = new \DateTime();
+
+        // Comment ? Rate ?
     }
 
     public function getMovie(): ?array

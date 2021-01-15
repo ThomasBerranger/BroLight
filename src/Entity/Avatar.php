@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\DoctrineUpdateLifecycleTrait;
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -12,6 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Avatar
 {
+    use DoctrineUpdateLifecycleTrait;
+
     const ACCESSORIES_TYPE = [
         'Aucun' => 'Blank',
         'Lunette 1' => 'Kurt',
@@ -315,12 +318,6 @@ class Avatar
      */
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"avatar:read", "user:read"})
-     */
-    private $updatedAt;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -552,13 +549,4 @@ class Avatar
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
     }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
 }

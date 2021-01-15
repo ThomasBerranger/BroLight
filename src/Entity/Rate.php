@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Helper\DoctrinePersistLifecycleTrait;
+use App\Helper\DoctrineUpdateLifecycleTrait;
 use App\Repository\RateRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -13,6 +15,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Rate
 {
+    use DoctrinePersistLifecycleTrait;
+    use DoctrineUpdateLifecycleTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,16 +40,6 @@ class Rate
      * @ORM\Column(type="integer")
      */
     private $value;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @ORM\OneToOne(targetEntity=View::class, mappedBy="rate", cascade={"remove"})
@@ -123,23 +118,6 @@ class Rate
         $this->createdAt = $createdAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
     }
 
     public function getView(): ?View
