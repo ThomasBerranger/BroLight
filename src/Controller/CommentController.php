@@ -60,7 +60,7 @@ class CommentController extends AbstractController
         if (!$comment instanceof Comment)
             $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId]);
+        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $comment->getView() instanceof View]);
 
         if ($comment->getView() instanceof View and $comment->getView()->getRate() instanceof Rate) {
             $rate = $comment->getView()->getRate();

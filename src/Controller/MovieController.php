@@ -76,14 +76,9 @@ class MovieController extends AbstractController
 
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['tmdbId'=>$tmdbId]);
 
-        $currentUserComment = $this->commentManager->getCommentFrom(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
-        !$currentUserComment instanceof Comment ? $currentUserComment = new Comment() : null;
-        $form = $this->createForm(CommentType::class, $currentUserComment, ['tmdbId' => $tmdbId]);
-
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,
             'comments' => $comments,
-            'form' => $form->createView(),
         ]);
     }
 }

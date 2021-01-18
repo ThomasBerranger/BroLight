@@ -39,8 +39,12 @@ class EntityLinkerService
         if (!$view->getComment() instanceof Comment) {
             $comment = $this->entityManager->getRepository(Comment::class)->findOneBy(['author'=>$view->getAuthor(), 'tmdbId'=>$view->getTmdbId()]);
 
-            if ($comment instanceof Comment)
-                $view->setComment($comment);
+            if ($comment instanceof Comment) {
+                $comment->setView($view);
+
+                $this->entityManager->persist($comment);
+                $this->entityManager->flush();
+            }
         }
     }
 }

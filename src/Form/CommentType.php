@@ -29,7 +29,7 @@ class CommentType extends AbstractType
             ->add('viewed', CheckboxType::class, [
                 'required' => false,
                 'mapped' => false,
-                'data' => true
+                'data' => $options['viewed']
             ])
             ->add('rate', HiddenType::class, [
                 'required' => false,
@@ -42,7 +42,8 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Comment::class,
-            'tmdbId' => 0
+            'tmdbId' => 0,
+            'viewed' => false,
         ]);
     }
 }
