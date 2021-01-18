@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Entity\View;
+use App\Service\EntityLinkerService;
 use App\Service\TMDBService;
 use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,7 @@ class ViewManager
     private $authorizationChecker;
     private $commentManager;
     private $tmdbService;
+    private $entityLinkerService;
     private $viewService;
 
     public function __construct(
@@ -30,6 +32,7 @@ class ViewManager
         AuthorizationCheckerInterface $authorizationChecker,
         CommentManager                $commentManager,
         TMDBService                   $tmdbService,
+        EntityLinkerService           $entityLinkerService,
         ViewService                   $viewService)
     {
         $this->entityManager = $entityManager;
@@ -38,6 +41,7 @@ class ViewManager
         $this->authorizationChecker = $authorizationChecker;
         $this->commentManager = $commentManager;
         $this->tmdbService = $tmdbService;
+        $this->entityLinkerService = $entityLinkerService;
         $this->viewService = $viewService;
     }
 
@@ -47,8 +51,6 @@ class ViewManager
 
         $view->setAuthor($this->security->getUser());
         $view->setTmdbId($tmdbId);
-
-        $this->viewService->associateComment($view);
 
         $errors = $this->validator->validate($view);
         if (count($errors) > 0) {

@@ -8,6 +8,7 @@ use App\Entity\View;
 use App\Manager\CommentManager;
 use App\Manager\RateManager;
 use App\Manager\ViewManager;
+use App\Service\EntityLinkerService;
 use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
@@ -29,15 +30,17 @@ class CommentController extends AbstractController
     private $entityManager;
     private $serializer;
     private $viewService;
+    private $entityLinkerService;
     private $commentManager;
     private $viewManager;
     private $rateManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, EntityLinkerService $entityLinkerService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->viewService = $viewService;
+        $this->entityLinkerService = $entityLinkerService;
         $this->commentManager = $commentManager;
         $this->viewManager = $viewManager;
         $this->rateManager = $rateManager;
@@ -92,22 +95,26 @@ class CommentController extends AbstractController
             /** @var Comment $comment */
             $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $comment]);
 
-            $comment->setAuthor($this->getUser());
+            !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null; // Set spoiler
 
-            !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null;
+            $comment->setAuthor($this->getUser()); // Set author
 
-            $view = $this->getDoctrine()->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$comment->getTmdbId()]);
-            if ($view instanceof View) {
-                $comment->setView($view);
+            if (isset(json_decode($data)->viewed)) { // Create + Set / Set View
+                $viewFounded = $this->entityLinkerService->findAndLinkView($comment);
+                if (!$viewFounded) {
+                    $this->viewManager->createView($comment->getTmdbId());
+                }
+            } else {
+                $this->viewManager->deleteView($comment->getTmdbId());
+            }
+
+            if(isset(json_decode($data)->rate) and json_decode($data)->rate != "") { // Create Rate
+                $this->rateManager->createRateIfViewExist($comment->getTmdbId(), (int) json_decode($data)->rate);
             }
 
             $errors = $validator->validate($comment);
             if (count($errors) > 0) {
                 throw new Exception((string) $errors);
-            }
-
-            if($view instanceof View and isset(json_decode($data)->rate) and json_decode($data)->rate != "") {
-                $this->rateManager->createRateFromView($view, (int) json_decode($data)->rate);
             }
 
             $this->entityManager->persist($comment);

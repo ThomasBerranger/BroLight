@@ -18,8 +18,13 @@ class RateManager
         $this->security = $security;
     }
 
-    public function createRateFromView(View $view, int $rateValue): Rate
+    public function createRateIfViewExist(int $tmdbId, int $rateValue): ?Rate
     {
+        $view = $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->security->getUser(), 'tmdbId'=>$tmdbId]);
+
+        if (!$view instanceof View)
+            return null;
+
         $rate = new Rate();
 
         $rate->setView($view);

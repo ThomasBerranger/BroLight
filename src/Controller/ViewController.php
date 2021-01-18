@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\View;
 use App\Manager\ViewManager;
+use App\Service\EntityLinkerService;
 use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -20,12 +21,14 @@ class ViewController extends AbstractController
     private $entityManager;
     private $viewManager;
     private $viewService;
+    private $entityLinkerService;
 
-    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService)
+    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService, EntityLinkerService $entityLinkerService)
     {
         $this->entityManager = $entityManager;
         $this->viewManager = $viewManager;
         $this->viewService = $viewService;
+        $this->entityLinkerService = $entityLinkerService;
     }
 
     /**
@@ -39,6 +42,8 @@ class ViewController extends AbstractController
     {
         try {
             $view = $this->viewManager->createView($tmdbId);
+
+            $this->entityLinkerService->findAndLinkCommentIfExist($view);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
