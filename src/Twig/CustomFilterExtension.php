@@ -55,7 +55,7 @@ class CustomFilterExtension extends AbstractExtension
         } elseif ($interval <= 24 * 60 * 60 * 2) {
             return 'Hier';
         } else {
-            return $date->format('Y-m-d');
+            return $date->format('d/m/Y');
         }
     }
 

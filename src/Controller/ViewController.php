@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\View;
 use App\Manager\ViewManager;
 use App\Service\EntityLinkerService;
+use App\Service\TMDBService;
 use App\Service\ViewService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -21,13 +22,15 @@ class ViewController extends AbstractController
     private $entityManager;
     private $viewManager;
     private $viewService;
+    private $tmdbService;
     private $entityLinkerService;
 
-    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService, EntityLinkerService $entityLinkerService)
+    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService, TMDBService $tmdbService, EntityLinkerService $entityLinkerService)
     {
         $this->entityManager = $entityManager;
         $this->viewManager = $viewManager;
         $this->viewService = $viewService;
+        $this->tmdbService = $tmdbService;
         $this->entityLinkerService = $entityLinkerService;
     }
 
@@ -38,7 +41,7 @@ class ViewController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function createView(int $tmdbId): JsonResponse
+    public function createView(int $tmdbId)
     {
         try {
             $view = $this->viewManager->createView($tmdbId);
@@ -48,7 +51,7 @@ class ViewController extends AbstractController
             return $this->json($exception->getMessage(), 500);
         }
 
-        return $this->json($view, 201, [], ['groups' => 'view:read']);
+        return new JsonResponse($this->renderView('movie/_viewButton.html.twig', ['movie' => $this->tmdbService->getMovieById($tmdbId)]), 201);
     }
 
     /**
@@ -63,9 +66,10 @@ class ViewController extends AbstractController
         try {
             $this->viewManager->deleteView($tmdbId);
 
-            return $this->json(null);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
+
+        return new JsonResponse($this->renderView('movie/_viewButton.html.twig', ['movie' => $this->tmdbService->getMovieById($tmdbId)]), 200);
     }
 }

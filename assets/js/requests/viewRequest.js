@@ -18,8 +18,8 @@ $(document).ready(function() {
 function createRequest(element) {
     $.ajax({
         url: element.data('view-url'),
-        success: function () {
-            element.parent().load(` #${element.parent().attr('id')}`);
+        success: function (data) {
+            element.parent().html(data);
             $('#alert').trigger("trigger-alert", ["success", "Visionnage sauvegardé !"]);
         },
         error: function (error) {
@@ -31,8 +31,8 @@ function createRequest(element) {
 function deleteRequest(element) {
     $.ajax({
         url: element.data('view-url'),
-        success: function () {
-            element.parent().load(` #${element.parent().attr('id')}`);
+        success: function (data) {
+            element.parent().html(data);
             $('#alert').trigger("trigger-alert", ["success", "Visionnage Supprimé !"]);
         },
         error: function (error) {

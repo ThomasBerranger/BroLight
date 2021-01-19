@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Helper\DoctrinePersistLifecycleTrait;
+use App\Helper\DoctrineUpdateLifecycleTrait;
 use App\Repository\ViewRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,6 +16,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class View
 {
+    use DoctrinePersistLifecycleTrait;
+    use DoctrineUpdateLifecycleTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,18 +39,6 @@ class View
      * @Groups({"view:read", "user:read"})
      */
     private $tmdbId;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"view:read", "user:read"})
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"view:read", "user:read"})
-     */
-    private $createdAt;
 
     private $movie;
 
@@ -86,51 +79,6 @@ class View
         $this->tmdbId = $tmdbId;
 
         return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-
-        // Comment ? Rate ?
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues()
-    {
-        $this->updatedAt = new \DateTime();
-
-        // Comment ? Rate ?
     }
 
     public function getMovie(): ?array
