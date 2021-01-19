@@ -29,8 +29,8 @@ $(document).ready(function() {
             case 'open-form':
                 openFormRequest(element);
                 break;
-            case 'remove':
-                removeRequest(element);
+            case 'delete':
+                deleteRequest(element);
                 break;
         }
     });
@@ -45,6 +45,15 @@ function openFormRequest(element) {
     ]);
 }
 
-function removeRequest(element) {
-    console.log('En cours ...');
+function deleteRequest(element) {
+    $.ajax({
+        url: element.data('comment-url'),
+        method: "get",
+        success: function () {
+            $('#alert').trigger("trigger-alert", ["success", "Commentaire supprimé !"]);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }

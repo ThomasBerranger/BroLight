@@ -15,6 +15,7 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,10 +58,12 @@ class CommentController extends AbstractController
     {
         $comment = $this->getDoctrine()->getRepository(Comment::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
 
+        $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]) ? $viewed = true : $viewed = false;
+
         if (!$comment instanceof Comment)
             $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $comment->getView() instanceof View]);
+        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $viewed]);
 
         if ($comment->getView() instanceof View and $comment->getView()->getRate() instanceof Rate) {
             $rate = $comment->getView()->getRate();
@@ -80,9 +83,9 @@ class CommentController extends AbstractController
      * @param Request            $request
      * @param ValidatorInterface $validator
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function create(Request $request, ValidatorInterface $validator): Response
+    public function create(Request $request, ValidatorInterface $validator): JsonResponse
     {
         try {
             $data = $request->getContent();
@@ -122,6 +125,24 @@ class CommentController extends AbstractController
             $this->entityManager->flush();
 
             return $this->json($comment, 201, [], ['groups' => 'comment:read']);
+        } catch (Exception $exception) {
+            return $this->json($exception->getMessage(), 500);
+        }
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete", methods={"GET"})
+     *
+     * @param Comment $comment
+     *
+     * @return JsonResponse
+     */
+    public function delete(Comment $comment): JsonResponse
+    {
+        try {
+            $this->commentManager->delete($comment);
+
+            return $this->json(null);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }

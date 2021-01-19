@@ -22,7 +22,7 @@ class CustomFilterExtension extends AbstractExtension
         return [
             new TwigFilter('textLimit', [$this, 'textLimit']),
             new TwigFilter('formatAvatarData', [$this, 'formatAvatarData']),
-            new TwigFilter('historyDateFormat', [$this, 'historyDateFormat']),
+            new TwigFilter('customDateFormat', [$this, 'customDateFormat']),
             new TwigFilter('associatedEmojiURL', [$this, 'associatedEmojiURL']),
         ];
     }
@@ -41,7 +41,7 @@ class CustomFilterExtension extends AbstractExtension
         return 'https://avataaars.io/?avatarStyle='.$avatar->getAvatarStyle().'&topType='.$avatar->getTopType().'&mouthType='.$avatar->getMouthType().'&facialHairColor='.$avatar->getFacialHairColor().'&facialHairType='.$avatar->getFacialHairType().'&accessoriesType='.$avatar->getAccessoriesType().'&hatColor='.$avatar->getHatColor().'&clotheType='.$avatar->getClotheType().'&eyeType='.$avatar->getEyeType().'&eyebrowType='.$avatar->getEyebrowType().'&clotheColor='.$avatar->getClotheColor().'&graphicType='.$avatar->getGraphicType().'&skinColor='.$avatar->getSkinColor().'&hairColor='.$avatar->getHairColor();
     }
 
-    public function historyDateFormat(DateTime $date): string
+    public function customDateFormat(DateTime $date): string
     {
         $now = new DateTime();
         $interval = $now->getTimestamp() - $date->getTimestamp();

@@ -29,51 +29,47 @@
                     <h5 class="card-title text-center py-2">Commentaires :</h5>
                     {% set isCurrentUserCommentDetected = false %}
                     {% for comment in comments %}
+
                         <div class="card-text d-flex flex-row">
-                            <a href="{{ path('user.show', {'slug': comment.author.slug}) }}">
-                                <img class="avatar-small" src="{{ comment.author.avatar|formatAvatarData }}" alt="{{ comment.author }} avatar">
-                            </a>
-                            <div>
-                                <a href="{{ path('user.show', {'slug': comment.author.slug}) }}">{{ comment.author }}</a>
-                                <p>{{ comment.content }}</p>
+                            <a style="position: relative" class="mr-2" href="{{ path('user.show', {'slug': comment.author.slug}) }}">
+                                <img class="avatar-medium" src="{{ comment.author.avatar|formatAvatarData }}" alt="{{ comment.author }} avatar">
                                 {% if comment.view.rate is defined %}
                                     {% if comment.view.rate %}
-                                        <img class="rate-emoji-sm" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                        <img class="rate-emoji-md" style="position: absolute; bottom: -15px; right: 0;" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
                                     {% endif %}
                                 {% endif %}
+                            </a>
+
+                            <div class="w-100">
+                                <a class="font-weight-bolder" style="font-size: 1rem" href="{{ path('user.show', {'slug': comment.author.slug}) }}">{{ comment.author }}</a>
+                                <p class="text-muted">{{ comment.createdAt|customDateFormat }}</p>
+                                <p>{{ comment.content|nl2br }}</p>
                             </div>
+
                             {% if comment.author == app.user %}
                                 {% set isCurrentUserCommentDetected = true %}
                                 <div class="ml-2">
                                     {% include 'movie/_viewButton.html.twig' %}
-                                    <button class="btn btn-sm btn-info"
-                                            data-tmdb-id="{{ movie.id }}"
-                                            data-title="{{ movie.title }}"
-                                            data-comment-action="open-form"
-                                            data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"><i class="far fa-comment"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                    <br>
+                                    <i class="far fa-comment pointer-cursor"
+                                       data-tmdb-id="{{ movie.id }}"
+                                       data-title="{{ movie.title }}"
+                                       data-comment-action="open-form"
+                                       data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
+                                    <br>
+                                    <i class="fa fa-trash pointer-cursor"
+                                       data-comment-action="delete"
+                                       data-comment-url="{{ absolute_url(path('comment.delete', {'id': comment.id})) }}"></i>
                                 </div>
                             {% endif %}
+
                         </div>
+
                         <hr class="m-2-vh">
                     {% endfor %}
                     {% if not isCurrentUserCommentDetected %}
                         <div class="ml-2">
-                            <span id="movieActionButtonContainer{{ movie.id }}">
-                                {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-                                    <button class="btn btn-sm btn-info"
-                                            data-tmdb-id="{{ movie.id }}"
-                                            data-title="{{ movie.title }}"
-                                            data-view-action="create"
-                                            data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"><i class="fa fa-eye"></i></button>
-                                {% else %}
-                                    <button class="btn btn-sm btn-danger"
-                                            data-tmdb-id="{{ movie.id }}"
-                                            data-title="{{ movie.title }}"
-                                            data-view-action="delete"
-                                            data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"><i class="fa fa-eye-slash"></i></button>
-                                {% endif %}
-                             </span>
+                            {% include 'movie/_viewButton.html.twig' %}
                             <button class="btn btn-sm btn-info"
                                     data-tmdb-id="{{ movie.id }}"
                                     data-title="{{ movie.title }}"
