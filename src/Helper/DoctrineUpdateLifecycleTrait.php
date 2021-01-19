@@ -16,6 +16,18 @@ trait DoctrineUpdateLifecycleTrait
      */
     private $updatedAt;
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
     /**
      * @ORM\PreUpdate()
      */

@@ -102,7 +102,8 @@ class CommentController extends AbstractController
             if (isset(json_decode($data)->viewed)) { // Create + Set / Set View
                 $viewFounded = $this->entityLinkerService->findAndLinkView($comment);
                 if (!$viewFounded) {
-                    $this->viewManager->createView($comment->getTmdbId());
+                    $view = $this->viewManager->createView($comment->getTmdbId());
+                    $comment->setView($view);
                 }
             } else {
                 $this->viewManager->deleteView($comment->getTmdbId());

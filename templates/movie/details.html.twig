@@ -45,21 +45,7 @@
                             {% if comment.author == app.user %}
                                 {% set isCurrentUserCommentDetected = true %}
                                 <div class="ml-2">
-                                    <span id="movieActionButtonContainer{{ movie.id }}">
-                                        {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-                                            <button class="btn btn-sm btn-info"
-                                                    data-tmdb-id="{{ movie.id }}"
-                                                    data-title="{{ movie.title }}"
-                                                    data-view-action="create"
-                                                    data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"><i class="fa fa-eye-slash"></i></button>
-                                        {% else %}
-                                            <button class="btn btn-sm btn-info"
-                                                    data-tmdb-id="{{ movie.id }}"
-                                                    data-title="{{ movie.title }}"
-                                                    data-view-action="delete"
-                                                    data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"><i class="fa fa-eye"></i></button>
-                                        {% endif %}
-                                     </span>
+                                    {% include 'movie/_viewButton.html.twig' %}
                                     <button class="btn btn-sm btn-info"
                                             data-tmdb-id="{{ movie.id }}"
                                             data-title="{{ movie.title }}"

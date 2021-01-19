@@ -20,33 +20,7 @@
                         <h5 class="card-title">{{ movie.title is defined ? movie.title }}</h5>
                         <p class="card-overview">{{ movie.overview is defined ? movie.overview|textLimit(130) }}</p>
                         <p class="card-text d-flex justify-content-between">
-
-
-                            <span id="movieActionButtonContainer{{ movie.id }}">
-                                {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-                                    <i class="fas fa-eye-slash pointer-cursor text-danger"
-                                       data-tmdb-id="{{ movie.id }}"
-                                       data-title="{{ movie.title }}"
-                                       data-view-action="create"
-                                       data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"
-                                       data-comment-action="open-form"
-                                       data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
-                                {% elseif movie.id not in app.user.commentedMoviesTmdbIds %}
-                                    <i class="fas fa-comment-slash pointer-cursor text-danger"
-                                       data-tmdb-id="{{ movie.id }}"
-                                       data-title="{{ movie.title }}"
-                                       data-comment-action="open-form"
-                                       data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
-                                {% else %}
-                                    <i class="fas fa-comment pointer-cursor text-success"
-                                       data-tmdb-id="{{ movie.id }}"
-                                       data-title="{{ movie.title }}"
-                                       data-comment-action="open-form"
-                                       data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
-                                {% endif %}
-                             </span>
-
-
+                            {% include 'movie/_viewButton.html.twig' %}
                             <small class="text-muted">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</small>
                         </p>
                     </div>

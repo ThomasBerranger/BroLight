@@ -35,8 +35,7 @@
                         </div>
 
                     </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        {% include 'movie/_viewButton.html.twig' with {'movie': event.movie} %}
+                    <div class="card-footer text-right">
                         <p class="card-text">{{ event.createdAt|historyDateFormat }}</p>
                     </div>
                 </div>
