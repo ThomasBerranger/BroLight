@@ -1,18 +1,22 @@
 import $ from "jquery";
 
 $(document).ready(function(){
-    const modal = $('#headerModal');
+    const modal = $('#customModal');
 
-    modal.on("trigger-header-modal", function(event, title, body, conf = {keyboard: true, backdrop: true}) {
-        modal.modal(conf)
-        modal.modal('show')
+    modal.on("trigger-custom-modal", function(event, title, body, footer = true, conf = {keyboard: true, backdrop: true}) {
+        modal.modal(conf);
+        modal.modal('show');
         $(".modal-title", modal).text(title);
         $(".modal-body", modal).html(body);
+        if (!footer)
+            $(".modal-footer", modal).hide();
+        else
+            $(".modal-footer", modal).show();
     });
 
     const spanFirstTime = $('span#trigger-first-time-modal');
     if(spanFirstTime.length === 1) {
-        modal.trigger("trigger-header-modal", [
+        modal.trigger("trigger-custom-modal", [
             spanFirstTime.text(),
             `Te voila enfin ${spanFirstTime.data('user-firstname')} ! <i class="far fa-laugh-beam"></i><br>` +
             `Tu peux commencer par modifier ton avatar <br>` +
@@ -21,5 +25,23 @@ $(document).ready(function(){
             {keyboard: false, backdrop: 'static'}
         ]);
     }
+
+    $('body').on('click', '[data-custom-confirm]', function () {
+        const element = $(this);
+
+        // todo : refactoring data-***-action
+        modal.trigger("trigger-custom-modal", [
+            'Attention !',
+            $('<div class="text-center">' +
+                '<p>Etes-vous sûr de ce que vous faites ?</p><br>' +
+                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-comment-action="">Confirmer</button>' +
+                '<button class="btn btn-info mx-2 px-4" data-dismiss="modal">Annuler</button>' +
+                '</div>'),
+            false
+        ]);
+
+        $('#modalConfirmButton').data(`${element.data('custom-confirm-configurations')['entity']}-action`, 'delete');
+        $('#modalConfirmButton').data(`${element.data('custom-confirm-configurations')['entity']}-url`, element.data('custom-confirm-configurations')['url']);
+    });
 
 });

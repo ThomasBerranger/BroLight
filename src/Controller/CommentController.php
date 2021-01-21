@@ -57,16 +57,15 @@ class CommentController extends AbstractController
     public function form(int $tmdbId): Response
     {
         $comment = $this->getDoctrine()->getRepository(Comment::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
-
-        $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]) ? $viewed = true : $viewed = false;
+        $view = $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
 
         if (!$comment instanceof Comment)
             $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $viewed]);
+        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $view instanceof View]);
 
-        if ($comment->getView() instanceof View and $comment->getView()->getRate() instanceof Rate) {
-            $rate = $comment->getView()->getRate();
+        if ($view instanceof View and $view->getRate() instanceof Rate) {
+            $rate = $view->getRate();
         } else {
             $rate = 0;
         }

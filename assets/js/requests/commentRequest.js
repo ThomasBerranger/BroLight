@@ -19,7 +19,7 @@ $(document).ready(function() {
             }
         });
 
-        $('#headerModal').modal('hide');
+        $('#customModal').modal('hide');
     });
 
     body.on('click', '[data-comment-action]', function () {
@@ -39,7 +39,7 @@ $(document).ready(function() {
 function openFormRequest(element) {
     let formDiv = $('<div class="px-4"></div>')
 
-    $('#headerModal').trigger("trigger-header-modal", [
+    $('#customModal').trigger("trigger-custom-modal", [
         element.data('title'),
         formDiv.load(element.data('comment-url'))
     ]);
@@ -56,4 +56,6 @@ function deleteRequest(element) {
             console.log(error);
         }
     });
+
+    $('#customModal').modal('hide');
 }

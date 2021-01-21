@@ -35,7 +35,7 @@
                                 <img class="avatar-medium" src="{{ comment.author.avatar|formatAvatarData }}" alt="{{ comment.author }} avatar">
                                 {% if comment.view.rate is defined %}
                                     {% if comment.view.rate %}
-                                        <img class="rate-emoji-md" style="position: absolute; bottom: -15px; right: 0;" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                        <img class="rate-emoji-md" style="position: absolute; top: 60px; right: 0;" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
                                     {% endif %}
                                 {% endif %}
                             </a>
@@ -49,17 +49,17 @@
                             {% if comment.author == app.user %}
                                 {% set isCurrentUserCommentDetected = true %}
                                 <div class="ml-2">
-                                    {% include 'movie/_viewButton.html.twig' %}
-                                    <br>
-                                    <i class="far fa-comment pointer-cursor"
+                                    <i class="far fa-edit pointer-cursor"
                                        data-tmdb-id="{{ movie.id }}"
                                        data-title="{{ movie.title }}"
                                        data-comment-action="open-form"
                                        data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
                                     <br>
-                                    <i class="fa fa-trash pointer-cursor"
-                                       data-comment-action="delete"
-                                       data-comment-url="{{ absolute_url(path('comment.delete', {'id': comment.id})) }}"></i>
+                                    <i class="fa fa-trash-alt pointer-cursor"
+                                       data-custom-confirm="open"
+                                       data-custom-confirm-configurations='{"entity":"comment", "action":"delete", "url": "{{ absolute_url(path('comment.delete', {'id': comment.id})) }}"}'>
+                                    </i>
+
                                 </div>
                             {% endif %}
 
