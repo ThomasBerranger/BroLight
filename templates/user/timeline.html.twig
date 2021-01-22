@@ -28,9 +28,18 @@
                                 </a>
                             </div>
 
-                            <div class="card-text text-left p-2">
-                                <p>{{ event.comment ? event.comment.content|nl2br }}</p>
-                            </div>
+                            {% if event.comment %}
+                                <div class="card-text text-left p-2">
+                                    {% if event.comment.spoiler %}
+                                        <p class="bg-warning pointer-cursor text-center" data-toggle="collapse" data-target="#collapseSpoiler{{ event.comment.id }}" aria-expanded="false" aria-controls="collapseSpoiler{{ event.comment.id }}">
+                                            <i class="fas fa-exclamation-circle"></i> Spoiler - Cliquer pour afficher
+                                        </p>
+                                        <p class="collapse" id="collapseSpoiler{{ event.comment.id }}">{{ event.comment.content|nl2br }}</p>
+                                    {% else %}
+                                        <p>{{ event.comment.content|nl2br }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
 
                         </div>
 

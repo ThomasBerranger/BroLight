@@ -1,6 +1,10 @@
 nav {
   font-weight: 500;
 
+  & > a.navbar-brand {
+    margin-right: 0.2rem;
+  }
+
   & > a.navbar-brand > img {
     max-height: 30px;
   }
