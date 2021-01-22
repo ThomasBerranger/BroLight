@@ -2,14 +2,10 @@
 
     {% if movie.id not in app.user.watchedMoviesTmdbIds %}
         <i class="fas fa-eye-slash pointer-cursor"
-           data-tmdb-id="{{ movie.id }}"
-           data-title="{{ movie.title }}"
            data-view-action="create"
            data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
     {% else %}
         <i class="fas fa-eye pointer-cursor"
-           data-tmdb-id="{{ movie.id }}"
-           data-title="{{ movie.title }}"
            data-view-action="delete"
            data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"></i>
     {% endif %}

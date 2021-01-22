@@ -9,6 +9,7 @@ use App\Manager\CommentManager;
 use App\Manager\RateManager;
 use App\Manager\ViewManager;
 use App\Service\EntityLinkerService;
+use App\Service\TMDBService;
 use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
@@ -32,16 +33,18 @@ class CommentController extends AbstractController
     private $serializer;
     private $viewService;
     private $entityLinkerService;
+    private $tmdbService;
     private $commentManager;
     private $viewManager;
     private $rateManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, EntityLinkerService $entityLinkerService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, EntityLinkerService $entityLinkerService, TMDBService $tmdbService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->viewService = $viewService;
         $this->entityLinkerService = $entityLinkerService;
+        $this->tmdbService = $tmdbService;
         $this->commentManager = $commentManager;
         $this->viewManager = $viewManager;
         $this->rateManager = $rateManager;
@@ -123,7 +126,10 @@ class CommentController extends AbstractController
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
 
-            return $this->json($comment, 201, [], ['groups' => 'comment:read']);
+            return new JsonResponse([
+                'view' => $this->renderView('comment/_commentButton.html.twig', ['movie' => $this->tmdbService->getMovieById($comment->getTmdbId())]),
+                'tmdbId' => $comment->getTmdbId()
+            ], 200);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }

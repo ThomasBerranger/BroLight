@@ -11,7 +11,11 @@ $(document).ready(function() {
             method: "post",
             data: $(this).serializePrefixedFormJSON(),
             dataType: "json",
-            success: function () {
+            success: function (data) {
+                const currentCommentButton = $(`#commentButton-${data['tmdbId']}`);
+                if (currentCommentButton.length === 1) {
+                    currentCommentButton.html(data['view']);
+                }
                 $('#alert').trigger("trigger-alert", ["success", "Commentaire sauvegardé !"]);
             },
             error: function (error) {

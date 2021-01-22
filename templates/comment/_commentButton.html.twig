@@ -1,0 +1,9 @@
+<span id="commentButton-{{ movie.id }}">
+
+        <i class="fas {{ movie.id not in app.user.commentedMoviesTmdbIds ? 'fa-comment-slash' : 'fa-comment' }} pointer-cursor"
+           data-title="{{ movie.title }}"
+           data-comment-action="open-form"
+           data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}">
+        </i>
+
+</span>

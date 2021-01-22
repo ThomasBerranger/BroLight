@@ -20,11 +20,13 @@
                         <h5 class="card-title">{{ movie.title is defined ? movie.title }}</h5>
                         <p class="card-overview">{{ movie.overview is defined ? movie.overview|textLimit(130) }}</p>
                         <p class="card-text d-flex justify-content-between">
-                            {% include 'movie/_viewButton.html.twig' %}
+                            <small>
+                                {% include 'movie/_viewButton.html.twig' %}
+                                {% include 'comment/_commentButton.html.twig' %}
+                            </small>
                             <small class="text-muted">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</small>
                         </p>
                     </div>
-
                 </div>
             {% endfor %}
 

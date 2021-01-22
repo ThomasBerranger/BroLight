@@ -20,6 +20,7 @@ class CommentType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'attr' => [
+                    'placeholder' => 'La vie c\'est comme une boit de chocolats ...',
                     'rows' => 3
                 ]
             ])
