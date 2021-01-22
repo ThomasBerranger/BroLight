@@ -5,6 +5,15 @@
 {% block body %}
     <ul class="timeline">
 
+        {% if timeline|length == 0 %}
+            <div class="card">
+                <div class="card-body text-center">
+                    <p class="mb-2">Abonnes toi à tes amis si tu veux savoir quels flms ils ont vu !</p>
+                    <a role="button" href="{{ path('user.edit') }}" class="btn btn-sm btn-info">Liste d'abonnés</a>
+                </div>
+            </div>
+        {% endif %}
+
         {% for event in timeline %}
             <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
                 <div class="timeline-badge"><i class="fa fa-circle"></i></div>
