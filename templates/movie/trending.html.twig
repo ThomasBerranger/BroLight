@@ -12,9 +12,11 @@
             {% for movie in trendingMovies %}
                 <div class="card mb-4">
                     {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
-                        <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
-                            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
-                        </a>
+                        <div style="overflow: hidden; border-radius: 0.25rem">
+                            <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
+                                <img class="card-img-top poster" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                            </a>
+                        </div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.title is defined ? movie.title }}</h5>
