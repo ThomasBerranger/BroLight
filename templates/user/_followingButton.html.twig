@@ -1,0 +1,23 @@
+{% if user in app.user.followings %}
+
+    <button class="btn-delete-follow"
+            data-custom-confirm="open"
+            data-custom-confirm-configurations='{"entity":"user-relationship", "url": "{{ path('user_relationship.unfollow', {'id': user.id}) }}"}'>
+    </button>
+
+{% elseif user in app.user.pendingFollowings %}
+
+    <button class="btn-cancel-follow-request"
+            data-user-relationship-action="create"
+            data-user-relationship-url="{{ path('user_relationship.unfollow', {'id': user.id}) }}">
+    </button>
+
+{% elseif user != app.user %}
+
+    <button class="btn-follow"
+            data-user-relationship-action="create"
+            data-user-relationship-url="{{ path('user_relationship.follow', {'id': user.id}) }}">
+        S'abonner
+    </button>
+
+{% endif %}

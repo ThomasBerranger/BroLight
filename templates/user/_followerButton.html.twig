@@ -1,0 +1,10 @@
+{% if user in app.user.followers %}
+
+    <button>supprimer ?</button>
+
+{% elseif user in app.user.pendingFollowers %}
+
+    <button>accepter ?</button>
+    <button>refuser ?</button>
+
+{% endif %}

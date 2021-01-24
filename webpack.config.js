@@ -22,7 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('userEdit', './assets/js/pages/userEdit.js')
-    .addEntry('userRelationshipHistory', './assets/js/pages/userRelationshipHistory.js')
+    .addEntry('timeline', './assets/js/pages/timeline.js')
     .addEntry('movieSearch', './assets/js/pages/movieSearch.js')
     .addEntry('movieDetails', './assets/js/pages/movieDetails.js')
 

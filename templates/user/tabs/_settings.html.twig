@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-12 col-md-5">
+        <div class="card">
+            <div id="avatar-container" class="card-body text-center">
+                <button class="btn btn-sm btn-info modal-avatar-edit" type="button" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-7">
+        <div class="card mb-4 collapse" id="collapseAvatarEdit">
+            <div class="card-body">
+
+                {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyeType) }}
+                    {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyebrowType) }}
+                    {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.mouthType) }}
+                    {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.skinColor) }}
+                    {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-12">
+                    {{ form_label(avatarForm.topType) }}
+                    {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.accessoriesType) }}
+                    {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.hatColor) }}
+                    {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.hairColor) }}
+                    {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6"></div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairType) }}
+                    {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairColor) }}
+                    {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-12">
+                    {{ form_label(avatarForm.clotheType) }}
+                    {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.clotheColor) }}
+                    {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-6">
+                    {{ form_label(avatarForm.graphicType) }}
+                    {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-sm btn-success">Sauvegarder mon avatar</button>
+                    <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false" aria-controls="collapseExample">
+                        Fermer
+                    </button>
+                </div>
+
+                {{ form_end(avatarForm) }}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                {{ form_label(form.firstname, 'Ton prénom :') }}
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(form.lastname, 'Ton prénom :') }}
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+
+                {{ form_label(form.email, 'Ton email :') }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <div class="alert-danger">
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="w-100 text-center mt-4">
+                    <button class="btn btn-sm btn-success">Sauvegarder mes informations</button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+
+    </div>
+</div>

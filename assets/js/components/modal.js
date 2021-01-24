@@ -35,7 +35,7 @@ $(document).ready(function(){
             $('<div class="text-center">' +
                 '<p>Toute suppression est définitive !</p>' +
                 '<p>Êtes vous sûr de ce que vous faites ?</p><br>' +
-                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-comment-action="">Confirmer</button>' +
+                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-comment-action="" data-user-relationship-action="">Confirmer</button>' +
                 '<button class="btn btn-info mx-2 px-4" data-dismiss="modal">Annuler</button>' +
                 '</div>'),
             false

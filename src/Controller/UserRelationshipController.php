@@ -18,28 +18,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserRelationshipController extends AbstractController
 {
     private $entityManager;
+    private $userRelationshipManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, UserRelationshipManager $userRelationshipManager)
     {
         $this->entityManager = $entityManager;
+        $this->userRelationshipManager = $userRelationshipManager;
     }
 
     /**
      * @Route("/follow/{id}", name="follow", methods={"GET"})
      *
      * @param User $user
-     * @param UserRelationshipManager $userRelationshipManager
      *
      * @return JsonResponse
      *
      * @throws Exception
      */
-    public function follow(User $user, UserRelationshipManager $userRelationshipManager): JsonResponse
+    public function follow(User $user): JsonResponse
     {
         try {
-            $userRelationshipManager->createFollowRelationship($this->getUser(), $user);
+            $this->userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 
-            return $this->json(null);
+            return new JsonResponse($this->renderView('user/_followingButton.html.twig', ['user' => $user]), 200);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }
@@ -49,18 +50,37 @@ class UserRelationshipController extends AbstractController
      * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
      *
      * @param User $user
-     * @param UserRelationshipManager $userRelationshipManager
      *
      * @return Response
      *
      * @throws Exception
      */
-    public function acceptFollow(User $user, UserRelationshipManager $userRelationshipManager): Response
+    public function acceptFollow(User $user): Response
     {
         try {
-            $userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
+            $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
 
             return $this->json(null);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
+    }
+
+    /**
+     * @Route("/unfollow/{id}", name="unfollow", methods={"GET"})
+     *
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function unfollow(User $user): Response
+    {
+        try {
+            $this->userRelationshipManager->deleteFollowRelationship($this->getUser(), $user);
+
+            return new JsonResponse($this->renderView('user/_followingButton.html.twig', ['user' => $user]), 200);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }

@@ -1,14 +1,17 @@
 import $ from "jquery";
 
 $(document).ready(function() {
-    $("a[data-user-relationship]").click(function () {
+    $('body').on('click', '[data-user-relationship-action]', function () {
         event.preventDefault();
-        switch ($(this).data('user-relationship')) {
-            case 'create-follow':
+        switch ($(this).data('user-relationship-action')) {
+            case 'create':
                 createFollowRequest($(this));
                 break;
-            case 'accept-follow':
+            case 'accept':
                 acceptFollowRequest($(this));
+                break;
+            case 'delete':
+                deleteFollowRequest($(this));
                 break;
         }
     })
@@ -16,25 +19,50 @@ $(document).ready(function() {
 
 function createFollowRequest(element) {
     $.ajax({
-        url: element.attr('href'),
+        url: element.data('user-relationship-url'),
         method: "get",
-    }).fail(function() {
-        console.log("fail");
-    }).done(function() {
-        element.removeClass('btn-follow');
-        element.addClass('btn-remove-follow-requests');
+        success: function (data) {
+            updateFollowButton(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
     });
 }
 
 function acceptFollowRequest(element) {
     $.ajax({
-        url: element.attr('href'),
+        url: element.data('user-relationship-url'),
         method: "get",
-    }).fail(function() {
-        console.log("fail");
-    }).done(function() {
-        $('#alert').trigger("trigger-alert", ["success", "Demande acceptée !"]);
-        element.fadeOut(200);
-        $("#followers-container").append(element.prev()).children(':last').hide().fadeIn(500);
+        success: function (data) {
+            updateFollowButton(data);
+            $('#alert').trigger("trigger-alert", ["success", "Demande acceptée !"]);
+        },
+        error: function (error) {
+            console.log(error);
+        }
     });
+}
+
+function deleteFollowRequest(element) {
+
+    $.ajax({
+        url: element.data('user-relationship-url'),
+        method: "get",
+        success: function (data) {
+            updateFollowButton(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+    $('#customModal').modal('hide');
+}
+
+function updateFollowButton(data) {
+    const followButtonDiv = $('#followButtonDiv');
+    if (followButtonDiv.length === 1) {
+        followButtonDiv.html(data);
+    }
 }

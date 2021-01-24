@@ -6,10 +6,12 @@ use App\Helper\DoctrinePersistLifecycleTrait;
 use App\Helper\DoctrineUpdateLifecycleTrait;
 use App\Repository\UserRelationshipRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRelationshipRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"userSource", "userTarget"}, message="Ces utilisateurs sont déjà en relation.")
  */
 class UserRelationship
 {
@@ -35,16 +37,16 @@ class UserRelationship
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userTarget;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsSource")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userSource;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userTarget;
 
     public function getId(): ?int
     {
@@ -63,18 +65,6 @@ class UserRelationship
         return $this;
     }
 
-    public function getUserTarget(): ?User
-    {
-        return $this->userTarget;
-    }
-
-    public function setUserTarget(?User $userTarget): self
-    {
-        $this->userTarget = $userTarget;
-
-        return $this;
-    }
-
     public function getUserSource(): ?User
     {
         return $this->userSource;
@@ -87,4 +77,15 @@ class UserRelationship
         return $this;
     }
 
+    public function getUserTarget(): ?User
+    {
+        return $this->userTarget;
+    }
+
+    public function setUserTarget(?User $userTarget): self
+    {
+        $this->userTarget = $userTarget;
+
+        return $this;
+    }
 }

@@ -4,18 +4,16 @@
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
-
-  &:after {
-    content: 'S\'abonner';
-  }
 }
 
-.btn-remove-follow-request {
+.btn-cancel-follow-request {
   @extend .btn;
   @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
 
   &:after {
     content: 'Demande en attente';
@@ -30,12 +28,14 @@
   }
 }
 
-.btn-remove-follow {
+.btn-delete-follow {
   @extend .btn;
   @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
 
   &:after {
     content: 'Abonné';
