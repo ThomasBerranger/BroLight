@@ -128,6 +128,7 @@ class CommentController extends AbstractController
 
             return new JsonResponse([
                 'view' => $this->renderView('comment/_commentButton.html.twig', ['movie' => $this->tmdbService->getMovieById($comment->getTmdbId())]),
+                'commentId' => $comment->getId(),
                 'tmdbId' => $comment->getTmdbId()
             ], 200);
         } catch (Exception $exception) {

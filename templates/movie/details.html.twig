@@ -24,67 +24,25 @@
         </div>
 
         <div class="col-12">
-            <div class="card">
+            <div class="card" id="movieDetailsCommentDiv">
                 <div class="card-body">
                     <h5 class="card-title text-center py-2">Commentaires :</h5>
                     {% set isCurrentUserCommentDetected = false %}
                     {% for comment in comments %}
 
-                        <div class="card-text d-flex flex-row">
-                            <a style="position: relative" class="mr-2" href="{{ path('user.show', {'slug': comment.author.slug}) }}">
-                                <img class="avatar-medium" src="{{ comment.author.avatar|formatAvatarData }}" alt="{{ comment.author }} avatar">
-                                {% if comment.view.rate is defined %}
-                                    {% if comment.view.rate %}
-                                        <img class="rate-emoji-md" style="position: absolute; top: 60px; right: 0;" src="{{ comment.view.rate.value|associatedEmojiURL }}" alt="rate emoji">
-                                    {% endif %}
-                                {% endif %}
-                            </a>
+                        {% include 'comment/_commentMovieDetails.html.twig' %}
 
-                            <div class="w-100">
-                                <a class="font-weight-bolder" style="font-size: 1rem" href="{{ path('user.show', {'slug': comment.author.slug}) }}">{{ comment.author }}</a>
-                                <p class="text-muted">{{ comment.createdAt|customDateFormat }}</p>
-                                {% if comment.spoiler %}
-                                    <p class="bg-warning pointer-cursor text-center" data-toggle="collapse" data-target="#collapseSpoiler{{ comment.id }}" aria-expanded="false" aria-controls="collapseSpoiler{{ comment.id }}">
-                                        <i class="fas fa-exclamation-circle"></i> Spoiler - Cliquer pour afficher
-                                    </p>
-                                    <p class="collapse" id="collapseSpoiler{{ comment.id }}">{{ comment.content|nl2br }}</p>
-                                {% else %}
-                                    <p>{{ comment.content|nl2br }}</p>
-                                {% endif %}
-                            </div>
+                        {% if loop.index != comments|length %}
+                            <hr class="m-2-vh">
+                        {% endif %}
 
-                            {% if comment.author == app.user %}
-                                {% set isCurrentUserCommentDetected = true %}
-                                <div class="ml-2">
-                                    <i class="far fa-edit pointer-cursor"
-                                       data-tmdb-id="{{ movie.id }}"
-                                       data-title="{{ movie.title }}"
-                                       data-comment-action="open-form"
-                                       data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
-                                    <br>
-                                    <i class="fa fa-trash-alt pointer-cursor"
-                                       data-custom-confirm="open"
-                                       data-custom-confirm-configurations='{"entity":"comment", "action":"delete", "url": "{{ absolute_url(path('comment.delete', {'id': comment.id})) }}"}'>
-                                    </i>
-                                </div>
-                            {% endif %}
-
-                        </div>
-
-                        <hr class="m-2-vh">
                     {% endfor %}
-                    {% if not isCurrentUserCommentDetected %}
-                        <div class="ml-2">
-                            {% include 'movie/_viewButton.html.twig' %}
-                            <button class="btn btn-sm btn-info"
-                                    data-tmdb-id="{{ movie.id }}"
-                                    data-title="{{ movie.title }}"
-                                    data-comment-action="open-form"
-                                    data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}">
-                                Et toi qu'est-ce que tu en penses ? <i class="far fa-comment"></i>
-                            </button>
-                        </div>
-                    {% endif %}
+
+                    <div class="ml-2">
+                        {% include 'movie/_viewButton.html.twig' %}
+                        {% include 'comment/_commentButton.html.twig' %}
+                    </div>
+
                 </div>
             </div>
         </div>
