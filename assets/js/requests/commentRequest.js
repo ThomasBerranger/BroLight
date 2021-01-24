@@ -45,7 +45,7 @@ function openFormRequest(element) {
 
     $('#customModal').trigger("trigger-custom-modal", [
         element.data('title'),
-        formDiv.load(element.data('comment-url'))
+        formDiv.html('<div class="text-center"><i class="fas fa-compact-disc fa-spin fa-3x"></i></div>').load(element.data('comment-url'))
     ]);
 }
 
