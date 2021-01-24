@@ -26,8 +26,8 @@ class ViewRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('v')
             ->innerJoin('v.author', 'u', 'WITH', 'v.author = u.id')
             ->innerJoin('u.userRelationsAsTarget', 'ur', 'WITH', 'u.id = ur.userTarget')
-            ->where('ur.status = :status')
-            ->andWhere('ur.userSource = :userId')
+            ->where('ur.status = :status AND ur.userSource = :userId')
+            ->orWhere('v.author = :userId')
             ->setParameters([
                 'status' => UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
                 'userId' => $user->getId()
