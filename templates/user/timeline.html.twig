@@ -48,6 +48,8 @@
                                         <p>{{ event.comment.content|nl2br }}</p>
                                     {% endif %}
                                 </div>
+                            {% else %}
+                                <div class="card-text text-left text-danger p-2">Vu...</div>
                             {% endif %}
 
                         </div>

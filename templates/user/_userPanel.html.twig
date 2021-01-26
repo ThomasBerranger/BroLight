@@ -1,8 +1,10 @@
 <div class="{{ display is defined and not display ? 'd-none' : 'd-flex' }} user-panel">
 
         <span>
-            <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
-            {{ user }}
+            <a href="{{ path('user.show', { 'slug' : user.slug }) }}">
+                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                {{ user }}
+            </a>
         </span>
 
         {% if context == "follower" and buttonDisplay is defined %}

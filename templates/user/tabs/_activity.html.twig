@@ -1,13 +1,33 @@
 <div class="row">
     <div class="col-12 col-md-6">
         <div class="card">
-            <p>blabla</p>
+            <div class="card-body row">
+
+                {% for view in app.user.views|reverse %}
+                    <div class="col-4 mb-3">
+                        <a href="{{ path('movie.details', {'tmdbId': view.tmdbId}) }}">
+                            <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ view.movie.poster_path }}" alt="{{ view.movie.title }} poster">
+                            {% if view.rate %}
+                                <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ view.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        {% if view.comment %}
+                            <div class="card-text text-left p-2">
+                                <p>{{ view.comment.content|nl2br }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+            </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6">
-        <div class="card">
-            <p>blabla</p>
+        <div class="card p-3 text-center">
+            <p>autre</p>
         </div>
     </div>
 </div>

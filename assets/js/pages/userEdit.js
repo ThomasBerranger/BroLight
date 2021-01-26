@@ -131,7 +131,6 @@ function disable(elements) {
 }
 
 function moveToFollowers(followerButtonContainer) {
-    followerButtonContainer.fadeOut(500)
     followerButtonContainer.parent().fadeOut(500, function () {
         followerButtonContainer.parent().appendTo('#followersDiv').fadeIn(500);
     });

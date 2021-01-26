@@ -47,6 +47,14 @@ function deleteFollowRequest(element) {
     $('#customModal').modal('hide');
 }
 
+function updateFollowingButtonContainer(data) {
+    const followingButtonContainer = $(`#followingButtonContainer-${data['userId']}`);
+
+    if (followingButtonContainer.length === 1) {
+        followingButtonContainer.html(data['view']);
+    }
+}
+
 function acceptFollowRequest(element) {
     $.ajax({
         url: element.data('user-relationship-url'),
@@ -75,18 +83,11 @@ function refuseFollowRequest(element) {
     $('#customModal').modal('hide');
 }
 
-function updateFollowingButtonContainer(data) {
-    const followingButtonContainer = $(`#followingButtonContainer-${data['userId']}`);
-
-    if (followingButtonContainer.length === 1) {
-        followingButtonContainer.html(data['view']);
-    }
-}
-
-function updateFollowerButtonContainer(userId, type) {
-    const followerButtonContainer = $(`#followerButtonContainer-${userId}`);
+function updateFollowerButtonContainer(data, type) {
+    const followerButtonContainer = $(`#followerButtonContainer-${data['userId']}`);
 
     if (followerButtonContainer.length === 1) {
+        followerButtonContainer.html(data['view']);
         followerButtonContainer.trigger('update-user-interface', [type]);
     }
 }

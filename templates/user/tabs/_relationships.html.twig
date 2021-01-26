@@ -7,7 +7,7 @@
                     <p class="text-center">Abonné{{ app.user.followers|length > 1 ? 's' }}</p>
                     <hr class="mb-2">
                     {% for user in app.user.followers %}
-                        {% include 'user/_userPanel.html.twig' with {'context': 'follower'} %}
+                        {% include 'user/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
                     {% endfor %}
                 </div>
                 <div id="followings-container" class="col-12 col-lg-6 mt-2 mt-lg-0">

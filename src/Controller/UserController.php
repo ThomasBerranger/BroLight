@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\View;
 use App\Form\UserType;
 use App\Form\AvatarType;
-use App\Manager\ViewManager;
+use App\Service\TMDBService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,11 +20,13 @@ class UserController extends AbstractController
 {
     private $entityManager;
     private $userService;
+    private $tmdbService;
 
-    public function __construct(EntityManagerInterface $entityManager, UserService $userService)
+    public function __construct(EntityManagerInterface $entityManager, UserService $userService, TMDBService $tmdbService)
     {
         $this->entityManager = $entityManager;
         $this->userService = $userService;
+        $this->tmdbService = $tmdbService;
     }
 
     /**
@@ -63,6 +64,10 @@ class UserController extends AbstractController
 
             $this->entityManager->persist($currentUser);
             $this->entityManager->flush();
+        }
+
+        foreach ($currentUser->getViews() as $view) {
+            $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
         }
 
         return $this->render('user/edit.html.twig', [

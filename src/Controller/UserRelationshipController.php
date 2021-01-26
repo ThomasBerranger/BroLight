@@ -86,7 +86,10 @@ class UserRelationshipController extends AbstractController
         try {
             $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
 
-            return $this->json($user->getId());
+            return $this->json([
+                'view' => $this->renderView('user/_followerButton.html.twig', ['user' => $user]),
+                'userId' => $user->getId()
+            ], 201);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }
@@ -106,7 +109,10 @@ class UserRelationshipController extends AbstractController
         try {
             $this->userRelationshipManager->deleteFollowRelationship($user, $this->getUser());
 
-            return $this->json($user->getId());
+            return $this->json([
+                'view' => $this->renderView('user/_followerButton.html.twig', ['user' => $user]),
+                'userId' => $user->getId()
+            ], 201);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }

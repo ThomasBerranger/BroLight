@@ -18,11 +18,14 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h2>{{ user }}</h2>
-
-                        <div id="followingButtonContainer-{{ user.id }}">
-                            {{ include('user/_followingButton.html.twig') }}
+                        <div class="text-right">
+                            <span id="followerButtonContainer-{{ user.id }}">
+                                {{ include('user/_followerButton.html.twig') }}
+                            </span>
+                            <span id="followingButtonContainer-{{ user.id }}">
+                                {{ include('user/_followingButton.html.twig') }}
+                            </span>
                         </div>
-
                     </div>
                     <p>{{ user.views|length }} Film{{ user.views|length > 1 ? 's' }} vu{{ user.views|length > 1 ? 's' }}</p>
                     <p>{{ user.followings|length }} Abonnement{{ user.followings|length > 1 ? 's' }}</p>
