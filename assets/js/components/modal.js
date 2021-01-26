@@ -41,8 +41,16 @@ $(document).ready(function(){
             false
         ]);
 
-        $('#modalConfirmButton').data(`${element.data('custom-confirm-configurations')['entity']}-action`, 'delete');
-        $('#modalConfirmButton').data(`${element.data('custom-confirm-configurations')['entity']}-url`, element.data('custom-confirm-configurations')['url']);
+        const modalConfirmButton = $('#modalConfirmButton');
+
+        if (element.data('custom-confirm-configurations')['action']) {
+            modalConfirmButton.data(`${element.data('custom-confirm-configurations')['entity']}-action`, `${element.data('custom-confirm-configurations')['action']}`);
+        } else {
+            modalConfirmButton.data(`${element.data('custom-confirm-configurations')['entity']}-action`, 'delete');
+        }
+
+        modalConfirmButton.data(`${element.data('custom-confirm-configurations')['entity']}-url`, element.data('custom-confirm-configurations')['url']);
+
     });
 
 });

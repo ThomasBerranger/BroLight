@@ -1,10 +1,31 @@
 {% if user in app.user.followers %}
 
-    <button>supprimer ?</button>
+    <button class="btn-refuse-follow" role="button"
+            data-custom-confirm="open"
+            data-custom-confirm-configurations='{
+            "entity":"user-relationship",
+            "action":"refuse",
+             "url": "{{ path('user_relationship.refuse', {'id': user.id}) }}"
+             }'>
+        <i class="fa fa-user-times"></i>
+    </button>
 
 {% elseif user in app.user.pendingFollowers %}
 
-    <button>accepter ?</button>
-    <button>refuser ?</button>
+    <button class="btn-accept-follow" role="button"
+            data-user-relationship-action="accept"
+            data-user-relationship-url="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">
+        <i class="fa fa-user-check"></i>
+    </button>
+
+    <button class="btn-refuse-follow" role="button"
+            data-custom-confirm="open"
+            data-custom-confirm-configurations='{
+            "entity":"user-relationship",
+            "action":"refuse",
+            "url": "{{ path('user_relationship.refuse', {'id': user.id}) }}"
+            }'>
+        <i class="fa fa-user-times"></i>
+    </button>
 
 {% endif %}

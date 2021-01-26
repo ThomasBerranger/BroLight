@@ -1,0 +1,22 @@
+<div class="{{ display is defined and not display ? 'd-none' : 'd-flex' }} user-panel">
+
+        <span>
+            <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+            {{ user }}
+        </span>
+
+        {% if context == "follower" and buttonDisplay is defined %}
+
+        <span id="followerButtonContainer-{{ user.id }}">
+            {{ include('user/_followerButton.html.twig') }}
+        </span>
+
+        {% elseif context == "following" and buttonDisplay is defined %}
+
+        <span id="followingButtonContainer-{{ user.id }}">
+            {{ include('user/_followingButton.html.twig') }}
+        </span>
+
+        {% endif %}
+
+</div>

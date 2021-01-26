@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 $(document).ready(function() {
     editInputsDisplay();
 
@@ -43,6 +45,18 @@ $(document).ready(function() {
 
         editInputsDisplay();
     });
+
+    $("[id*='followerButtonContainer-']").on("update-user-interface", function(event, type) {
+        switch (type) {
+            case 'move-to-followers':
+                moveToFollowers($(this));
+                break;
+            case 'remove-from-followers':
+                removeFromFollowers($(this));
+                break;
+        }
+    });
+
 });
 
 function editInputsDisplay() {
@@ -94,24 +108,37 @@ function editInputsDisplay() {
     } else {
         disable(graphicTypeInput);
     }
+}
 
-    function enable(elements) {
-        if (Array.isArray(elements)) {
-            elements.forEach(function(element){
-                element.prop('disabled', false);
-            });
-        } else {
-            elements.prop('disabled', false);
-        }
+function enable(elements) {
+    if (Array.isArray(elements)) {
+        elements.forEach(function(element){
+            element.prop('disabled', false);
+        });
+    } else {
+        elements.prop('disabled', false);
     }
+}
 
-    function disable(elements) {
-        if (Array.isArray(elements)) {
-            elements.forEach(function (element) {
-                element.prop('disabled', true);
-            });
-        } else {
-            elements.prop('disabled', true);
-        }
+function disable(elements) {
+    if (Array.isArray(elements)) {
+        elements.forEach(function (element) {
+            element.prop('disabled', true);
+        });
+    } else {
+        elements.prop('disabled', true);
     }
+}
+
+function moveToFollowers(followerButtonContainer) {
+    followerButtonContainer.fadeOut(500)
+    followerButtonContainer.parent().fadeOut(500, function () {
+        followerButtonContainer.parent().appendTo('#followersDiv').fadeIn(500);
+    });
+}
+
+function removeFromFollowers(followerButtonContainer) {
+    followerButtonContainer.parent().fadeOut(500, function () {
+        $(this).remove();
+    });
 }

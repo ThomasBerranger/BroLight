@@ -1,9 +1,28 @@
+.btn-xs {
+  padding: .25rem .5rem;
+  font-size: .800rem;
+  line-height: 1;
+  border-radius: .2rem;
+}
+
 .btn-follow {
   @extend .btn;
   @extend .btn-sm;
   @extend .btn-info;
 
   padding: 0.15rem 1.5vw;
+}
+
+.btn-accept-follow {
+  @extend .btn;
+  @extend .btn-xs;
+  @extend .btn-info;
+}
+
+.btn-refuse-follow {
+  @extend .btn;
+  @extend .btn-xs;
+  @extend .btn-danger;
 }
 
 .btn-cancel-follow-request {

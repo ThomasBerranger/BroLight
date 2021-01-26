@@ -40,27 +40,10 @@ class UserRelationshipController extends AbstractController
         try {
             $this->userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 
-            return new JsonResponse($this->renderView('user/_followingButton.html.twig', ['user' => $user]), 200);
-        } catch (Exception $exception) {
-            return $this->json($exception, 500);
-        }
-    }
-
-    /**
-     * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
-     *
-     * @param User $user
-     *
-     * @return Response
-     *
-     * @throws Exception
-     */
-    public function acceptFollow(User $user): Response
-    {
-        try {
-            $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
-
-            return $this->json(null);
+            return new JsonResponse([
+                'view' => $this->renderView('user/_followingButton.html.twig', ['user' => $user]),
+                'userId' => $user->getId()
+            ], 200);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }
@@ -80,7 +63,50 @@ class UserRelationshipController extends AbstractController
         try {
             $this->userRelationshipManager->deleteFollowRelationship($this->getUser(), $user);
 
-            return new JsonResponse($this->renderView('user/_followingButton.html.twig', ['user' => $user]), 200);
+            return new JsonResponse([
+                'view' => $this->renderView('user/_followingButton.html.twig', ['user' => $user]),
+                'userId' => $user->getId()
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
+    }
+
+    /**
+     * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
+     *
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function acceptFollow(User $user): Response
+    {
+        try {
+            $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
+
+            return $this->json($user->getId());
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
+    }
+
+    /**
+     * @Route("/refuse/{id}", name="refuse", methods={"GET"})
+     *
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function refuse(User $user): Response
+    {
+        try {
+            $this->userRelationshipManager->deleteFollowRelationship($user, $this->getUser());
+
+            return $this->json($user->getId());
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }
