@@ -93,6 +93,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "laminas/laminas-code": {
         "version": "3.5.1"
     },
@@ -104,9 +107,6 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.3"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.10.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -131,15 +131,6 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
-    },
-    "symfony/apache-pack": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "71599f5b0fdeeeec0fb90e9b17c85e6f5e1350c1"
-        }
     },
     "symfony/asset": {
         "version": "v5.2.0"
@@ -433,8 +424,5 @@
     },
     "twig/twig": {
         "version": "v3.1.1"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     }
 }
