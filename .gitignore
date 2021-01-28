@@ -1,5 +1,5 @@
 .idea
-.docker-compose.yaml
+docker-compose.yaml
 
 ###> symfony/framework-bundle ###
 /.env.local
