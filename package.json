@@ -12,7 +12,6 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "npm install && encore production --progress"
