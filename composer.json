@@ -66,6 +66,10 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "compile": [
+            "nmp run build",
+            "php bin/console doctrine:migration:migrate"
         ]
     },
     "conflict": {
