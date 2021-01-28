@@ -67,7 +67,7 @@
             "@auto-scripts"
         ],
         "compile": [
-            "nmp run build",
+            "npm run build",
             "php bin/console doctrine:migration:migrate"
         ]
     },
