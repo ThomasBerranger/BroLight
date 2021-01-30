@@ -1,0 +1,18 @@
+{% extends 'offline_base.html.twig' %}
+
+{% block title %}{{ parent() }} | Connexion{% endblock %}
+
+{% block body %}
+    <div class="row vertical-center-container full-page-y">
+
+        <div class="col-10 center-content card p-4">
+
+            <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
+            <h4 class="text-center mt-3">About</h4>
+            <p class="text-center my-3">Thomas Berranger est le webmaster et il vous prie de patienter !</p>
+            <a type="button" class="btn btn-sm btn-info" href="{{ path('home') }}">Retour à {{ project_title }} ici !</a>
+
+        </div>
+
+    </div>
+{% endblock %}

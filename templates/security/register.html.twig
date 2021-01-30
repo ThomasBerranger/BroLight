@@ -37,6 +37,7 @@
         <label class="mb-3 pointer-cursor w-100">
             {{ form_widget(registrationForm.agreeTerms) }}
             Conditions d'utilisations
+            <a href="{{ path('tcu') }}"><i class="far fa-question-circle"></i></a>
             <div class="alert-danger">
                 {{ form_errors(registrationForm.agreeTerms) }}
             </div>

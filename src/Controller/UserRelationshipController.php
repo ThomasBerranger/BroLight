@@ -41,7 +41,7 @@ class UserRelationshipController extends AbstractController
             $this->userRelationshipManager->createFollowRelationship($this->getUser(), $user);
 
             return new JsonResponse([
-                'view' => $this->renderView('user/_followingButton.html.twig', ['user' => $user]),
+                'view' => $this->renderView('user/_partials/_followingButton.html.twig', ['user' => $user]),
                 'userId' => $user->getId()
             ], 200);
         } catch (Exception $exception) {
@@ -64,7 +64,7 @@ class UserRelationshipController extends AbstractController
             $this->userRelationshipManager->deleteFollowRelationship($this->getUser(), $user);
 
             return new JsonResponse([
-                'view' => $this->renderView('user/_followingButton.html.twig', ['user' => $user]),
+                'view' => $this->renderView('user/_partials/_followingButton.html.twig', ['user' => $user]),
                 'userId' => $user->getId()
             ], 200);
         } catch (Exception $exception) {
@@ -87,7 +87,7 @@ class UserRelationshipController extends AbstractController
             $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
 
             return $this->json([
-                'view' => $this->renderView('user/_followerButton.html.twig', ['user' => $user]),
+                'view' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
                 'userId' => $user->getId()
             ], 201);
         } catch (Exception $exception) {
@@ -110,7 +110,7 @@ class UserRelationshipController extends AbstractController
             $this->userRelationshipManager->deleteFollowRelationship($user, $this->getUser());
 
             return $this->json([
-                'view' => $this->renderView('user/_followerButton.html.twig', ['user' => $user]),
+                'view' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
                 'userId' => $user->getId()
             ], 201);
         } catch (Exception $exception) {
