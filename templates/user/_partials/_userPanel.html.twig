@@ -7,18 +7,18 @@
             </a>
         </span>
 
-        {% if context == "follower" and buttonDisplay is defined %}
+    {% if context == "follower" and buttonDisplay is defined %}
 
         <span id="followerButtonContainer-{{ user.id }}">
-            {{ include('user/_followerButton.html.twig') }}
+            {{ include('user/_partials/_followerButton.html.twig') }}
         </span>
 
-        {% elseif context == "following" and buttonDisplay is defined %}
+    {% elseif context == "following" and buttonDisplay is defined %}
 
         <span id="followingButtonContainer-{{ user.id }}">
-            {{ include('user/_followingButton.html.twig') }}
+            {{ include('user/_partials/_followingButton.html.twig') }}
         </span>
 
-        {% endif %}
+    {% endif %}
 
 </div>
