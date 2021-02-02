@@ -16,7 +16,17 @@ if ($_SERVER['APP_DEBUG']) {
 }
 
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+
 $request = Request::createFromGlobals();
+
+$trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ?? false;
+$trustedProxies = $trustedProxies ? explode(',', $trustedProxies) : [];
+if($_SERVER['APP_ENV'] == 'prod') $trustedProxies[] = $_SERVER['REMOTE_ADDR'];
+if($trustedProxies) {
+    Request::setTrustedProxies($trustedProxies, Request::HEADER_X_FORWARDED_AWS_ELB);
+}
+
 $response = $kernel->handle($request);
 $response->send();
+
 $kernel->terminate($request, $response);

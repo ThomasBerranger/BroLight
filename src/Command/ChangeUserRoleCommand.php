@@ -44,7 +44,7 @@ class ChangeUserRoleCommand extends Command
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            $output->writeln('User successfully generated!');
+            $output->writeln('User successfully updated!');
 
             return Command::SUCCESS;
         }
