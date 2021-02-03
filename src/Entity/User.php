@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email"}, message="Un compte est déjà enregistré avec cet email.")
+ * @UniqueEntity(fields={"email", "username"}, message="Un compte est déjà enregistré avec cet email ou ce username.")
  *
  */
 class User implements UserInterface

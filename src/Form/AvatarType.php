@@ -22,15 +22,15 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::CLOTHE_COLOR,
             ])
             ->add('clotheType', ChoiceType::class, [
-                'label' => 'Type de vêtements :',
+                'label' => 'Vêtements :',
                 'choices' => Avatar::CLOTHE_TYPE,
             ])
             ->add('eyeType', ChoiceType::class, [
-                'label' => 'Type d\'œils :',
+                'label' => 'Yeux :',
                 'choices' => Avatar::EYE_TYPE,
             ])
             ->add('eyebrowType', ChoiceType::class, [
-                'label' => 'Type de sourcils :',
+                'label' => 'Sourcils :',
                 'choices' => Avatar::EYEBROW_TYPE,
             ])
             ->add('facialHairColor', ChoiceType::class, [
@@ -38,7 +38,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::FACIAL_HAIR_COLOR,
             ])
             ->add('facialHairType', ChoiceType::class, [
-                'label' => 'Type de barbe :',
+                'label' => 'Barbe :',
                 'choices' => Avatar::FACIAL_HAIR_TYPE,
             ])
             ->add('graphicType', ChoiceType::class, [
@@ -46,7 +46,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::GRAPHIC_TYPE,
             ])
             ->add('hairColor', ChoiceType::class, [
-                'label' => 'Couleur de cheveux / chapeaux :',
+                'label' => 'Couleur de cheveux :',
                 'choices' => Avatar::HAIR_COLOR,
             ])
             ->add('hatColor', ChoiceType::class, [
@@ -54,7 +54,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::HAT_COLOR,
             ])
             ->add('mouthType', ChoiceType::class, [
-                'label' => 'Type de bouche :',
+                'label' => 'Bouche :',
                 'choices' => Avatar::MOUTH_TYPE,
             ])
             ->add('skinColor', ChoiceType::class, [
@@ -62,7 +62,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::SKIN_COLOR,
             ])
             ->add('topType', ChoiceType::class, [
-                'label' => 'Type de cheveux / chapeaux :',
+                'label' => 'Type de chapeau :',
                 'choices' => Avatar::TOP_TYPE,
             ])
         ;

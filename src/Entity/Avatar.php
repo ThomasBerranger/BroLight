@@ -47,7 +47,7 @@ class Avatar
         'Veste' => 'BlazerShirt',
         'Veste et colle' => 'BlazerSweater',
         'Colle' => 'CollarSweater',
-        'T-shirt avec graphique' => 'GraphicShirt',
+        'T-shirt avec graphisme' => 'GraphicShirt',
         'Pull à capuche' => 'Hoodie',
         'Salopette' => 'Overall',
         'T-shirt' => 'ShirtCrewNeck',
@@ -147,7 +147,7 @@ class Avatar
         'Rouge Pastel' => 'PastelRed',
         'Jaune' => 'PastelYellow',
         'Rose' => 'Pink',
-        'White' => 'White',
+        'Blanc' => 'White',
     ];
 
     const MOUTH_TYPE = [
