@@ -101,6 +101,11 @@ class User implements UserInterface
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
     public function __construct()
     {
         $this->views = new ArrayCollection();
@@ -324,7 +329,14 @@ class User implements UserInterface
 
     public function getUsername(): string
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -421,6 +433,7 @@ class User implements UserInterface
         $this->createdAt = new \DateTime();
         $this->roles = [User::ROLE_USER];
         $this->slug = strtolower($this->firstname.$this->lastname);
+        $this->username = strtolower($this->firstname.$this->lastname.time());
     }
 
     /**
