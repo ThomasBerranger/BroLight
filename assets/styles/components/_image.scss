@@ -9,3 +9,18 @@ img.poster {
     transform: scale(1.1);
   }
 }
+
+img.img {
+  &-xs {
+    height: 5vh;
+  }
+  &-sm {
+    height: 10vh;
+  }
+  &-md {
+    height: 15vh;
+  }
+  &-lg {
+    height: 20vh;
+  }
+}
