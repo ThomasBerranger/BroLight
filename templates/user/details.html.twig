@@ -5,43 +5,107 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-12 col-md-5">
-            <div class="card">
-                <div id="avatar-container" class="card-body text-center">
-                    <img class="img-fluid" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img class="img-fluid img-md" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
+                        </div>
+                        <h3 class="text-center">{{ user }}</h3>
+                        <div class="d-flex justify-content-center mb-2">
+                        <span id="followerButtonContainer-{{ user.id }}">
+                            {{ include('user/_partials/_followerButton.html.twig') }}
+                        </span>
+                        <span id="followingButtonContainer-{{ user.id }}">
+                            {{ include('user/_partials/_followingButton.html.twig') }}
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-12">
+                    <div class="card my-3 p-4">
+                        <div class="row">
+                            <div class="col-4 text-center font-weight-bold" style="
+                            border-left: 2px black solid;
+                            border-top: 2px black solid;
+                            height: 30px;
+                            width: 30px;
+                            margin-top: 30px;">
+                                2
+                            </div>
+                            <div class="col-4 text-center font-weight-bold" style="
+                            border: 2px black solid;
+                            border-bottom: 0;
+                            height: 60px;
+                            width: 65px;">
+                                1
+                            </div>
+                            <div class="col-4 text-center font-weight-bold" style="
+                            border-right: 2px black solid;
+                            border-top: 2px black solid;
+                            height: 20px;
+                            width: 65px;
+                            margin-top: 40px;">
+                                3
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-md-7">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h2>{{ user }}</h2>
-                        <div class="text-right">
-                            <span id="followerButtonContainer-{{ user.id }}">
-                                {{ include('user/_partials/_followerButton.html.twig') }}
-                            </span>
-                            <span id="followingButtonContainer-{{ user.id }}">
-                                {{ include('user/_partials/_followingButton.html.twig') }}
-                            </span>
+                    <p class="font-weight-bold">{{ user.views|length }} Film{{ user.views|length > 1 ? 's' }} vu{{ user.views|length > 1 ? 's' }} ({{ user.comments|length }} commenté{{ user.comments|length > 1 ? 's' }}):</p>
+                    <hr class="my-2">
+                    <div class="row">
+                        {% for view in user.views|reverse %}
+                            <div class="col-4 mb-3">
+                                <a href="{{ path('movie.details', {'tmdbId': view.tmdbId}) }}">
+                                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ view.movie.poster_path }}" alt="{{ view.movie.title }} poster">
+                                    {% if view.rate %}
+                                        <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ view.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="col-8">
+                                {% if view.comment %}
+                                    <div class="card-text text-left p-2">
+                                        <p>{{ view.comment.content|nl2br }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-3 d-flex justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="user-followers-tab" data-toggle="pill" href="#pills-followers" role="tab" aria-controls="pills-settings" aria-selected="true">{{ user.followers|length }} Abonné{{ user.followers|length > 1 ? 's' }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="user-followings-tab" data-toggle="pill" href="#pills-followings" role="tab" aria-controls="pills-relationships" aria-selected="false">{{ user.followings|length }} Abonnement{{ user.followings|length > 1 ? 's' }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="user-followers-tab">
+                            {% for user in user.followers %}
+                                {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower'} %}
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane fade" id="pills-followings" role="tabpanel" aria-labelledby="user-followings-tab">
+                            {% for user in user.followings %}
+                                {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following'} %}
+                            {% endfor %}
                         </div>
                     </div>
-                    <p>{{ user.views|length }} Film{{ user.views|length > 1 ? 's' }} vu{{ user.views|length > 1 ? 's' }}</p>
-                    <p>{{ user.followings|length }} Abonnement{{ user.followings|length > 1 ? 's' }}</p>
-                    <p>{{ user.followers|length }} Abonné{{ user.followers|length > 1 ? 's' }}</p>
-                </div>
-            </div>
-
-            <div class="card mt-4">
-                <div class="card-body">
-                    <p>Genres favoris : <em>En cours de developpement ...</em></p>
-                </div>
-            </div>
-
-            <div class="card mt-4">
-                <div class="card-body">
-                    <p>Badges : <em>En cours de developpement ...</em></p>
                 </div>
             </div>
         </div>

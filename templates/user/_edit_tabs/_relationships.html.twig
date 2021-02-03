@@ -11,7 +11,7 @@
                     {% endfor %}
                 </div>
                 <div id="followings-container" class="col-12 col-lg-6 mt-2 mt-lg-0">
-                    <p class="text-center">Abonement{{ app.user.followings|length > 1 ? 's' }}</p>
+                    <p class="text-center">Abonnement{{ app.user.followings|length > 1 ? 's' }}</p>
                     <hr class="mb-2">
                     {% for user in app.user.followings %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following'} %}

@@ -5,5 +5,8 @@ footer {
   padding: 1rem;
   background-color: $white;
   text-align: center;
+}
+
+footer > a {
   text-decoration: underline;
 }

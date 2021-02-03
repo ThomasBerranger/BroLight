@@ -86,6 +86,11 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
+
+        foreach ($user->getViews() as $view) {
+            $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
+        }
+
         return $this->render('user/details.html.twig', [
             'user' => $user
         ]);
