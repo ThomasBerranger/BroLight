@@ -1,0 +1,13 @@
+<div class="row justify-content-center">
+    {% for movie in movies %}
+        {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
+            <div class="col-7">
+                <img class="card-img-top pointer-cursor" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster"
+                     data-podium-action="vote"
+                     data-podium-url="{{ path('podium.vote', {'rank': rank, 'tmdbId': movie.id}) }}"
+                >
+                <h4 class="text-center mt-2">{{ movie.title }}</h4>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

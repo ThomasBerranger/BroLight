@@ -1,0 +1,11 @@
+{% block body %}
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+            <div class="form-group">
+                <input type="text" class="form-control" id="podiumMovieSearchInput" data-search-url="{{ path('podium.search', {'rank': rank, 'title': 'replaceMe'}) }}" placeholder="Parasite">
+            </div>
+
+            <div id="podiumMoviesResult"></div>
+        </div>
+    </div>
+{% endblock %}

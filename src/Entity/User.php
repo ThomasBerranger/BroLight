@@ -106,6 +106,11 @@ class User implements UserInterface
      */
     private $username;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Podium::class, mappedBy="author", cascade={"persist", "remove"})
+     */
+    private $podium;
+
     public function __construct()
     {
         $this->views = new ArrayCollection();
@@ -462,6 +467,28 @@ class User implements UserInterface
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPodium(): ?Podium
+    {
+        return $this->podium;
+    }
+
+    public function setPodium(?Podium $podium): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($podium === null && $this->podium !== null) {
+            $this->podium->setAuthor(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($podium !== null && $podium->getAuthor() !== $this) {
+            $podium->setAuthor($this);
+        }
+
+        $this->podium = $podium;
 
         return $this;
     }

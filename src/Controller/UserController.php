@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Podium;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
@@ -70,10 +71,21 @@ class UserController extends AbstractController
             $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
         }
 
+        if ($currentUser->getPodium() instanceof Podium) {
+            $userPodium = [
+                1 => $currentUser->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getFirstTmdbId()) : null,
+                2 => $currentUser->getPodium()->getSecondTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getSecondTmdbId()) : null,
+                3 => $currentUser->getPodium()->getThirdTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getThirdTmdbId()) : null,
+            ];
+        } else {
+            $userPodium = [];
+        }
+
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser())
+            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()),
+            'userPodium' => $userPodium
         ]);
     }
 
@@ -86,13 +98,23 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-
         foreach ($user->getViews() as $view) {
             $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
         }
 
+        if ($user->getPodium() instanceof Podium) {
+            $userPodium = [
+                1 => $user->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getFirstTmdbId()) : null,
+                2 => $user->getPodium()->getSecondTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getSecondTmdbId()) : null,
+                3 => $user->getPodium()->getThirdTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getThirdTmdbId()) : null,
+            ];
+        } else {
+            $userPodium = [];
+        }
+
         return $this->render('user/details.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'userPodium' => $userPodium
         ]);
     }
 }

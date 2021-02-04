@@ -17,6 +17,15 @@
       &l-#{$value}-#{$unit} {
         margin-left: #{$value}#{$unit};
       }
+
+      &x-#{$value}-#{$unit} {
+        margin-left: #{$value}#{$unit};
+        margin-right: #{$value}#{$unit};
+      }
+      &y-#{$value}-#{$unit} {
+        margin-top: #{$value}#{$unit};
+        margin-bottom: #{$value}#{$unit};
+      }
     }
   } @else if($property == 'padding') {
     .p {
@@ -35,6 +44,15 @@
       }
       &l-#{$value}-#{$unit} {
         padding-left: #{$value}#{$unit};
+      }
+
+      &x-#{$value}-#{$unit} {
+        padding-left: #{$value}#{$unit};
+        padding-right: #{$value}#{$unit};
+      }
+      &y-#{$value}-#{$unit} {
+        padding-top: #{$value}#{$unit};
+        padding-bottom: #{$value}#{$unit};
       }
     }
   }
