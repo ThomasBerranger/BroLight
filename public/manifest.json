@@ -1,5 +1,5 @@
 {
-  "name": "My PWA BroLight",
+  "name": "BroLight",
   "short_name": "BroLight",
   "icons": [{
     "src": "./images/application-icons/brolight-icon-128.png",
