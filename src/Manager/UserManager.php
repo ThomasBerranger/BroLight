@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserManager
@@ -13,5 +14,9 @@ class UserManager
         $this->entityManager = $entityManager;
     }
 
-
+    public function delete(User $user): void
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
 }

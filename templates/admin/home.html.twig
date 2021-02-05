@@ -23,7 +23,10 @@
                                 <th scope="row">{{ user.id }}</th>
                                 <td>{{ user }}</td>
                                 <td>{{ user.email }}</td>
-                                <td class="text-center"><a href="{{ path('user.show', {'slug': user.slug}) }}"><i class="fa fa-eye"></i></a></td>
+                                <td class="text-center">
+                                    <a href="{{ path('user.show', {'slug': user.slug}) }}"><i class="fa fa-eye"></i></a> |
+                                    <a href="{{ path('admin.user.delete', {'id': user.id}) }}"><i class="fa fa-trash"></i></a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

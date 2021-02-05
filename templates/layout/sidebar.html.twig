@@ -14,5 +14,8 @@
         {% if is_granted('ROLE_ADMIN') %}
             <a role="button" class="btn btn-sm px-4 btn-outline-info" href="{{ path('admin.home') }}">Admin</a>
         {% endif %}
+        <br>
+        <br>
+        <a role="button" class="btn btn-sm px-4 btn-outline-danger" href="{{ path('app_logout') }}">Logout</a>
     </div>
 </div>

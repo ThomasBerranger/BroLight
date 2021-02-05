@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     private $entityManager;
+    private $userManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager)
     {
         $this->entityManager = $entityManager;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -41,14 +44,15 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/delete/user/{id}", name="delete.user")
+     * @Route("/delete/user/{id}", name="user.delete")
+     *
      * @param User $user
+     *
      * @return Response
      */
-    public function deleteUser(User $user): Response
+    public function removeUser(User $user): Response
     {
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
+        $this->userManager->delete($user);
 
         return $this->redirectToRoute('admin.home');
     }
