@@ -15,3 +15,9 @@ import './js/requests/viewRequest';
 import './js/requests/commentRequest';
 import './js/requests/avatarRequest';
 import './js/requests/podiumRequest';
+
+
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' }).then();
+    navigator.serviceWorker.ready.then();
+}
