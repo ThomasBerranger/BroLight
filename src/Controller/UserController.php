@@ -67,6 +67,8 @@ class UserController extends AbstractController
             $this->entityManager->flush();
         }
 
+        $this->userService->formattedPodium($this->getUser());
+
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
@@ -83,6 +85,8 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
+        $this->userService->formattedPodium($user);
+
         return $this->render('user/details.html.twig', ['user' => $user]);
     }
 }
