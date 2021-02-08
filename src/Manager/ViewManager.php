@@ -83,10 +83,6 @@ class ViewManager
     {
         $followingsViews = $this->entityManager->getRepository(View::class)->findFollowingsViews($user);
 
-        foreach ($followingsViews as $followingsView) {
-            $followingsView->setMovie($this->tmdbService->getMovieById($followingsView->getTmdbId()));
-        }
-
         return $followingsViews;
     }
 }

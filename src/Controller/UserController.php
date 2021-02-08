@@ -67,10 +67,6 @@ class UserController extends AbstractController
             $this->entityManager->flush();
         }
 
-        foreach ($currentUser->getViews() as $view) {
-            $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
-        }
-
         if ($currentUser->getPodium() instanceof Podium) {
             $userPodium = [
                 1 => $currentUser->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getFirstTmdbId()) : null,
@@ -98,10 +94,6 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        foreach ($user->getViews() as $view) {
-            $view->setMovie($this->tmdbService->getMovieById($view->getTmdbId()));
-        }
-
         if ($user->getPodium() instanceof Podium) {
             $userPodium = [
                 1 => $user->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getFirstTmdbId()) : null,
