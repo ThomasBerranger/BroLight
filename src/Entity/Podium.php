@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Helper\DoctrinePersistLifecycleTrait;
-use App\Helper\DoctrineUpdateLifecycleTrait;
+use App\Helper\CreatedAtBasicTrait;
+use App\Helper\UpdatedAtBasicTrait;
 use App\Repository\PodiumRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Podium
 {
-    use DoctrinePersistLifecycleTrait;
-    use DoctrineUpdateLifecycleTrait;
+    use CreatedAtBasicTrait;
+    use UpdatedAtBasicTrait;
 
     /**
      * @ORM\Id

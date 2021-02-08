@@ -5,7 +5,7 @@ namespace App\Helper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-trait DoctrineUpdateLifecycleTrait
+trait UpdatedAtBasicTrait
 {
     /**
      * @ORM\Column(type="datetime")

@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Helper\DoctrinePersistLifecycleTrait;
-use App\Helper\DoctrineUpdateLifecycleTrait;
+use App\Helper\CreatedAtBasicTrait;
+use App\Helper\UpdatedAtBasicTrait;
 use App\Repository\ViewRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,8 +16,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class View
 {
-    use DoctrinePersistLifecycleTrait;
-    use DoctrineUpdateLifecycleTrait;
+    use CreatedAtBasicTrait;
+    use UpdatedAtBasicTrait;
 
     /**
      * @ORM\Id

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Helper\DoctrineUpdateLifecycleTrait;
+use App\Helper\UpdatedAtBasicTrait;
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Avatar
 {
-    use DoctrineUpdateLifecycleTrait;
+    use UpdatedAtBasicTrait;
 
     const ACCESSORIES_TYPE = [
         'Aucun' => 'Blank',

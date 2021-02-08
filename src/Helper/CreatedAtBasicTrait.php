@@ -4,7 +4,7 @@ namespace App\Helper;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait DoctrinePersistLifecycleTrait
+trait CreatedAtBasicTrait
 {
     /**
      * @ORM\Column(type="datetime")
