@@ -67,21 +67,10 @@ class UserController extends AbstractController
             $this->entityManager->flush();
         }
 
-        if ($currentUser->getPodium() instanceof Podium) {
-            $userPodium = [
-                1 => $currentUser->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getFirstTmdbId()) : null,
-                2 => $currentUser->getPodium()->getSecondTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getSecondTmdbId()) : null,
-                3 => $currentUser->getPodium()->getThirdTmdbId() ? $this->tmdbService->getMovieById($currentUser->getPodium()->getThirdTmdbId()) : null,
-            ];
-        } else {
-            $userPodium = [];
-        }
-
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
             'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()),
-            'userPodium' => $userPodium
         ]);
     }
 
@@ -94,19 +83,6 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        if ($user->getPodium() instanceof Podium) {
-            $userPodium = [
-                1 => $user->getPodium()->getFirstTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getFirstTmdbId()) : null,
-                2 => $user->getPodium()->getSecondTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getSecondTmdbId()) : null,
-                3 => $user->getPodium()->getThirdTmdbId() ? $this->tmdbService->getMovieById($user->getPodium()->getThirdTmdbId()) : null,
-            ];
-        } else {
-            $userPodium = [];
-        }
-
-        return $this->render('user/details.html.twig', [
-            'user' => $user,
-            'userPodium' => $userPodium
-        ]);
+        return $this->render('user/details.html.twig', ['user' => $user]);
     }
 }

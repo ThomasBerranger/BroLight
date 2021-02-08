@@ -30,9 +30,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if userPodium is not empty and userPodium[2] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': userPodium[2].id}) }}">
-                                                <img class="podium-img-2" src="https://image.tmdb.org/t/p/w154{{ userPodium[2].poster_path }}" alt="{{ userPodium[1].title }} poster">
+                                        {% if user.formattedPodium is not empty and user.formattedPodium[2] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[2].id}) }}">
+                                                <img class="podium-img-2" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[2].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-2" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
@@ -46,9 +46,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if userPodium is not empty and userPodium[1] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': userPodium[1].id}) }}">
-                                                <img class="podium-img-1" src="https://image.tmdb.org/t/p/w154{{ userPodium[1].poster_path }}" alt="{{ userPodium[1].title }} poster">
+                                        {% if user.formattedPodium is not empty and user.formattedPodium[1] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[1].id}) }}">
+                                                <img class="podium-img-1" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[1].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-1" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
@@ -62,9 +62,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if userPodium is not empty and userPodium[3] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': userPodium[3].id}) }}">
-                                                <img class="podium-img-3" src="https://image.tmdb.org/t/p/w154{{ userPodium[3].poster_path }}" alt="{{ userPodium[1].title }} poster">
+                                        {% if user.formattedPodium is not empty and user.formattedPodium[3] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[3].id}) }}">
+                                                <img class="podium-img-3" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[3].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-3" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
