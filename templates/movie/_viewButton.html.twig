@@ -1,13 +1,15 @@
 <span id="viewButton-{{ movie.id }}">
 
-    {% if movie.id not in app.user.watchedMoviesTmdbIds %}
-        <i class="fas fa-eye-slash pointer-cursor" style="font-weight: 600; font-size: 1rem"
-           data-view-action="create"
-           data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
+    {% if movie.id in app.user.watchedMoviesTmdbIds %}
+            <i class="fas fa-eye pointer-cursor text-primary" style="font-weight: 600; font-size: 1rem"
+               data-view-action="delete"
+               data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"></i>
     {% else %}
-        <i class="fas fa-eye pointer-cursor text-primary" style="font-weight: 600; font-size: 1rem"
-           data-view-action="delete"
-           data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"></i>
+            <button role="button" class="btn btn-xxs btn-info">
+            <i class="fas fa-eye-slash pointer-cursor"
+               data-view-action="create"
+               data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
+            </button>
     {% endif %}
 
 </span>
