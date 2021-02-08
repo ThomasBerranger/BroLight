@@ -1,10 +1,7 @@
 <div id="alert" class="custom-alert px-4" role="alert" style="display: none"></div>
 
-{% if app.flashes('firstTime') %}
-    <span id="trigger-first-time-modal" class="d-none"
-          data-user-firstname="{{ app.user.firstname }}"
-          data-user-edit-link="{{ absolute_url(path('user.edit')) }}"
-          data-user-avatar="{{ app.user.avatar|formatAvatarData }}">
-        Bienvenue sur {{ project_title }} !
-    </span>
-{% endif %}
+<noscript>
+    <div class="custom-alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ project_title }}</strong> a besoin de JavaScript !
+    </div>
+</noscript>
