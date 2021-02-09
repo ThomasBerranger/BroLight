@@ -2,13 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
-use App\Entity\View;
 use App\Manager\ViewManager;
-use App\Service\EntityLinkerService;
 use App\Service\TMDBService;
-use App\Service\ViewService;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,19 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ViewController extends AbstractController
 {
-    private $entityManager;
     private $viewManager;
-    private $viewService;
     private $tmdbService;
-    private $entityLinkerService;
 
-    public function __construct(EntityManagerInterface $entityManager,ViewManager $viewManager, ViewService $viewService, TMDBService $tmdbService, EntityLinkerService $entityLinkerService)
+    public function __construct(ViewManager $viewManager, TMDBService $tmdbService)
     {
-        $this->entityManager = $entityManager;
         $this->viewManager = $viewManager;
-        $this->viewService = $viewService;
         $this->tmdbService = $tmdbService;
-        $this->entityLinkerService = $entityLinkerService;
     }
 
     /**
@@ -45,6 +34,7 @@ class ViewController extends AbstractController
     {
         try {
             $this->viewManager->create($tmdbId);
+
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
