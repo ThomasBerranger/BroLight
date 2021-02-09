@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Rate;
+use App\Entity\Opinion;
 use App\Entity\View;
+use App\Form\OpinionType;
 use App\Manager\CommentManager;
 use App\Manager\RateManager;
 use App\Manager\ViewManager;
 use App\Service\EntityLinkerService;
 use App\Service\TMDBService;
-use App\Service\ViewService;
 use Exception;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -21,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/comment", name="comment.")
@@ -30,18 +30,16 @@ class CommentController extends AbstractController
 {
     private $entityManager;
     private $serializer;
-    private $viewService;
     private $entityLinkerService;
     private $tmdbService;
     private $commentManager;
     private $viewManager;
     private $rateManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, ViewService $viewService, EntityLinkerService $entityLinkerService, TMDBService $tmdbService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, EntityLinkerService $entityLinkerService, TMDBService $tmdbService, CommentManager $commentManager, ViewManager $viewManager, RateManager $rateManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
-        $this->viewService = $viewService;
         $this->entityLinkerService = $entityLinkerService;
         $this->tmdbService = $tmdbService;
         $this->commentManager = $commentManager;
@@ -78,23 +76,21 @@ class CommentController extends AbstractController
     /**
      * @Route("/create", name="create", methods={"POST"})
      *
-     * @param Request            $request
-     * @param ValidatorInterface $validator
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function create(Request $request, ValidatorInterface $validator): JsonResponse
+    public function create(Request $request): JsonResponse
     {
         try {
             $data = $request->getContent();
 
-            $comment = $this->commentManager->getFrom([
+            $existingComment = $this->commentManager->getFrom([
                 'author'=>$this->getUser(),
                 'tmdbId'=>json_decode($data)->tmdbId
             ]);
 
-            /** @var Comment $comment */
-            $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $comment]);
+            $comment = $this->serializer->deserialize($data, Comment::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $existingComment]);
 
             !isset(json_decode($data)->spoiler) ? $comment->setSpoiler(false) : null; // Set spoiler
 
