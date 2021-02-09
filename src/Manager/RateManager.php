@@ -18,6 +18,11 @@ class RateManager
         $this->security = $security;
     }
 
+    public function getFrom(array $criteria): ?Rate
+    {
+        return $this->entityManager->getRepository(Rate::class)->findOneBy($criteria);
+    }
+
     public function createRateIfViewExist(int $tmdbId, int $rateValue): ?Rate
     {
         $view = $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->security->getUser(), 'tmdbId'=>$tmdbId]);

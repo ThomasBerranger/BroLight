@@ -34,7 +34,8 @@ class CommentType extends AbstractType
             ])
             ->add('rate', HiddenType::class, [
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'data' => $options['rateValue']
             ])
         ;
     }
@@ -45,6 +46,7 @@ class CommentType extends AbstractType
             'data_class' => Comment::class,
             'tmdbId' => 0,
             'viewed' => false,
+            'rateValue' => false,
         ]);
     }
 }

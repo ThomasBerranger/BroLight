@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Rate;
-use App\Entity\User;
 use App\Entity\View;
 use App\Manager\CommentManager;
 use App\Manager\RateManager;
@@ -59,24 +58,21 @@ class CommentController extends AbstractController
      */
     public function form(int $tmdbId): Response
     {
-        $comment = $this->getDoctrine()->getRepository(Comment::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
-        $view = $this->entityManager->getRepository(View::class)->findOneBy(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
+        $comment = $this->commentManager->getFrom(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
 
         if (!$comment instanceof Comment)
             $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment, ['tmdbId' => $tmdbId, 'viewed' => $view instanceof View]);
+        $view = $this->viewManager->getFrom(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
+        $rate = $this->rateManager->getFrom(['author'=>$this->getUser(), 'tmdbId'=>$tmdbId]);
 
-        if ($view instanceof View and $view->getRate() instanceof Rate) {
-            $rate = $view->getRate();
-        } else {
-            $rate = 0;
-        }
-
-        return $this->render('comment/_form.html.twig', [
-            'form' => $form->createView(),
-            'rate' => $rate
+        $form = $this->createForm(CommentType::class, $comment, [
+            'tmdbId' => $tmdbId,
+            'viewed' => $view instanceof View,
+            'rateValue' => $rate instanceof Rate ? $rate->getValue() : 0
         ]);
+
+        return $this->render('comment/_form.html.twig', ['form' => $form->createView()]);
     }
 
     /**

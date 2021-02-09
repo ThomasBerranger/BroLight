@@ -22,6 +22,11 @@ class ViewManager
         $this->validator = $validator;
     }
 
+    public function getFrom(array $criteria): ?View
+    {
+        return $this->entityManager->getRepository(View::class)->findOneBy($criteria);
+    }
+
     public function create(int $tmdbId): View
     {
         $view = new View();
