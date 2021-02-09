@@ -41,12 +41,10 @@ class ViewController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function createView(int $tmdbId)
+    public function createView(int $tmdbId): JsonResponse
     {
         try {
-            $view = $this->viewManager->createView($tmdbId);
-
-            $this->entityLinkerService->findAndLinkCommentIfExist($view);
+            $this->viewManager->createView($tmdbId);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
