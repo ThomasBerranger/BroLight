@@ -3,13 +3,11 @@
 namespace App\EventListener;
 
 use App\Entity\Comment;
-use App\Entity\View;
 use App\Manager\CommentManager;
 use App\Manager\ViewManager;
-use App\Service\TMDBService;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-class ViewLinkerToComment
+class CommentListener
 {
     private $viewManager;
     private $commentManager;
@@ -20,14 +18,13 @@ class ViewLinkerToComment
         $this->commentManager = $commentManager;
     }
 
-    public function prePersist(View $view, LifecycleEventArgs $event): void
+    public function prePersist(Comment $comment, LifecycleEventArgs $event): void
     {
-        if (!$view->getComment() instanceof Comment) {
+//        dump("create");
+    }
 
-            $comment = $this->commentManager->getCommentFrom(['author'=>$view->getAuthor(), 'tmdbId'=>$view->getTmdbId()]);
-
-            if ($comment instanceof Comment)
-                $view->setComment($comment);
-        }
+    public function preUpdate(Comment $comment, LifecycleEventArgs $event): void
+    {
+//        dump("update");
     }
 }
