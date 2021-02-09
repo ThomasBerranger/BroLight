@@ -41,10 +41,10 @@ class ViewController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function createView(int $tmdbId): JsonResponse
+    public function create(int $tmdbId): JsonResponse
     {
         try {
-            $this->viewManager->createView($tmdbId);
+            $this->viewManager->create($tmdbId);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
@@ -59,10 +59,10 @@ class ViewController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function deleteView(int $tmdbId): JsonResponse
+    public function delete(int $tmdbId): JsonResponse
     {
         try {
-            $this->viewManager->deleteView($tmdbId);
+            $this->viewManager->delete($tmdbId);
 
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);

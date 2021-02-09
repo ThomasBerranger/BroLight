@@ -5,7 +5,9 @@ namespace App\Manager;
 use App\Entity\Comment;
 use App\Entity\View;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CommentManager
 {
@@ -18,9 +20,15 @@ class CommentManager
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function getCommentFrom(array $criteria): ?Comment
+    public function getFrom(array $criteria): ?Comment
     {
         return $this->entityManager->getRepository(Comment::class)->findOneBy($criteria);
+    }
+
+    public function create(Comment $comment): void
+    {
+        $this->entityManager->persist($comment);
+        $this->entityManager->flush();
     }
 
     public function delete(Comment $comment): void

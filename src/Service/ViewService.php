@@ -20,7 +20,7 @@ class ViewService
 
     public function associateComment(View $view): ?View
     {
-        $comment = $this->commentManager->getCommentFrom([
+        $comment = $this->commentManager->getFrom([
             'author' => $view->getAuthor(),
             'tmdbId' => $view->getTmdbId()
         ]);

@@ -92,7 +92,7 @@ class CommentController extends AbstractController
         try {
             $data = $request->getContent();
 
-            $comment = $this->commentManager->getCommentFrom([
+            $comment = $this->commentManager->getFrom([
                 'author'=>$this->getUser(),
                 'tmdbId'=>json_decode($data)->tmdbId
             ]);
@@ -107,24 +107,18 @@ class CommentController extends AbstractController
             if (isset(json_decode($data)->viewed)) { // Create + Set / Set View
                 $viewFounded = $this->entityLinkerService->findAndLinkView($comment);
                 if (!$viewFounded) {
-                    $view = $this->viewManager->createView($comment->getTmdbId());
+                    $view = $this->viewManager->create($comment->getTmdbId());
                     $comment->setView($view);
                 }
             } else {
-                $this->viewManager->deleteView($comment->getTmdbId());
+                $this->viewManager->delete($comment->getTmdbId());
             }
 
             if(isset(json_decode($data)->rate) and json_decode($data)->rate != "") { // Create Rate
                 $this->rateManager->createRateIfViewExist($comment->getTmdbId(), (int) json_decode($data)->rate);
             }
 
-            $errors = $validator->validate($comment);
-            if (count($errors) > 0) {
-                throw new Exception((string) $errors);
-            }
-
-            $this->entityManager->persist($comment);
-            $this->entityManager->flush();
+            $this->commentManager->create($comment);
 
             return new JsonResponse([
                 'view' => $this->renderView('comment/_commentButton.html.twig', ['movie' => $this->tmdbService->getMovieById($comment->getTmdbId())]),

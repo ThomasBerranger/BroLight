@@ -28,7 +28,7 @@ class ViewListener
     {
         if (!$view->getComment() instanceof Comment) {
 
-            $comment = $this->commentManager->getCommentFrom(['author'=>$view->getAuthor(), 'tmdbId'=>$view->getTmdbId()]);
+            $comment = $this->commentManager->getFrom(['author'=>$view->getAuthor(), 'tmdbId'=>$view->getTmdbId()]);
 
             if ($comment instanceof Comment)
                 $view->setComment($comment);
