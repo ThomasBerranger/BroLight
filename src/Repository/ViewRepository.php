@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\UserRelationship;
+use App\Entity\Relationship;
 use App\Entity\View;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -29,7 +29,7 @@ class ViewRepository extends ServiceEntityRepository
             ->where('ur.status = :status AND ur.userSource = :userId')
             ->orWhere('v.author = :userId')
             ->setParameters([
-                'status' => UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
                 'userId' => $user->getId()
             ])
             ->orderBy('v.createdAt', 'DESC')

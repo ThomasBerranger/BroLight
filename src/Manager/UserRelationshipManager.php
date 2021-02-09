@@ -4,7 +4,7 @@ namespace App\Manager;
 
 use App\Entity\User;
 use Exception;
-use App\Entity\UserRelationship;
+use App\Entity\Relationship;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -24,7 +24,7 @@ class UserRelationshipManager
 
     public function getAllUserRelationships(User $user): array
     {
-        return $this->entityManager->getRepository(UserRelationship::class)->findAllUserRelationships($user);
+        return $this->entityManager->getRepository(Relationship::class)->findAllUserRelationships($user);
     }
 
     /**
@@ -36,13 +36,13 @@ class UserRelationshipManager
      *
      * @throws Exception
      */
-    public function createFollowRelationship(User $userSource, User $userTarget, int $status = UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']): void
+    public function createFollowRelationship(User $userSource, User $userTarget, int $status = Relationship::STATUS['PENDING_FOLLOW_REQUEST']): void
     {
         if ($userSource === $userTarget) {
             throw new Exception("User can't have relation with himself");
         }
 
-        $userRelationship = new UserRelationship();
+        $userRelationship = new Relationship();
 
         $userRelationship->setUserSource($userSource);
         $userRelationship->setUserTarget($userTarget);
@@ -71,13 +71,13 @@ class UserRelationshipManager
             throw new Exception("User can't have relation with himself");
         }
 
-        $userRelationship = $this->entityManager->getRepository(UserRelationship::class)->findOneBy([
+        $userRelationship = $this->entityManager->getRepository(Relationship::class)->findOneBy([
             'userSource' => $userSource,
             'userTarget' => $userTarget,
-            'status' => UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']
+            'status' => Relationship::STATUS['PENDING_FOLLOW_REQUEST']
         ]);
 
-        $userRelationship->setStatus(UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
+        $userRelationship->setStatus(Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
 
         $errors = $this->validator->validate($userRelationship);
         if (count($errors) > 0) {
@@ -102,7 +102,7 @@ class UserRelationshipManager
             throw new Exception("User can't have relation with himself");
         }
 
-        $userRelationship = $this->entityManager->getRepository(UserRelationship::class)->findOneBy([
+        $userRelationship = $this->entityManager->getRepository(Relationship::class)->findOneBy([
             'userSource' => $userSource,
             'userTarget' => $userTarget,
         ]);

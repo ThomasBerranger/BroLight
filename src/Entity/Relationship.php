@@ -13,15 +13,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"userSource", "userTarget"}, message="Ces utilisateurs sont déjà en relation.")
  */
-class UserRelationship
+class Relationship
 {
     use CreatedAtBasicTrait;
     use UpdatedAtBasicTrait;
 
     const STATUS = [
         'PENDING_FOLLOW_REQUEST' => 1,
-        'ACCEPTED_FOLLOW_REQUEST' => 2,
-        'REFUSED_FOLLOW_REQUEST' => 3,
+        'ACCEPTED_FOLLOW_REQUEST' => 2
     ];
 
     /**

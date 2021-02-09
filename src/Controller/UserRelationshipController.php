@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
-use App\Entity\UserRelationship;
+use App\Entity\Relationship;
 use App\Manager\UserRelationshipManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

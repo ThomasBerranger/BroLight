@@ -80,13 +80,13 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="userSource", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userSource", orphanRemoval=true)
      * @OrderBy({"updatedAt" = "ASC"})
      */
     private $userRelationsAsSource;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserRelationship::class, mappedBy="userTarget", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userTarget", orphanRemoval=true)
      * @OrderBy({"updatedAt" = "ASC"})
      */
     private $userRelationsAsTarget;
@@ -353,9 +353,9 @@ class User implements UserInterface
     {
         $followers = [];
 
-        /** @var UserRelationship $userRelation */
+        /** @var Relationship $userRelation */
         foreach ($this->userRelationsAsTarget as $userRelation) {
-            if ($userRelation->getStatus() === UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+            if ($userRelation->getStatus() === Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
                 array_push($followers, $userRelation->getUserSource());
             }
         }
@@ -370,9 +370,9 @@ class User implements UserInterface
     {
         $followers = [];
 
-        /** @var UserRelationship $userRelation */
+        /** @var Relationship $userRelation */
         foreach ($this->userRelationsAsTarget as $userRelation) {
-            if ($userRelation->getStatus() === UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']) {
+            if ($userRelation->getStatus() === Relationship::STATUS['PENDING_FOLLOW_REQUEST']) {
                 array_push($followers, $userRelation->getUserSource());
             }
         }
@@ -387,9 +387,9 @@ class User implements UserInterface
     {
         $followings = [];
 
-        /** @var UserRelationship $userRelation */
+        /** @var Relationship $userRelation */
         foreach ($this->userRelationsAsSource as $userRelation) {
-            if ($userRelation->getStatus() === UserRelationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+            if ($userRelation->getStatus() === Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
                 array_push($followings, $userRelation->getUserTarget());
             }
         }
@@ -404,9 +404,9 @@ class User implements UserInterface
     {
         $followings = [];
 
-        /** @var UserRelationship $userRelation */
+        /** @var Relationship $userRelation */
         foreach ($this->userRelationsAsSource as $userRelation) {
-            if ($userRelation->getStatus() === UserRelationship::STATUS['PENDING_FOLLOW_REQUEST']) {
+            if ($userRelation->getStatus() === Relationship::STATUS['PENDING_FOLLOW_REQUEST']) {
                 array_push($followings, $userRelation->getUserTarget());
             }
         }
