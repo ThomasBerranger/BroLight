@@ -113,6 +113,11 @@ class User implements UserInterface
 
     private $formattedPodium;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Opinion::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $opinions;
+
     public function __construct()
     {
         $this->views = new ArrayCollection();
@@ -120,6 +125,7 @@ class User implements UserInterface
         $this->rates = new ArrayCollection();
         $this->userRelationsAsSource = new ArrayCollection();
         $this->userRelationsAsTarget = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -503,6 +509,36 @@ class User implements UserInterface
     public function setFormattedPodium(array $formattedPodium): self
     {
         $this->formattedPodium = $formattedPodium;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Opinion[]
+     */
+    public function getOpinions(): Collection
+    {
+        return $this->opinions;
+    }
+
+    public function addOpinion(Opinion $opinion): self
+    {
+        if (!$this->opinions->contains($opinion)) {
+            $this->opinions[] = $opinion;
+            $opinion->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOpinion(Opinion $opinion): self
+    {
+        if ($this->opinions->removeElement($opinion)) {
+            // set the owning side to null (unless already changed)
+            if ($opinion->getAuthor() === $this) {
+                $opinion->setAuthor(null);
+            }
+        }
 
         return $this;
     }
