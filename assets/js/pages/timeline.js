@@ -13,7 +13,7 @@ $(document).ready(function () {
 
         if (timelinePanel.length === 1) {
             timelinePanel.html('<div class="d-flex align-items-center justify-content-center" style="height:'+timelinePanel.height()+'px;">' +
-                '<i class="fas fa-compact-disc fa-spin fa-2x"></i></div>').parent().load(` #timelinePanel-${opinionId}`);
+                '<i class="fas fa-compact-disc fa-spin fa-2x"></i></div>').load(` #timelinePanel-${opinionId}`);
         }
     });
 });
