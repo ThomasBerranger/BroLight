@@ -24,27 +24,60 @@
         </div>
 
         <div class="col-12">
-            <div class="card" id="movieDetailsCommentDiv">
+            <div class="card" id="movieDetailsOpinionDiv">
                 <div class="card-body">
-                    <h5 class="card-title text-center py-2">Commentaires :</h5>
-                    {% set isCurrentUserCommentDetected = false %}
-                    {% for comment in comments %}
+                    <h5 class="card-title text-center py-2">Commentaires</h5>
+                    {% set isCurrentUserComment = false %}
 
-                        {% include 'comment/_commentMovieDetails.html.twig' %}
+                    {% for opinion in opinions %}
+                        <div class="mb-3-vh">
+                            <div id="opinionMovieDetails-{{ opinion.id }}" class="card-text d-flex flex-row">
+                                <a style="position: relative" class="mr-2" href="{{ path('user.show', {'slug': opinion.author.slug}) }}">
+                                    <img class="avatar-medium" src="{{ opinion.author.avatar|formatAvatarData }}" alt="{{ opinion.author }} avatar">
+                                    {% if opinion.rate > 0%}
+                                        {% if opinion.rate %}
+                                            <img class="rate-emoji-md" style="position: absolute; top: 60px; right: 0;" src="{{ opinion.rate|associatedEmojiURL }}" alt="rate emoji">
+                                        {% endif %}
+                                    {% endif %}
+                                </a>
+                                <div class="w-100">
+                                    <a class="font-weight-bolder" style="font-size: 1rem" href="{{ path('user.show', {'slug': opinion.author.slug}) }}">{{ opinion.author }}</a>
+                                    <p class="text-muted">{{ opinion.createdAt|customDateFormat }}</p>
+                                    {% if opinion.isSpoiler %}
+                                        <div class="spoiler-guard center-container bg-secondary pointer-cursor" style="border-radius: 5px">
+                                            <p class="center-content text-white h6">Spoiler</p>
+                                        </div>
+                                        <p style="display: none">{{ opinion.comment|nl2br }}</p>
+                                    {% else %}
+                                        <p>{{ opinion.comment|nl2br }}</p>
+                                    {% endif %}
+                                </div>
+                                {% if opinion.author == app.user %}
+                                    {% set isCurrentUserComment = true %}
 
-                        {% if loop.index != comments|length %}
+                                    <button role="button" class="btn btn-xxs btn-dark"
+                                            data-title="{{ movie.title }}"
+                                            data-opinion-action="open-form"
+                                            data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
+                                        <i class="far fa-edit pointer-cursor"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if loop.index != opinions|length %}
                             <hr class="m-2-vh">
                         {% endif %}
-
                     {% endfor %}
 
-                    <div class="ml-2 text-center">
-                        <button role="button" class="btn btn-sm btn-outline-dark"
-                                data-title="{{ movie.title }}"
-                                data-comment-action="open-form"
-                                data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
-                        </button>
-                    </div>
+                    {% if isCurrentUserComment == false %}
+                        <div class="ml-2 text-center">
+                            <button role="button" class="btn btn-sm btn-outline-dark"
+                                    data-title="{{ movie.title }}"
+                                    data-comment-action="open-form"
+                                    data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
+                            </button>
+                        </div>
+                    {% endif %}
 
                 </div>
             </div>

@@ -2,15 +2,14 @@ import $ from "jquery";
 
 $(document).ready(function(){
 
-    $('#movieDetailsCommentDiv').on("update-comment", function(event, commentId) {
+    $('#movieDetailsOpinionDiv').on("update-opinion", function(event, opinionId) {
+        const selectedOpinion = $(`#opinionMovieDetails-${opinionId}`);
 
-        const selectedComment = $(`#commentMovieDetails-${commentId}`);
-        if (selectedComment.length === 1) {
-            selectedComment.html('<div class="text-center w-100"><i class="fas fa-compact-disc fa-spin fa-2x"></i></div>').parent().load(` #commentMovieDetails-${commentId}`);
+        if (selectedOpinion.length === 1) {
+            selectedOpinion.html('<div class="text-center w-100"><i class="fas fa-compact-disc fa-spin fa-2x"></i></div>').parent().load(` #opinionMovieDetails-${opinionId}`);
         } else {
-            $('#movieDetailsCommentDiv').children().load(' #movieDetailsCommentDiv>div');
+            $('#movieDetailsOpinionDiv').load(' #movieDetailsOpinionDiv>div');
         }
-
     });
 
 });

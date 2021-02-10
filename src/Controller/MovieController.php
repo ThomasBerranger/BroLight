@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Opinion;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +31,7 @@ class MovieController extends AbstractController
     {
         $trendingMovies = $this->TMDBService->getTrendingMovies();
 
-        return $this->render('movie/trending.html.twig', [
-            'trendingMovies' => $trendingMovies,
-        ]);
+        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies,]);
     }
 
     /**
@@ -54,9 +53,7 @@ class MovieController extends AbstractController
     {
         $movies = $this->TMDBService->getSearchedMovies($title);
 
-        return $this->render('movie/_search_result.html.twig', [
-            'movies' => $movies
-        ]);
+        return $this->render('movie/_search_result.html.twig', ['movies' => $movies]);
     }
 
     /**
@@ -70,11 +67,11 @@ class MovieController extends AbstractController
     {
         $movie = $this->TMDBService->getMovieById($tmdbId);
 
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['tmdbId'=>$tmdbId]);
+        $opinions = $this->getDoctrine()->getRepository(Opinion::class)->findBy(['tmdbId'=>$tmdbId]);
 
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,
-            'comments' => $comments,
+            'opinions' => $opinions,
         ]);
     }
 }

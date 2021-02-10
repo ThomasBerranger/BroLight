@@ -13,6 +13,9 @@ $(document).ready(function() {
             case 'delete-view':
                 deleteViewRequest(element);
                 break;
+            case 'open-form':
+                openFormRequest(element);
+                break;
         }
     })
 
@@ -25,7 +28,9 @@ $(document).ready(function() {
             data: $(this).serializePrefixedFormJSON(),
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                updateOpinionButton(data);
+                updateOpinionOnMovieDetails(data['opinionId']);
+                $('#alert').trigger("trigger-alert", ["success", "Avis enregistré !"]);
             },
             error: function (error) {
                 console.log(error);
@@ -58,4 +63,28 @@ function deleteViewRequest(element) {
             console.log(error);
         }
     });
+}
+
+function openFormRequest(element) {
+    let formDiv = $('<div class="px-4"></div>')
+
+    $('#customModal').trigger("trigger-custom-modal", [
+        element.data('title'),
+        formDiv.html('<div class="text-center"><i class="fas fa-compact-disc fa-spin fa-3x"></i></div>').load(element.data('opinion-url'))
+    ]);
+}
+
+function updateOpinionButton(data) {
+    const currentOpinionButton = $(`#opinionButton-${data['tmdbId']}`);
+    if (currentOpinionButton.length === 1) {
+        currentOpinionButton.html(data['button']);
+    }
+}
+
+function updateOpinionOnMovieDetails(opinionId) {
+    const movieDetailsOpinionDiv = $('#movieDetailsOpinionDiv');
+
+    if (movieDetailsOpinionDiv.length === 1) {
+        movieDetailsOpinionDiv.trigger('update-opinion', opinionId);
+    }
 }

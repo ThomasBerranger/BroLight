@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Opinion;
 use App\Form\OpinionType;
 use App\Manager\OpinionManager;
+use App\Service\TMDBService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,11 +22,13 @@ class OpinionController extends AbstractController
 {
     private OpinionManager $opinionManager;
     private SerializerInterface $serializer;
+    private TMDBService $TMDBService;
 
-    public function __construct(OpinionManager $opinionManager, SerializerInterface $serializer)
+    public function __construct(OpinionManager $opinionManager, SerializerInterface $serializer, TMDBService $TMDBService)
     {
         $this->opinionManager = $opinionManager;
         $this->serializer = $serializer;
+        $this->TMDBService = $TMDBService;
     }
 
     /**
@@ -97,7 +100,11 @@ class OpinionController extends AbstractController
 
             $opinion = $this->opinionManager->save($opinion);
 
-            return $this->json($opinion, 200, [], ['groups' => 'opinion:read']);
+            return new JsonResponse([
+                'button' => $this->renderView('opinion/_button.html.twig', ['movie' => $this->TMDBService->getMovieById($opinion->getTmdbId())]),
+                'opinionId' => $opinion->getId(),
+                'tmdbId' => $opinion->getTmdbId()
+            ], 200);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }
