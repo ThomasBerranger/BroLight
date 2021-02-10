@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Manager\AvatarManager;
 use Exception;
 use App\Entity\Avatar;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,13 +18,15 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class AvatarController extends AbstractController
 {
-    private $entityManager;
-    private $serializer;
+    private EntityManagerInterface $entityManager;
+    private SerializerInterface $serializer;
+    private AvatarManager $avatarManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, AvatarManager $avatarManager)
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
+        $this->avatarManager = $avatarManager;
     }
 
     /**
@@ -42,8 +45,7 @@ class AvatarController extends AbstractController
 
             $avatar = $this->serializer->deserialize($data, Avatar::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $avatar]);
 
-            $this->entityManager->persist($avatar);
-            $this->entityManager->flush();
+            $this->avatarManager->save($avatar);
 
             return $this->json($avatar, 201, [], ['groups' => 'avatar:read']);
         } catch (Exception $exception) {

@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AvatarManager
 {
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -20,6 +20,14 @@ class AvatarManager
         $avatar = new Avatar();
         $avatar->setAuthor($user);
 
+        $this->entityManager->persist($avatar);
+        $this->entityManager->flush();
+
+        return $avatar;
+    }
+
+    public function save(Avatar $avatar): Avatar
+    {
         $this->entityManager->persist($avatar);
         $this->entityManager->flush();
 

@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
-use App\Entity\Relationship;
-use App\Manager\UserRelationshipManager;
+use App\Manager\RelationshipManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,13 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RelationshipController extends AbstractController
 {
-    private $entityManager;
-    private $userRelationshipManager;
+    private EntityManagerInterface $entityManager;
+    private RelationshipManager $relationshipManager;
 
-    public function __construct(EntityManagerInterface $entityManager, UserRelationshipManager $userRelationshipManager)
+    public function __construct(EntityManagerInterface $entityManager, RelationshipManager $relationshipManager)
     {
         $this->entityManager = $entityManager;
-        $this->userRelationshipManager = $userRelationshipManager;
+        $this->relationshipManager = $relationshipManager;
     }
 
     /**
@@ -38,7 +37,7 @@ class RelationshipController extends AbstractController
     public function follow(User $user): JsonResponse
     {
         try {
-            $this->userRelationshipManager->createFollowRelationship($this->getUser(), $user);
+            $this->relationshipManager->createFollowRelationship($this->getUser(), $user);
 
             return new JsonResponse([
                 'view' => $this->renderView('user/_partials/_followingButton.html.twig', ['user' => $user]),
@@ -61,7 +60,7 @@ class RelationshipController extends AbstractController
     public function unfollow(User $user): Response
     {
         try {
-            $this->userRelationshipManager->deleteFollowRelationship($this->getUser(), $user);
+            $this->relationshipManager->deleteFollowRelationship($this->getUser(), $user);
 
             return new JsonResponse([
                 'view' => $this->renderView('user/_partials/_followingButton.html.twig', ['user' => $user]),
@@ -84,7 +83,7 @@ class RelationshipController extends AbstractController
     public function acceptFollow(User $user): Response
     {
         try {
-            $this->userRelationshipManager->acceptFollowRelationship($user, $this->getUser());
+            $this->relationshipManager->acceptFollowRelationship($user, $this->getUser());
 
             return $this->json([
                 'view' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
@@ -107,7 +106,7 @@ class RelationshipController extends AbstractController
     public function refuse(User $user): Response
     {
         try {
-            $this->userRelationshipManager->deleteFollowRelationship($user, $this->getUser());
+            $this->relationshipManager->deleteFollowRelationship($user, $this->getUser());
 
             return $this->json([
                 'view' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),

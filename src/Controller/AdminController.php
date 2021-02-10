@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminController extends AbstractController
 {
-    private $entityManager;
-    private $userManager;
+    private EntityManagerInterface $entityManager;
+    private UserManager $userManager;
 
     public function __construct(EntityManagerInterface $entityManager, UserManager $userManager)
     {
@@ -33,14 +33,6 @@ class AdminController extends AbstractController
         return $this->render('admin/home.html.twig', [
             'users' => $users
         ]);
-    }
-
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test(): Response
-    {
-        return $this->render('admin/test.html.twig');
     }
 
     /**

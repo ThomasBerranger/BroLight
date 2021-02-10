@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
+use App\Entity\User;
 use App\Form\OpinionType;
 use App\Manager\OpinionManager;
 use App\Service\TMDBService;
@@ -96,6 +97,7 @@ class OpinionController extends AbstractController
 
             $existingOpinion = $this->opinionManager->findOrCreate($this->getUser(), $decodedJson->tmdbId);
 
+            /** @var Opinion $opinion */
             $opinion = $this->serializer->deserialize($data, Opinion::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $existingOpinion]);
 
             $opinion = $this->opinionManager->save($opinion);
@@ -120,7 +122,7 @@ class OpinionController extends AbstractController
     public function delete(Opinion $opinion): JsonResponse
     {
         try {
-            $this->opinionManager->delete($opinion); // todo: create voter
+            $this->opinionManager->delete($opinion);
 
             return $this->json(204);
         } catch (Exception $exception) {

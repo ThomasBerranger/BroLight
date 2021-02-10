@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Podium;
-use App\Entity\User;
 use App\Manager\PodiumManager;
 use App\Service\TMDBService;
 use Doctrine\ORM\EntityManagerInterface;

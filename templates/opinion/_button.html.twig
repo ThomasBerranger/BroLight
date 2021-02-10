@@ -4,8 +4,8 @@
 <span id="opinionButton-{{ movie.id }}">
         <button role="button" class="btn btn-xxs {{ movie.id in app.user.opinionsTmdbIds ? 'btn-dark' : 'btn-outline-dark' }}"
                 data-title="{{ movie.title }}"
-                data-comment-action="open-form"
-                data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
+                data-opinion-action="open-form"
+                data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
             {% if movie.id in app.user.opinionsTmdbIds %}
                 <i class="far fa-check-circle"></i>
             {% else %}

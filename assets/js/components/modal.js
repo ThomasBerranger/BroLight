@@ -29,13 +29,12 @@ $(document).ready(function(){
     $('body').on('click', '[data-custom-confirm]', function () {
         const element = $(this);
 
-        // todo : refactoring data-***-action
         modal.trigger("trigger-custom-modal", [
             'Attention !',
             $('<div class="text-center">' +
                 '<p>Toute suppression est définitive !</p>' +
                 '<p>Êtes vous sûr de ce que vous faites ?</p><br>' +
-                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-comment-action="" data-user-relationship-action="">Confirmer</button>' +
+                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-opinion-action="" data-user-relationship-action="">Confirmer</button>' +
                 '<button class="btn btn-info mx-2 px-4" data-dismiss="modal">Annuler</button>' +
                 '</div>'),
             false
@@ -50,7 +49,5 @@ $(document).ready(function(){
         }
 
         modalConfirmButton.data(`${element.data('custom-confirm-configurations')['entity']}-url`, element.data('custom-confirm-configurations')['url']);
-
     });
-
 });

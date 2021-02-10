@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Relationship[]    findAll()
  * @method Relationship[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRelationshipRepository extends ServiceEntityRepository
+class RelationshipRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

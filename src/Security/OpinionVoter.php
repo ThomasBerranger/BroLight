@@ -2,18 +2,18 @@
 
 namespace App\Security;
 
-use App\Entity\Comment;
+use App\Entity\Opinion;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class CommentVoter extends Voter
+class OpinionVoter extends Voter
 {
     const EDIT = 'edit';
     const DELETE = 'delete';
 
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {
@@ -26,7 +26,7 @@ class CommentVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Comment) {
+        if (!$subject instanceof Opinion) {
             return false;
         }
 
@@ -45,26 +45,26 @@ class CommentVoter extends Voter
             return true;
         }
 
-        /** @var Comment $comment */
-        $comment = $subject;
+        /** @var Opinion $opinion */
+        $opinion = $subject;
 
         switch ($attribute) {
             case self::EDIT:
-                return $this->canEdit($comment, $user);
+                return $this->canEdit($opinion, $user);
             case self::DELETE:
-                return $this->canDelete($comment, $user);
+                return $this->canDelete($opinion, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canEdit(Comment $comment, User $user): bool
+    private function canEdit(Opinion $opinion, User $user): bool
     {
-        return $comment->getAuthor() === $user;
+        return $opinion->getAuthor() === $user;
     }
 
-    private function canDelete(Comment $comment, User$user): bool
+    private function canDelete(Opinion $opinion, User$user): bool
     {
-        return $this->canEdit($comment, $user);
+        return $this->canEdit($opinion, $user);
     }
 }

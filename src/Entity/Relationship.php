@@ -4,12 +4,12 @@ namespace App\Entity;
 
 use App\Helper\CreatedAtBasicTrait;
 use App\Helper\UpdatedAtBasicTrait;
-use App\Repository\UserRelationshipRepository;
+use App\Repository\RelationshipRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=UserRelationshipRepository::class)
+ * @ORM\Entity(repositoryClass=RelationshipRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"userSource", "userTarget"}, message="Ces utilisateurs sont déjà en relation.")
  */

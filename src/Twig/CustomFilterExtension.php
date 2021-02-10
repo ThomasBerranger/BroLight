@@ -10,7 +10,7 @@ use Symfony\Component\Asset\Packages;
 
 class CustomFilterExtension extends AbstractExtension
 {
-    private $assetManager;
+    private Packages $assetManager;
 
     public function __construct(Packages $assetManager)
     {

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Podium;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
@@ -19,9 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    private $entityManager;
-    private $userService;
-    private $tmdbService;
+    private EntityManagerInterface $entityManager;
+    private UserService $userService;
+    private TMDBService $tmdbService;
 
     public function __construct(EntityManagerInterface $entityManager, UserService $userService, TMDBService $tmdbService)
     {

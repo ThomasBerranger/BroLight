@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Opinion;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,8 +14,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class MovieController extends AbstractController
 {
-    private $client;
-    private $TMDBService;
+    private HttpClientInterface $client;
+    private TMDBService $TMDBService;
 
     public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService)
     {

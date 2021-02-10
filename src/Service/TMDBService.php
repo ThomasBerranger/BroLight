@@ -8,8 +8,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class TMDBService
 {
-    private $client;
-    private $params;
+    private HttpClientInterface $client;
+    private ParameterBagInterface $params;
 
     public function __construct(ParameterBagInterface $params, HttpClientInterface $httpClient)
     {

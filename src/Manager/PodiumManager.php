@@ -2,17 +2,15 @@
 
 namespace App\Manager;
 
-use App\Entity\Comment;
 use App\Entity\Podium;
 use App\Entity\User;
-use App\Entity\View;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class PodiumManager
 {
-    private $entityManager;
-    private $authorizationChecker;
+    private EntityManagerInterface $entityManager;
+    private AuthorizationCheckerInterface $authorizationChecker;
 
     public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker)
     {
