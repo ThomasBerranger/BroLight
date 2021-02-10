@@ -38,9 +38,12 @@
 
                     {% endfor %}
 
-                    <div class="ml-2">
-                        {% include 'movie/_viewButton.html.twig' %}
-                        {% include 'comment/_commentButton.html.twig' %}
+                    <div class="ml-2 text-center">
+                        <button role="button" class="btn btn-sm btn-outline-dark"
+                                data-title="{{ movie.title }}"
+                                data-comment-action="open-form"
+                                data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
+                        </button>
                     </div>
 
                 </div>

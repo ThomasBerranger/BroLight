@@ -1,0 +1,15 @@
+{#    <button role="button" class="btn btn-sm btn-outline-dark" data-opinion-action="create-view" data-opinion-url="{{ path('opinion.create_view', {'tmdbId': movie.id}) }}">J'ai vu ce film !</button>#}
+{#    <button role="button" class="btn btn-sm btn-outline-dark" data-opinion-action="delete-view" data-opinion-url="{{ path('opinion.delete_view', {'tmdbId': movie.id}) }}">Je n'ai pas vu ce film.</button>#}
+
+<span id="viewButton-{{ movie.id }}">
+        <button role="button" class="btn btn-xxs {{ movie.id in app.user.opinionsTmdbIds ? 'btn-dark' : 'btn-outline-dark' }}"
+                data-title="{{ movie.title }}"
+                data-comment-action="open-form"
+                data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
+            {% if movie.id in app.user.opinionsTmdbIds %}
+                <i class="far fa-check-circle"></i>
+            {% else %}
+                <i class="far fa-question-circle"></i>
+            {% endif %}
+        </button>
+</span>

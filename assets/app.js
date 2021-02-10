@@ -9,6 +9,7 @@ import './js/components/modal';
 import './js/components/sidebar';
 import './js/components/rate';
 import './js/components/tooltip';
+import './js/components/spoilerGuard';
 
 import './js/requests/relationRequest';
 import './js/requests/opinionRequest';

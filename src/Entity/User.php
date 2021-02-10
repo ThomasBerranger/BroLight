@@ -27,57 +27,42 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstname;
+    private string $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastname;
-
-    /**
-     * @ORM\OneToMany(targetEntity=View::class, mappedBy="author", cascade={"remove"})
-     */
-    private $views;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", cascade={"remove"})
-     */
-    private $comments;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="author", cascade={"remove"})
-     */
-    private $rates;
+    private string $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private \DateTimeInterface $updatedAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userSource", orphanRemoval=true)
@@ -94,22 +79,22 @@ class User implements UserInterface
     /**
      * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="author", cascade={"remove"})
      */
-    private $avatar;
+    private ?Avatar $avatar;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private string $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\OneToOne(targetEntity=Podium::class, mappedBy="author", cascade={"persist", "remove"})
      */
-    private $podium;
+    private ?Podium $podium;
 
     /**
      * @ORM\OneToMany(targetEntity=Opinion::class, mappedBy="author", orphanRemoval=true)
@@ -118,9 +103,6 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->views = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->rates = new ArrayCollection();
         $this->userRelationsAsSource = new ArrayCollection();
         $this->userRelationsAsTarget = new ArrayCollection();
         $this->opinions = new ArrayCollection();
@@ -161,121 +143,17 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|View[]
-     */
-    public function getViews(): Collection
-    {
-        return $this->views;
-    }
-
-    public function addView(View $view): self
-    {
-        if (!$this->views->contains($view)) {
-            $this->views[] = $view;
-            $view->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeView(View $view): self
-    {
-        if ($this->views->removeElement($view)) {
-            // set the owning side to null (unless already changed)
-            if ($view->getAuthor() === $this) {
-                $view->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
-    public function getWatchedMoviesTmdbIds(): array
+    public function getOpinionsTmdbIds(): array
     {
-        $watchedMoviesTmdbIds = [];
+        $opinionsTmdbIds = [];
 
-        foreach ($this->views as $view) {
-            array_push($watchedMoviesTmdbIds, $view->getTmdbId());
+        foreach ($this->opinions as $opinion) {
+            array_push($opinionsTmdbIds, $opinion->getTmdbId());
         }
 
-        return $watchedMoviesTmdbIds;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCommentedMoviesTmdbIds(): array
-    {
-        $commentedMoviesTmdbIds = [];
-
-        foreach ($this->comments as $comment) {
-            array_push($commentedMoviesTmdbIds, $comment->getTmdbId());
-        }
-
-        return $commentedMoviesTmdbIds;
-    }
-
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getAuthor() === $this) {
-                $comment->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Rate[]
-     */
-    public function getRates(): Collection
-    {
-        return $this->rates;
-    }
-
-    public function addRate(Rate $rate): self
-    {
-        if (!$this->rates->contains($rate)) {
-            $this->rates[] = $rate;
-            $rate->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRate(Rate $rate): self
-    {
-        if ($this->rates->removeElement($rate)) {
-            // set the owning side to null (unless already changed)
-            if ($rate->getAuthor() === $this) {
-                $rate->setAuthor(null);
-            }
-        }
-
-        return $this;
+        return $opinionsTmdbIds;
     }
 
     public function getEmail(): ?string
@@ -353,7 +231,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getFollowers(): array
+    public function getFollowers(): array // todo: event listener
     {
         $followers = [];
 
@@ -370,7 +248,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getPendingFollowers(): array
+    public function getPendingFollowers(): array // todo: event listener
     {
         $followers = [];
 
@@ -387,7 +265,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getFollowings(): array
+    public function getFollowings(): array // todo: event listener
     {
         $followings = [];
 
@@ -404,7 +282,7 @@ class User implements UserInterface
     /**
      * @return array
      */
-    public function getPendingFollowings(): array
+    public function getPendingFollowings(): array // todo: event listener
     {
         $followings = [];
 
@@ -438,7 +316,7 @@ class User implements UserInterface
     /**
      * @ORM\PrePersist()
      */
-    public function setCreateDefaultValues()
+    public function setCreateDefaultValues() // todo: event listener
     {
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
@@ -450,7 +328,7 @@ class User implements UserInterface
     /**
      * @ORM\PreUpdate()
      */
-    public function setUpdateDefaultValues()
+    public function setUpdateDefaultValues() // todo: event listener
     {
         $this->updatedAt = new \DateTime();
         $this->slug = strtolower($this->firstname.$this->lastname);
