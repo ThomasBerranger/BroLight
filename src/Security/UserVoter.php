@@ -2,13 +2,13 @@
 
 namespace App\Security;
 
+use App\Entity\Avatar;
 use App\Entity\User;
-use App\Entity\Podium;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class PodiumVoter extends Voter
+class UserVoter extends Voter
 {
     const EDIT = 'edit';
     const DELETE = 'delete';
@@ -26,7 +26,7 @@ class PodiumVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Podium) {
+        if (!$subject instanceof User) {
             return false;
         }
 
@@ -45,26 +45,26 @@ class PodiumVoter extends Voter
             return true;
         }
 
-        /** @var Podium $podium */
-        $podium = $subject;
+        /** @var User $userSubject*/
+        $userSubject = $subject;
 
         switch ($attribute) {
             case self::EDIT:
-                return $this->canEdit($podium, $user);
+                return $this->canEdit($userSubject, $user);
             case self::DELETE:
-                return $this->canDelete($podium, $user);
+                return $this->canDelete($userSubject, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canEdit(Podium $podium, User $user): bool
+    private function canEdit(User $userSubject, User $user): bool
     {
-        return $podium->getAuthor() === $user;
+        return $userSubject === $user;
     }
 
-    private function canDelete(Podium $podium, User$user): bool
+    private function canDelete(User $userSubject, User $user): bool
     {
-        return $this->canEdit($podium, $user);
+        return $this->canEdit($userSubject, $user);
     }
 }

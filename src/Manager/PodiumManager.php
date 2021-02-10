@@ -18,27 +18,21 @@ class PodiumManager
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function create(User $user, int $rank, int $tmdbId): Podium
+    public function update(User $user, $rank, $tmdbId): Podium
     {
-        $podium = new Podium();
+        if ($user->getPodium() instanceof Podium) {
+            $podium = $user->getPodium();
+        } else {
+            $podium = new Podium();
+            $podium->setAuthor($user);
+        }
 
-        $podium->setAuthor($user);
-        $podium->assignedTmdbIdToRank($rank, $tmdbId);
+        if ($this->authorizationChecker->isGranted('edit', $podium)) {
+            $podium->assignedTmdbIdToRank($rank, $tmdbId);
 
-        $this->entityManager->persist($podium);
-        $this->entityManager->flush();
-
-        return $podium;
-    }
-
-    public function update($podium, $rank, $tmdbId): Podium
-    {
-        $this->authorizationChecker->isGranted('update', $podium);
-
-        $podium->assignedTmdbIdToRank($rank, $tmdbId);
-
-        $this->entityManager->persist($podium);
-        $this->entityManager->flush();
+            $this->entityManager->persist($podium);
+            $this->entityManager->flush();
+        }
 
         return $podium;
     }

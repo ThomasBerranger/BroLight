@@ -28,24 +28,24 @@ class Relationship
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $status;
+    private ?int $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsSource")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $userSource;
+    private ?User $userSource;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $userTarget;
+    private ?User $userTarget;
 
     public function getId(): ?int
     {

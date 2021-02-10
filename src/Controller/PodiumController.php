@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Podium;
+use App\Entity\User;
 use App\Manager\PodiumManager;
 use App\Service\TMDBService;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PodiumController extends AbstractController
 {
-    private TMDBService $tmdbService;
-    private EntityManagerInterface $entityManager;
+    private TMDBService $TMDBService;
     private PodiumManager $podiumManager;
 
-    public function __construct(TMDBService $tmdbService, EntityManagerInterface $entityManager, PodiumManager $podiumManager)
+    public function __construct(TMDBService $TMDBService, PodiumManager $podiumManager)
     {
-        $this->tmdbService = $tmdbService;
-        $this->entityManager = $entityManager;
+        $this->TMDBService = $TMDBService;
         $this->podiumManager = $podiumManager;
     }
 
@@ -36,9 +34,7 @@ class PodiumController extends AbstractController
      */
     public function form(int $rank): Response
     {
-        return $this->render('podium/_form.html.twig', [
-            'rank' => $rank,
-        ]);
+        return $this->render('podium/_form.html.twig', ['rank' => $rank]);
     }
 
     /**
@@ -51,7 +47,7 @@ class PodiumController extends AbstractController
      */
     public function search(int $rank, string $title): Response
     {
-        $movies = $this->tmdbService->getSearchedMovies($title);
+        $movies = $this->TMDBService->getSearchedMovies($title);
 
         return $this->render('podium/_search_result.html.twig', [
             'rank' => $rank,
@@ -70,13 +66,7 @@ class PodiumController extends AbstractController
     public function vote(int $rank, int $tmdbId): Response
     {
         try {
-            $podium = $this->getUser()->getPodium();
-
-            if (!$podium instanceof Podium) {
-                $this->podiumManager->create($this->getUser(), $rank, $tmdbId);
-            } else {
-                $this->podiumManager->update($podium, $rank, $tmdbId);
-            }
+            $this->podiumManager->update($this->getUser(), $rank, $tmdbId);
 
             return $this->json(null);
         } catch (Exception $exception) {

@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch($event, UserEvent::USER_CREATE_EVENT);
+            $this->eventDispatcher->dispatch($event, UserEvent::USER_CREATE_EVENT); // todo: remplacer par un doctrine event
 
             $this->addFlash('firstTime','Bienvenue');
 
@@ -65,8 +65,6 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('security/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        return $this->render('security/register.html.twig', ['registrationForm' => $form->createView()]);
     }
 }

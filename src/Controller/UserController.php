@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
-use App\Service\TMDBService;
+use App\Manager\UserManager;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,14 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+    private UserManager $usermanager;
     private UserService $userService;
-    private TMDBService $tmdbService;
 
-    public function __construct(EntityManagerInterface $entityManager, UserService $userService, TMDBService $tmdbService)
+    public function __construct(EntityManagerInterface $entityManager, UserManager $usermanager, UserService $userService)
     {
         $this->entityManager = $entityManager;
+        $this->usermanager = $usermanager;
         $this->userService = $userService;
-        $this->tmdbService = $tmdbService;
     }
 
     /**
@@ -60,8 +60,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $currentUser = $form->getData();
 
-            $this->entityManager->persist($currentUser);
-            $this->entityManager->flush();
+            $this->usermanager->save($currentUser);
         }
 
         return $this->render('user/edit.html.twig', [

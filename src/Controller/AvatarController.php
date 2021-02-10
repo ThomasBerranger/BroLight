@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Manager\AvatarManager;
 use Exception;
 use App\Entity\Avatar;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +17,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class AvatarController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
     private SerializerInterface $serializer;
     private AvatarManager $avatarManager;
 
-    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, AvatarManager $avatarManager)
+    public function __construct(SerializerInterface $serializer, AvatarManager $avatarManager)
     {
-        $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->avatarManager = $avatarManager;
     }

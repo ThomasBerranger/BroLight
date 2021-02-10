@@ -73,7 +73,7 @@ class Opinion
      * @ORM\Column(type="integer")
      * @Groups({"opinion:read"})
      */
-    private int $rate;
+    private ?int $rate;
 
     private ?array $movie;
 

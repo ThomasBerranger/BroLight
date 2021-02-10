@@ -51,7 +51,7 @@ function updateFollowingButtonContainer(data) {
     const followingButtonContainer = $(`#followingButtonContainer-${data['userId']}`);
 
     if (followingButtonContainer.length === 1) {
-        followingButtonContainer.html(data['view']);
+        followingButtonContainer.html(data['button']);
     }
 }
 
@@ -87,7 +87,7 @@ function updateFollowerButtonContainer(data, type) {
     const followerButtonContainer = $(`#followerButtonContainer-${data['userId']}`);
 
     if (followerButtonContainer.length === 1) {
-        followerButtonContainer.html(data['view']);
+        followerButtonContainer.html(data['button']);
         followerButtonContainer.trigger('update-user-interface', [type]);
     }
 }

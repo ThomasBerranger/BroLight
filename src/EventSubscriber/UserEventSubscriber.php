@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UserEventSubscriber implements EventSubscriberInterface
 {
-    private $avatarManager;
+    private AvatarManager $avatarManager;
 
     public function __construct(AvatarManager $avatarManager)
     {

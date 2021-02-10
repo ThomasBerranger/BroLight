@@ -219,104 +219,104 @@ class Avatar
      * @ORM\Column(type="integer")
      * @Groups({"avatar:read", "user:read"})
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="avatar")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"avatar:read"})
      */
-    private $author;
+    private ?User $author;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $accessoriesType;
+    private ?string $accessoriesType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $avatarStyle;
+    private ?string $avatarStyle;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $clotheColor;
+    private ?string $clotheColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $clotheType;
+    private ?string $clotheType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $eyeType;
+    private ?string $eyeType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $eyebrowType;
+    private ?string $eyebrowType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $facialHairColor;
+    private ?string $facialHairColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $facialHairType;
+    private ?string $facialHairType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $graphicType;
+    private ?string $graphicType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $hairColor;
+    private ?string $hairColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $hatColor;
+    private ?string $hatColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $mouthType;
+    private ?string $mouthType;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $skinColor;
+    private ?string $skinColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"avatar:read", "user:read"})
      */
-    private $topType;
+    private ?string $topType;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"avatar:read", "user:read"})
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt;
 
     public function getId(): ?int
     {

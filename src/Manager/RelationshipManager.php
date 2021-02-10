@@ -2,24 +2,24 @@
 
 namespace App\Manager;
 
+use App\Entity\Relationship;
 use App\Entity\User;
 use Exception;
-use App\Entity\Relationship;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RelationshipManager
 {
-    private $security;
-    private $validator;
-    private $entityManager;
+    private ValidatorInterface $validator;
+    private EntityManagerInterface $entityManager;
+    private Security $security;
 
-    public function __construct(Security $security, ValidatorInterface $validator, EntityManagerInterface $entityManager)
+    public function __construct(ValidatorInterface $validator, EntityManagerInterface $entityManager, Security $security)
     {
-        $this->security = $security;
         $this->validator = $validator;
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
     public function getAllUserRelationships(User $user): array
@@ -32,82 +32,81 @@ class RelationshipManager
      * @param User $userTarget
      * @param int  $status
      *
-     * @return void
+     * @return Relationship
      *
      * @throws Exception
      */
-    public function createFollowRelationship(User $userSource, User $userTarget, int $status = Relationship::STATUS['PENDING_FOLLOW_REQUEST']): void
+    public function createFollowRelationship(User $userSource, User $userTarget, int $status = Relationship::STATUS['PENDING_FOLLOW_REQUEST']): Relationship
     {
-        if ($userSource === $userTarget) {
-            throw new Exception("User can't have relation with himself");
-        }
-
         $userRelationship = new Relationship();
 
         $userRelationship->setUserSource($userSource);
         $userRelationship->setUserTarget($userTarget);
         $userRelationship->setStatus($status);
 
-        $errors = $this->validator->validate($userRelationship);
-        if (count($errors) > 0) {
-            throw new Exception((string) $errors);
+        if ($this->security->isGranted('edit', $userRelationship)) {
+            $errors = $this->validator->validate($userRelationship);
+            if (count($errors) > 0) {
+                throw new Exception((string) $errors);
+            }
+
+            $this->entityManager->persist($userRelationship);
+            $this->entityManager->flush();
         }
 
-        $this->entityManager->persist($userRelationship);
-        $this->entityManager->flush();
+        return $userRelationship;
     }
 
     /**
      * @param User $userSource
      * @param User $userTarget
      *
-     * @return void
+     * @return Relationship
      *
      * @throws Exception
      */
-    public function acceptFollowRelationship(User $userSource, User $userTarget): void
+    public function acceptFollowRelationship(User $userSource, User $userTarget): Relationship
     {
-        if ($userSource === $userTarget) {
-            throw new Exception("User can't have relation with himself");
-        }
-
         $userRelationship = $this->entityManager->getRepository(Relationship::class)->findOneBy([
             'userSource' => $userSource,
             'userTarget' => $userTarget,
             'status' => Relationship::STATUS['PENDING_FOLLOW_REQUEST']
         ]);
 
-        $userRelationship->setStatus(Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
+        if ($this->security->isGranted('edit', $userRelationship)) {
+            $userRelationship->setStatus(Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
 
-        $errors = $this->validator->validate($userRelationship);
-        if (count($errors) > 0) {
-            throw new Exception((string) $errors);
+            $errors = $this->validator->validate($userRelationship);
+            if (count($errors) > 0) {
+                throw new Exception((string) $errors);
+            }
+
+            $this->entityManager->persist($userRelationship);
+            $this->entityManager->flush();
         }
 
-        $this->entityManager->persist($userRelationship);
-        $this->entityManager->flush();
+        return $userRelationship;
     }
 
     /**
      * @param User $userSource
      * @param User $userTarget
      *
-     * @return void
+     * @return Relationship
      *
-     * @throws Exception
      */
-    public function deleteFollowRelationship(User $userSource, User $userTarget): void
+    public function deleteFollowRelationship(User $userSource, User $userTarget): Relationship
     {
-        if ($userSource === $userTarget) {
-            throw new Exception("User can't have relation with himself");
-        }
-
         $userRelationship = $this->entityManager->getRepository(Relationship::class)->findOneBy([
             'userSource' => $userSource,
             'userTarget' => $userTarget,
         ]);
 
-        $this->entityManager->remove($userRelationship);
-        $this->entityManager->flush();
+        if ($this->security->isGranted('delete', $userRelationship)) {
+            $this->entityManager->remove($userRelationship);
+            $this->entityManager->flush();
+        }
+
+        return $userRelationship;
     }
 }

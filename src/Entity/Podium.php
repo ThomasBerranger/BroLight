@@ -23,31 +23,31 @@ class Podium
      * @ORM\Column(type="integer")
      * @Groups({"podium:read", "user:read"})
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="podium", cascade={"persist", "remove"})
      * @Groups({"podium:read"})
      */
-    private $author;
+    private ?User $author;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"podium:read", "user:read"})
      */
-    private $firstTmdbId;
+    private ?int $firstTmdbId;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"podium:read", "user:read"})
      */
-    private $secondTmdbId;
+    private ?int $secondTmdbId;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"podium:read", "user:read"})
      */
-    private $thirdTmdbId;
+    private ?int $thirdTmdbId;
 
     public function getId(): ?int
     {
