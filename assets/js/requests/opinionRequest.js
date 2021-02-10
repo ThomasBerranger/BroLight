@@ -30,6 +30,7 @@ $(document).ready(function() {
             success: function (data) {
                 updateOpinionButton(data);
                 updateOpinionOnMovieDetails(data['opinionId']);
+                updateOpinionOnTimeline(data['opinionId']);
                 $('#alert').trigger("trigger-alert", ["success", "Avis enregistré !"]);
             },
             error: function (error) {
@@ -76,6 +77,7 @@ function openFormRequest(element) {
 
 function updateOpinionButton(data) {
     const currentOpinionButton = $(`#opinionButton-${data['tmdbId']}`);
+
     if (currentOpinionButton.length === 1) {
         currentOpinionButton.html(data['button']);
     }
@@ -86,5 +88,13 @@ function updateOpinionOnMovieDetails(opinionId) {
 
     if (movieDetailsOpinionDiv.length === 1) {
         movieDetailsOpinionDiv.trigger('update-opinion', opinionId);
+    }
+}
+
+function updateOpinionOnTimeline(opinionId) {
+    const timeline = $('ul.timeline');
+
+    if (timeline.length === 1) {
+        timeline.trigger('update-opinion', opinionId);
     }
 }
