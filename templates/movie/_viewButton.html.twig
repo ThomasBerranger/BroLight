@@ -1,15 +1,23 @@
-<span id="viewButton-{{ movie.id }}">
+{#<span id="viewButton-{{ movie.id }}">#}
+{#    {% if movie.id in app.user.watchedMoviesTmdbIds %}#}
+{#            <i class="fas fa-eye pointer-cursor text-primary" style="font-weight: 600; font-size: 1rem"#}
+{#               data-view-action="delete"#}
+{#               data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"></i>#}
+{#    {% else %}#}
+{#            <button role="button" class="btn btn-xxs btn-info">#}
+{#            <i class="fas fa-eye-slash pointer-cursor"#}
+{#               data-view-action="create"#}
+{#               data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>#}
+{#            </button>#}
+{#    {% endif %}#}
+{#</span>#}
 
-    {% if movie.id in app.user.watchedMoviesTmdbIds %}
-            <i class="fas fa-eye pointer-cursor text-primary" style="font-weight: 600; font-size: 1rem"
-               data-view-action="delete"
-               data-view-url="{{ absolute_url(path('view.delete', {'tmdbId': movie.id})) }}"></i>
-    {% else %}
-            <button role="button" class="btn btn-xxs btn-info">
-            <i class="fas fa-eye-slash pointer-cursor"
-               data-view-action="create"
-               data-view-url="{{ absolute_url(path('view.create', {'tmdbId': movie.id})) }}"></i>
-            </button>
-    {% endif %}
-
-</span>
+<div>
+    <button role="button" class="btn btn-sm btn-outline-dark" data-opinion-action="create-view" data-opinion-url="{{ path('opinion.create_view', {'tmdbId': movie.id}) }}">J'ai vu ce film !</button>
+    <button role="button" class="btn btn-sm btn-outline-dark" data-opinion-action="delete-view" data-opinion-url="{{ path('opinion.delete_view', {'tmdbId': movie.id}) }}">Je n'ai pas vu ce film.</button>
+    <button role="button" class="btn btn-sm btn-outline-dark"
+            data-title="{{ movie.title }}"
+            data-comment-action="open-form"
+            data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
+        Ouvrir le formulaire</button>
+</div>

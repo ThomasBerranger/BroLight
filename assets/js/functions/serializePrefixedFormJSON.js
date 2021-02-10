@@ -1,7 +1,7 @@
 (function ($) {
     $.fn.serializePrefixedFormJSON = function() {
-        let o = {};
-        let array = this.serializeArray();
+        const o = {};
+        const array = this.serializeArray();
 
         $.each(array, function () {
             let name = this.name;
@@ -13,6 +13,17 @@
             );
 
             o[name] = value;
+        });
+
+        $('input[type="checkbox"]:not(:checked)').each(function(){
+            let name = this.name;
+
+            name = name.substring(
+                name.lastIndexOf("[") + 1,
+                name.lastIndexOf("]")
+            );
+
+            o[name] = '0';
         });
 
         return JSON.stringify(o);

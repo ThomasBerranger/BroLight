@@ -1,18 +1,18 @@
-<span id="commentButton-{{ movie.id }}">
+{#<span id="commentButton-{{ movie.id }}">#}
 
-    {% if movie.id in app.user.commentedMoviesTmdbIds %}
-            <i class="fas fa-comment text-primary pointer-cursor" style="font-size: 1rem;"
-               data-title="{{ movie.title }}"
-               data-comment-action="open-form"
-               data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}">
-        </i>
-        {% else %}
-            <button role="button" class="btn btn-xxs btn-info">
-                 <i class="fas fa-comment-slash pointer-cursor"
-                    data-title="{{ movie.title }}"
-                    data-comment-action="open-form"
-                    data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>
-        </button>
-    {% endif %}
+{#    {% if movie.id in app.user.commentedMoviesTmdbIds %}#}
+{#            <i class="fas fa-comment text-primary pointer-cursor" style="font-size: 1rem;"#}
+{#               data-title="{{ movie.title }}"#}
+{#               data-comment-action="open-form"#}
+{#               data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}">#}
+{#        </i>#}
+{#        {% else %}#}
+{#            <button role="button" class="btn btn-xxs btn-info">#}
+{#                 <i class="fas fa-comment-slash pointer-cursor"#}
+{#                    data-title="{{ movie.title }}"#}
+{#                    data-comment-action="open-form"#}
+{#                    data-comment-url="{{ absolute_url(path('comment.form', {'tmdbId': movie.id})) }}"></i>#}
+{#        </button>#}
+{#    {% endif %}#}
 
-</span>
+{#</span>#}

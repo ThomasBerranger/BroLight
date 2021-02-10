@@ -10,12 +10,12 @@ import './js/components/sidebar';
 import './js/components/rate';
 import './js/components/tooltip';
 
-import './js/requests/userRelationRequest';
+import './js/requests/relationRequest';
+import './js/requests/opinionRequest';
 import './js/requests/viewRequest';
 import './js/requests/commentRequest';
 import './js/requests/avatarRequest';
 import './js/requests/podiumRequest';
-
 
 if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).then();

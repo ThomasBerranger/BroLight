@@ -39,3 +39,8 @@ services:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Comment', lazy: true }
             - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Comment', lazy: true }
+    App\EventListener\OpinionListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'postLoad', entity: 'App\Entity\Opinion', lazy: true }
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Opinion', lazy: true }
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Opinion', lazy: true }

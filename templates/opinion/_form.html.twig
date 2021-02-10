@@ -1,0 +1,48 @@
+{{ form_start(form, {'action': path('opinion.update'), 'attr': {'class': 'row'}}) }}
+
+<div class="col-12">
+    {{ form_label(form.comment, 'Alors ! Pépite ou navet ?') }}
+    {{ form_widget(form.comment, {'attr': {'class': 'form-control form-control-sm mb-3'}}) }}
+</div>
+
+<div class="col-12">
+    <label class="pointer-cursor">
+        {{ form_widget(form.isViewed) }}
+        J'ai vu ce film
+    </label>
+    <label class="pointer-cursor">
+        {{ form_widget(form.isSpoiler) }}
+        Attention je spoil !
+    </label>
+</div>
+
+<div id="ratingDiv" class="col-12 rating" style="display: none">
+    {{ include('rate/_inputs.html.twig') }}
+</div>
+
+<div class="col-12 text-center pointer-cursor mt-3">
+    <button class="btn btn-sm btn-success px-4" type="submit">Valider</button>
+</div>
+
+{{ form_end(form) }}
+
+<script type="text/javascript">
+    viewedInput = document.getElementById('opinion_isViewed');
+    rateInput = document.getElementById('opinion_rate');
+    ratingDiv = document.getElementById('ratingDiv');
+
+    if (viewedInput.checked) {
+        ratingDiv.style.display = "block";
+        if (rateInput.value && rateInput.value > 0) {
+            document.getElementById(`rating-${ rateInput.value }`).click();
+        }
+    }
+
+    viewedInput.onclick = () => {
+        if (viewedInput.checked  === true) {
+            ratingDiv.style.display = "block";
+        } else {
+            ratingDiv.style.display = "none";
+        }
+    }
+</script>

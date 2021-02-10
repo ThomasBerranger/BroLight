@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Opinion;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,16 +14,16 @@ class OpinionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author') // hidden
-            ->add('tmdbId') // hidden
+            ->add('tmdbId', HiddenType::class)
             ->add('isViewed')
-            ->add('viewedAt') // hidden
-            ->add('comment')
-            ->add('commentedAt') // hidden
+            ->add('comment', TextareaType::class, [
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Comment est votre blanquette ?'
+                ]
+            ])
             ->add('isSpoiler')
-            ->add('rate')
-            ->add('createdAt') // hidden
-            ->add('updatedAt') // hidden
+            ->add('rate', HiddenType::class)
         ;
     }
 
