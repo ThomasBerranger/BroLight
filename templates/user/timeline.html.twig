@@ -23,8 +23,8 @@
                         <div class="col-4">
                             <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
                                 <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
-                                {% if event.rate %}
-                                    <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ event.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                {% if event.rate > 0 %}
+                                    <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ event.rate|associatedEmojiURL }}" alt="rate emoji">
                                 {% endif %}
                             </a>
                         </div>
@@ -39,17 +39,17 @@
 
                             {% if event.comment %}
                                 <div class="card-text text-left p-2">
-                                    {% if event.comment.spoiler %}
-                                        <p class="bg-warning pointer-cursor text-center" data-toggle="collapse" data-target="#collapseSpoiler{{ event.comment.id }}" aria-expanded="false" aria-controls="collapseSpoiler{{ event.comment.id }}">
+                                    {% if event.isSpoiler %}
+                                        <p class="bg-warning pointer-cursor text-center" data-toggle="collapse" data-target="#collapseSpoiler{{ event.id }}">
                                             <i class="fas fa-exclamation-circle"></i> Spoiler - Cliquer pour afficher
                                         </p>
-                                        <p class="collapse" id="collapseSpoiler{{ event.comment.id }}">{{ event.comment.content|nl2br }}</p>
+                                        <p class="collapse" id="collapseSpoiler{{ event.id }}">{{ event.comment|nl2br }}</p>
                                     {% else %}
-                                        <p>{{ event.comment.content|nl2br }}</p>
+                                        <p>{{ event.comment|nl2br }}</p>
                                     {% endif %}
                                 </div>
                             {% else %}
-                                <div class="card-text text-left text-danger p-2">Vu...</div>
+                                <div class="card-text text-left text-danger p-2">J'ai vu ce film !</div>
                             {% endif %}
 
                         </div>

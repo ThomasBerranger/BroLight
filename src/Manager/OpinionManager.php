@@ -28,6 +28,11 @@ class OpinionManager
         return $opinion;
     }
 
+    public function findFollowingsOpinions(User $user): array
+    {
+        return $this->entityManager->getRepository(Opinion::class)->findFollowingsViews($user);
+    }
+
     public function createView(User $author, int $tmdbId): Opinion
     {
         $opinion = $this->findOrCreate($author, $tmdbId);

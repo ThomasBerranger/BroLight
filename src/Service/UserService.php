@@ -4,31 +4,25 @@ namespace App\Service;
 
 use App\Entity\Podium;
 use App\Entity\User;
-use App\Manager\ViewManager;
+use App\Manager\OpinionManager;
 
 class UserService
 {
-    private $viewManager;
-    private $TMDBService;
+    private OpinionManager $opinionManager;
+    private TMDBService $TMDBService;
 
-    public function __construct(ViewManager $viewManager, TMDBService $TMDBService)
+    public function __construct(OpinionManager $opinionManager, TMDBService $TMDBService)
     {
-        $this->viewManager = $viewManager;
+        $this->opinionManager = $opinionManager;
         $this->TMDBService = $TMDBService;
     }
 
     public function getTimeline(User $user): array
     {
-        $timeline = [];
-
-        $views = $this->viewManager->getFollowingsViews($user);
-
-        $timeline = $views;
-
-        return $timeline;
+        return $this->opinionManager->findFollowingsOpinions($user);
     }
 
-    public function formattedPodium(User $user): void
+    public function formattedPodium(User $user): array
     {
         if ($user->getPodium() instanceof Podium) {
             $formattedPodium = [
@@ -40,6 +34,6 @@ class UserService
             $formattedPodium = [];
         }
 
-        $user->setFormattedPodium($formattedPodium);
+        return $formattedPodium;
     }
 }

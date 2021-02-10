@@ -37,9 +37,7 @@ class UserController extends AbstractController
     {
         $timeline = $this->userService->getTimeline($this->getUser());
 
-        return $this->render('user/timeline.html.twig', [
-            'timeline' => $timeline
-        ]);
+        return $this->render('user/timeline.html.twig', ['timeline' => $timeline]);
     }
 
     /**
@@ -67,12 +65,11 @@ class UserController extends AbstractController
             $this->entityManager->flush();
         }
 
-        $this->userService->formattedPodium($this->getUser());
-
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()),
+            'podium' => $this->userService->formattedPodium($this->getUser()),
+            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()), //todo remplacer par une recherche ajax
         ]);
     }
 
@@ -87,6 +84,9 @@ class UserController extends AbstractController
     {
         $this->userService->formattedPodium($user);
 
-        return $this->render('user/details.html.twig', ['user' => $user]);
+        return $this->render('user/details.html.twig', [
+            'user' => $user,
+            'podium' => $this->userService->formattedPodium($this->getUser())
+        ]);
     }
 }

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user_relationship", name="user_relationship.")
  */
-class UserRelationshipController extends AbstractController
+class RelationshipController extends AbstractController
 {
     private $entityManager;
     private $userRelationshipManager;

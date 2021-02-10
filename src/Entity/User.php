@@ -111,8 +111,6 @@ class User implements UserInterface
      */
     private $podium;
 
-    private $formattedPodium;
-
     /**
      * @ORM\OneToMany(targetEntity=Opinion::class, mappedBy="author", orphanRemoval=true)
      */
@@ -497,18 +495,6 @@ class User implements UserInterface
         }
 
         $this->podium = $podium;
-
-        return $this;
-    }
-
-    public function getFormattedPodium(): array
-    {
-        return $this->formattedPodium;
-    }
-
-    public function setFormattedPodium(array $formattedPodium): self
-    {
-        $this->formattedPodium = $formattedPodium;
 
         return $this;
     }

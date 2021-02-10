@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Form\CommentType;
-use App\Manager\CommentManager;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +16,11 @@ class MovieController extends AbstractController
 {
     private $client;
     private $TMDBService;
-    private $commentManager;
 
-    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService, CommentManager $commentManager)
+    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService)
     {
         $this->client = $httpClient;
         $this->TMDBService = $TMDBService;
-        $this->commentManager = $commentManager;
     }
 
     /**

@@ -30,9 +30,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if user.formattedPodium is not empty and user.formattedPodium[2] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[2].id}) }}">
-                                                <img class="podium-img-2" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[2].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
+                                        {% if podium is not empty and podium[2] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': podium[2].id}) }}">
+                                                <img class="podium-img-2" src="https://image.tmdb.org/t/p/w154{{ podium[2].poster_path }}" alt="{{ podium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-2" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
@@ -46,9 +46,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if user.formattedPodium is not empty and user.formattedPodium[1] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[1].id}) }}">
-                                                <img class="podium-img-1" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[1].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
+                                        {% if podium is not empty and podium[1] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': podium[1].id}) }}">
+                                                <img class="podium-img-1" src="https://image.tmdb.org/t/p/w154{{ podium[1].poster_path }}" alt="{{ podium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-1" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
@@ -62,9 +62,9 @@
                             <div class="col-4">
                                 <div class="row">
                                     <div class="col-12 my-1-vh">
-                                        {% if user.formattedPodium is not empty and user.formattedPodium[3] %}
-                                            <a href="{{ path('movie.details', {'tmdbId': user.formattedPodium[3].id}) }}">
-                                                <img class="podium-img-3" src="https://image.tmdb.org/t/p/w154{{ user.formattedPodium[3].poster_path }}" alt="{{ user.formattedPodium[1].title }} poster">
+                                        {% if podium is not empty and podium[3] %}
+                                            <a href="{{ path('movie.details', {'tmdbId': podium[3].id}) }}">
+                                                <img class="podium-img-3" src="https://image.tmdb.org/t/p/w154{{ podium[3].poster_path }}" alt="{{ podium[1].title }} poster">
                                             </a>
                                         {% else %}
                                             <img class="podium-img-3" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
@@ -85,22 +85,22 @@
         <div class="col-12 col-md-6 col-lg-4 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <p class="font-weight-bold">{{ user.views|length }} Film{{ user.views|length > 1 ? 's' }} vu{{ user.views|length > 1 ? 's' }} ({{ user.comments|length }} commenté{{ user.comments|length > 1 ? 's' }}):</p>
+                    <p class="font-weight-bold">{{ user.opinions|length }} Avi{{ user.opinions|length > 1 ? 's' }}</p>
                     <hr class="my-2">
                     <div class="row">
-                        {% for view in user.views|reverse %}
+                        {% for opinion in user.opinions|reverse %}
                             <div class="col-4 mb-3">
-                                <a href="{{ path('movie.details', {'tmdbId': view.tmdbId}) }}">
-                                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ view.movie.poster_path }}" alt="{{ view.movie.title }} poster">
-                                    {% if view.rate %}
-                                        <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ view.rate.value|associatedEmojiURL }}" alt="rate emoji">
+                                <a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">
+                                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ opinion.movie.poster_path }}" alt="{{ opinion.movie.title }} poster">
+                                    {% if opinion.rate < 0 %}
+                                        <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ opinion.rate|associatedEmojiURL }}" alt="rate emoji">
                                     {% endif %}
                                 </a>
                             </div>
                             <div class="col-8">
-                                {% if view.comment %}
+                                {% if opinion.comment %}
                                     <div class="card-text text-left p-2">
-                                        <p>{{ view.comment.content|nl2br }}</p>
+                                        <p>{{ opinion.comment|nl2br }}</p>
                                     </div>
                                 {% endif %}
                             </div>
