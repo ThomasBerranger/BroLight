@@ -9,7 +9,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -21,11 +20,11 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * To use this command, open a terminal window, enter into your project
  * directory and execute the following:
  *
- *     $ php bin/console app:add-user
+ *     $ php bin/console app:change-user-role
  */
-class AddUserCommand extends Command
+class ChangeUserRoleCommand extends Command
 {
-    protected static $defaultName = 'app:add-user';
+    protected static $defaultName = 'app:change-user-role';
 
     /**
      * @var SymfonyStyle
@@ -51,11 +50,9 @@ class AddUserCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Creates users and stores them in the database')
-            ->addArgument('firstname', InputArgument::OPTIONAL, 'The firstname of the new user')
-            ->addArgument('lastname', InputArgument::OPTIONAL, 'The lastname of the new user')
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email of the new user')
-            ->addArgument('password', InputArgument::OPTIONAL, 'The plain password of the new user')
+            ->setDescription('Update users\' role.')
+            ->addArgument('email', InputArgument::OPTIONAL, 'The email of the user')
+            ->addArgument('role', InputArgument::OPTIONAL, 'The new role of the user')
         ;
     }
 
@@ -83,50 +80,32 @@ class AddUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $stopwatch = new Stopwatch();
-        $stopwatch->start('add-user-command');
+        $stopwatch->start('change-user-role-command');
 
-        $firstname = $input->getArgument('firstname');
-        $lastname = $input->getArgument('lastname');
         $email = $input->getArgument('email');
-        $plainPassword = $input->getArgument('password');
+        $role = $input->getArgument('role');
 
-        // make sure to validate the user data is correct
-        $this->validateUserData($email);
+        $user = $this->users->findOneBy(['email' => $email]);
 
-        // create the user and encode its password
-        $user = new User();
-        $user->setFirstname($firstname);
-        $user->setLastname($lastname);
-        $user->setEmail($email);
+        if (!$user instanceof User) {
+            throw new RuntimeException(sprintf('There is no user registered with the "%s" email.', $email));
+        } else if ($role !== User::ROLE_USER and $role !== User::ROLE_ADMIN) {
+            throw new RuntimeException(sprintf('"%s" isn\'t a correct role name.', $role));
+        }
 
-        $user->setUsername(strtolower($firstname.$lastname.time()));
-        $user->setSlug(strtolower($firstname.$lastname));
-        $user->setUpdatedAt(new \DateTime());
-        $user->setCreatedAt(new \DateTime());
-
-        // See https://symfony.com/doc/current/security.html#c-encoding-passwords
-        $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
-        $user->setPassword($encodedPassword);
+        $user->setRoles([$role]);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->io->success(sprintf('%s was successfully created: %s', $user->getUsername(), $user->getEmail()));
+        $this->io->success(sprintf('%s account now has : %s as role.', $user->getEmail(), $role));
 
-        $event = $stopwatch->stop('add-user-command');
+        $event = $stopwatch->stop('change-user-role-command');
         if ($output->isVerbose()) {
-            $this->io->comment(sprintf('New user database id: %d / Elapsed time: %.2f ms / Consumed memory: %.2f MB', $user->getId(), $event->getDuration(), $event->getMemory() / (1024 ** 2)));
+            $this->io->comment(sprintf('Updated user id: %d / Elapsed time: %.2f ms / Consumed memory: %.2f MB', $user->getId(), $event->getDuration(), $event->getMemory() / (1024 ** 2)));
         }
 
         return Command::SUCCESS;
     }
 
-    private function validateUserData($email): void
-    {
-        $existingUser = $this->users->findOneBy(['email' => $email]);
-
-        if (null !== $existingUser) {
-            throw new RuntimeException(sprintf('There is already a user registered with the "%s" email.', $email));
-        }
-    }
 }
