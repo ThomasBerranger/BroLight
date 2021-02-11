@@ -36,13 +36,13 @@ class Relationship
     private ?int $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsSource")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="relationsAsSource")
      * @ORM\JoinColumn(nullable=false)
      */
     private ?User $userSource;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userRelationsAsTarget")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="relationsAsTarget")
      * @ORM\JoinColumn(nullable=false)
      */
     private ?User $userTarget;

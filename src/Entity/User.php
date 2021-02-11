@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  *
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Quelqu'un utilise déjà cet email.")
  */
 class User implements UserInterface
 {
@@ -44,7 +44,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", unique=true)
-     * @Assert\Length(min=2, max=50)
+     * @Assert\Length(min=2, max=255)
      */
     private string $username;
 
@@ -89,30 +89,16 @@ class User implements UserInterface
     private $opinions;
 
     /**
-     * @return array
-     */
-    public function getOpinionsTmdbIds(): array
-    {
-        $opinionsTmdbIds = [];
-
-        foreach ($this->opinions as $opinion) {
-            array_push($opinionsTmdbIds, $opinion->getTmdbId());
-        }
-
-        return $opinionsTmdbIds;
-    }
-
-    /**
      * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userSource", orphanRemoval=true)
      * @OrderBy({"updatedAt" = "ASC"})
      */
-    private $userRelationsAsSource;
+    private $relationsAsSource;
 
     /**
      * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userTarget", orphanRemoval=true)
      * @OrderBy({"updatedAt" = "ASC"})
      */
-    private $userRelationsAsTarget;
+    private $relationsAsTarget;
 
     /**
      * @ORM\Column(type="datetime")
@@ -195,17 +181,12 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    /**
-     * Returns the roles or permissions granted to the user for security.
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
 
-        // guarantees that a user always has at least one role for security
-        if (empty($roles)) {
+        if (empty($roles))
             $roles[] = 'ROLE_USER';
-        }
 
         return array_unique($roles);
     }
@@ -264,9 +245,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Opinion[]
-     */
     public function getOpinions(): Collection
     {
         return $this->opinions;
@@ -285,7 +263,6 @@ class User implements UserInterface
     public function removeOpinion(Opinion $opinion): self
     {
         if ($this->opinions->removeElement($opinion)) {
-            // set the owning side to null (unless already changed)
             if ($opinion->getAuthor() === $this) {
                 $opinion->setAuthor(null);
             }
@@ -294,40 +271,35 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFollowers(): array // todo: event listener
+    public function getOpinionsTmdbIds(): array
     {
-        $followers = [];
+        $opinionsTmdbIds = [];
 
-        /** @var Relationship $userRelation */
-        foreach ($this->userRelationsAsTarget as $userRelation) {
-            if ($userRelation->getStatus() === Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
-                array_push($followers, $userRelation->getUserSource());
-            }
+        foreach ($this->opinions as $opinion) {
+            array_push($opinionsTmdbIds, $opinion->getTmdbId());
         }
 
-        return $followers;
+        return $opinionsTmdbIds;
     }
 
-    public function getPendingFollowers(): array // todo: event listener
+    public function getPendingFollowings(): array
     {
-        $followers = [];
+        $pendingFollowings = [];
 
-        /** @var Relationship $userRelation */
-        foreach ($this->userRelationsAsTarget as $userRelation) {
+        foreach ($this->relationsAsSource as $userRelation) {
             if ($userRelation->getStatus() === Relationship::STATUS['PENDING_FOLLOW_REQUEST']) {
-                array_push($followers, $userRelation->getUserSource());
+                array_push($pendingFollowings, $userRelation->getUserTarget());
             }
         }
 
-        return $followers;
+        return $pendingFollowings;
     }
 
-    public function getFollowings(): array // todo: event listener
+    public function getFollowings(): array
     {
         $followings = [];
 
-        /** @var Relationship $userRelation */
-        foreach ($this->userRelationsAsSource as $userRelation) {
+        foreach ($this->relationsAsSource as $userRelation) {
             if ($userRelation->getStatus() === Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
                 array_push($followings, $userRelation->getUserTarget());
             }
@@ -336,18 +308,31 @@ class User implements UserInterface
         return $followings;
     }
 
-    public function getPendingFollowings(): array // todo: event listener
+    public function getPendingFollowers(): array
     {
-        $followings = [];
+        $pendingFollowers = [];
 
         /** @var Relationship $userRelation */
-        foreach ($this->userRelationsAsSource as $userRelation) {
+        foreach ($this->relationsAsTarget as $userRelation) {
             if ($userRelation->getStatus() === Relationship::STATUS['PENDING_FOLLOW_REQUEST']) {
-                array_push($followings, $userRelation->getUserTarget());
+                array_push($pendingFollowers, $userRelation->getUserSource());
             }
         }
 
-        return $followings;
+        return $pendingFollowers;
+    }
+
+    public function getFollowers(): array
+    {
+        $followers = [];
+
+        foreach ($this->relationsAsTarget as $userRelation) {
+            if ($userRelation->getStatus() === Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']) {
+                array_push($followers, $userRelation->getUserSource());
+            }
+        }
+
+        return $followers;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface

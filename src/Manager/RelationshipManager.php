@@ -22,11 +22,6 @@ class RelationshipManager
         $this->security = $security;
     }
 
-    public function getAllUserRelationships(User $user): array
-    {
-        return $this->entityManager->getRepository(Relationship::class)->findAllUserRelationships($user);
-    }
-
     /**
      * @param User $userSource
      * @param User $userTarget

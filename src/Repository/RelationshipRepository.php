@@ -20,18 +20,7 @@ class RelationshipRepository extends ServiceEntityRepository
         parent::__construct($registry, Relationship::class);
     }
 
-    public function findAllUserRelationships(User $user): array
-    {
-        return $this->createQueryBuilder('ur')
-            ->where('ur.userSource = :userId')
-            ->orWhere('ur.userTarget = :userId')
-            ->setParameter('userId', $user->getId())
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-    public function findPendingFollowFor(User $user): array
+    public function findPendingFollowersOf(User $user): array
     {
         return $this->createQueryBuilder('ur')
             ->where('ur.userTarget = :userId')

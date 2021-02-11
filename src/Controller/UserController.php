@@ -80,7 +80,6 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        dump($this->userService->formattedPodium($user));
         return $this->render('user/details.html.twig', ['user' => $user, 'podium' => $this->userService->formattedPodium($user)]);
     }
 }

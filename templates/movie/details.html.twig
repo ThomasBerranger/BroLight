@@ -73,8 +73,8 @@
                         <div class="ml-2 text-center">
                             <button role="button" class="btn btn-sm btn-outline-dark"
                                     data-title="{{ movie.title }}"
-                                    data-comment-action="open-form"
-                                    data-comment-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
+                                    data-opinion-action="open-form"
+                                    data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
                             </button>
                         </div>
                     {% endif %}

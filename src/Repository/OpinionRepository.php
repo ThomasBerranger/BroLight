@@ -21,11 +21,11 @@ class OpinionRepository extends ServiceEntityRepository
         parent::__construct($registry, Opinion::class);
     }
 
-    public function findFollowingsViews(User $user)
+    public function findFollowingsOpinions(User $user)
     {
         return $this->createQueryBuilder('o')
             ->innerJoin('o.author', 'u', 'WITH', 'o.author = u.id')
-            ->innerJoin('u.userRelationsAsTarget', 'ur', 'WITH', 'u.id = ur.userTarget')
+            ->innerJoin('u.relationsAsTarget', 'ur', 'WITH', 'u.id = ur.userTarget')
             ->where('ur.status = :status AND ur.userSource = :userId')
             ->orWhere('o.author = :userId')
             ->setParameters([

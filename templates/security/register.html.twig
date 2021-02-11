@@ -12,23 +12,29 @@
 
         <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
 
-        {{ form_label(registrationForm.email, 'Ton email') }}
+        {{ form_label(registrationForm.email, 'Ton email :') }}
         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
         <div class="alert-danger">
             {{ form_errors(registrationForm.email) }}
         </div>
         <small id="emailHelp" class="form-text text-muted mb-2">Promis ton email ne sera pas diffusé.</small>
 
-        {{ form_label(registrationForm.firstname, 'Ton prénom') }}
-        {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control mb-2'}}) }}
+        {{ form_label(registrationForm.firstname, 'Ton prénom :', {'attr': {'class': 'mt-2'}}) }}
+        {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert-danger">
+            {{ form_errors(registrationForm.firstname) }}
+        </div>
 
-        {{ form_label(registrationForm.lastname, 'Ton nom') }}
-        {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control mb-2'}}) }}
+        {{ form_label(registrationForm.lastname, 'Ton nom :', {'attr': {'class': 'mt-2'}}) }}
+        {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert-danger">
+            {{ form_errors(registrationForm.lastname) }}
+        </div>
 
-        {{ form_label(registrationForm.plainPassword.first, 'Ton mot de passe') }}
+        {{ form_label(registrationForm.plainPassword.first, 'Ton mot de passe :') }}
         {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control mb-2'}}) }}
 
-        {{ form_label(registrationForm.plainPassword.second, 'Encore une fois') }}
+        {{ form_label(registrationForm.plainPassword.second, 'Encore une fois :') }}
         {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
         <div class="alert-danger">
             {{ form_errors(registrationForm.plainPassword.first) }}
