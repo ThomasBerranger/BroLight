@@ -91,6 +91,20 @@ class User implements UserInterface
     private $opinions;
 
     /**
+     * @return array
+     */
+    public function getOpinionsTmdbIds(): array
+    {
+        $opinionsTmdbIds = [];
+
+        foreach ($this->opinions as $opinion) {
+            array_push($opinionsTmdbIds, $opinion->getTmdbId());
+        }
+
+        return $opinionsTmdbIds;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity=Relationship::class, mappedBy="userSource", orphanRemoval=true)
      * @OrderBy({"updatedAt" = "ASC"})
      */
