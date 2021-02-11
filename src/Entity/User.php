@@ -7,14 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email", "username"}, message="Un compte est déjà enregistré avec cet email ou ce username.")
  *
  */
 class User implements UserInterface
@@ -32,22 +30,23 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $firstname;
+    private ?string $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $lastname;
+    private ?string $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\Email()
      */
     private string $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $password;
+    private ?string $password;
 
     /**
      * @ORM\Column(type="json")
@@ -87,7 +86,7 @@ class User implements UserInterface
     private string $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private string $username;
 

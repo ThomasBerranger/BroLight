@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\UserEvent;
-use App\Form\RegistrationFormType;
+use App\Form\RegistrationType;
+use App\Manager\UserManager;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class RegistrationController extends AbstractController
 {
     private EventDispatcherInterface $eventDispatcher;
+    private UserManager              $userManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, UserManager $userManager)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -36,7 +39,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,12 +51,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->userManager->save($user);
 
-            $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch($event, UserEvent::USER_CREATE_EVENT); // todo: remplacer par un doctrine event
+//            $event = new UserEvent($user);
+//            $this->eventDispatcher->dispatch($event, UserEvent::USER_CREATE_EVENT); // todo: remplacer par un doctrine event
 
             $this->addFlash('firstTime','Bienvenue');
 
