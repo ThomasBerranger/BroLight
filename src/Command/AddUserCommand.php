@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Avatar;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -106,6 +107,10 @@ class AddUserCommand extends Command
         $user->setSlug(strtolower($firstname.$lastname));
         $user->setUpdatedAt(new \DateTime());
         $user->setCreatedAt(new \DateTime());
+
+        $avatar = new Avatar();
+        $avatar->setAuthor($user);
+        $this->entityManager->persist($avatar);
 
         // See https://symfony.com/doc/current/security.html#c-encoding-passwords
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
