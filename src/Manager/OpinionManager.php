@@ -6,15 +6,18 @@ use App\Entity\Opinion;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OpinionManager
 {
     private EntityManagerInterface $entityManager;
+    private ValidatorInterface $validator;
     private Security $security;
 
-    public function __construct(EntityManagerInterface $entityManager, Security $security)
+    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, Security $security)
     {
         $this->entityManager = $entityManager;
+        $this->validator = $validator;
         $this->security = $security;
     }
 
@@ -40,9 +43,7 @@ class OpinionManager
     {
         $opinion = $this->findOrCreate($author, $tmdbId);
 
-        if ($this->security->isGranted('edit', $opinion)) {
-            $opinion->setIsViewed(true);
-        }
+        $opinion->setIsViewed(true);
 
         return $this->save($opinion);
     }
@@ -51,9 +52,7 @@ class OpinionManager
     {
         $opinion = $this->findOrCreate($author, $tmdbId);
 
-        if ($this->security->isGranted('edit', $opinion)) {
-            $opinion->setIsViewed(false);
-        }
+        $opinion->setIsViewed(false);
 
         return $this->save($opinion);
     }
@@ -68,7 +67,9 @@ class OpinionManager
 
     public function save(Opinion $opinion): Opinion
     {
-        if ($this->security->isGranted('edit', $opinion)) {
+        $errors = $this->validator->validate($opinion);
+
+        if ($this->security->isGranted('edit', $opinion) and count($errors) <= 0) {
             $this->entityManager->persist($opinion);
             $this->entityManager->flush();
         }

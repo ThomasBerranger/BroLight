@@ -89,6 +89,9 @@
                     <hr class="my-2">
                     <div class="row">
                         {% for opinion in user.opinions|reverse %}
+                            <div class="col-12">
+                                <h6 class="text-center mb-1">{{ opinion.movie.title }}</h6>
+                            </div>
                             <div class="col-4 mb-3">
                                 <a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">
                                     <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ opinion.movie.poster_path }}" alt="{{ opinion.movie.title }} poster">

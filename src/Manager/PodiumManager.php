@@ -6,15 +6,18 @@ use App\Entity\Podium;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PodiumManager
 {
     private EntityManagerInterface $entityManager;
+    private ValidatorInterface $validator;
     private AuthorizationCheckerInterface $authorizationChecker;
 
-    public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(ValidatorInterface $validator, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->entityManager = $entityManager;
+        $this->validator = $validator;
         $this->authorizationChecker = $authorizationChecker;
     }
 
@@ -27,9 +30,11 @@ class PodiumManager
             $podium->setAuthor($user);
         }
 
-        if ($this->authorizationChecker->isGranted('edit', $podium)) {
-            $podium->assignedTmdbIdToRank($rank, $tmdbId);
+        $podium->assignedTmdbIdToRank($rank, $tmdbId);
 
+        $errors = $this->validator->validate($podium);
+
+        if ($this->authorizationChecker->isGranted('edit', $podium) and count($errors) <= 0) {
             $this->entityManager->persist($podium);
             $this->entityManager->flush();
         }

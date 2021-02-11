@@ -127,9 +127,8 @@
                 <div class="col-4">
                     <div class="row">
                         <div class="col-12 my-1-vh">
-
                             <img class="podium-img-2"
-                                        {% if podium is not empty and podium[2] %}
+                                    {% if podium is not empty and podium[2] %}
                                         src="https://image.tmdb.org/t/p/w154{{ podium[2].poster_path }}" alt="{{ podium[2].title }} poster"
                                     {% else %}
                                         src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder"
@@ -138,7 +137,6 @@
                                  data-title="Séléctionne ton deuxième film préféré"
                                  data-podium-action="open-form"
                                  data-podium-url="{{ absolute_url(path('podium.form', {'rank': 2})) }}">
-
                         </div>
                         <div class="col-12 text-center font-weight-bold podium-2" style="height: 30px;">2</div>
                     </div>
@@ -146,7 +144,6 @@
                 <div class="col-4">
                     <div class="row">
                         <div class="col-12 my-1-vh">
-
                             <img class="podium-img-1"
                                     {% if podium is not empty and podium[1] %}
                                         src="https://image.tmdb.org/t/p/w154{{ podium[1].poster_path }}" alt="{{ podium[1].title }} poster"
@@ -156,7 +153,6 @@
                                  data-title="Séléctionne ton film préféré"
                                  data-podium-action="open-form"
                                  data-podium-url="{{ absolute_url(path('podium.form', {'rank': 1})) }}">
-
                         </div>
                         <div class="col-12 text-center font-weight-bold podium-1" style="height: 50px;">1</div>
                     </div>
@@ -164,7 +160,6 @@
                 <div class="col-4">
                     <div class="row">
                         <div class="col-12 my-1-vh">
-
                             <img class="podium-img-3"
                                     {% if podium is not empty and podium[3] %}
                                         src="https://image.tmdb.org/t/p/w154{{ podium[3].poster_path }}" alt="{{ podium[3].title }} poster"
@@ -174,7 +169,6 @@
                                  data-title="Séléctionne ton troisième film préféré"
                                  data-podium-action="open-form"
                                  data-podium-url="{{ absolute_url(path('podium.form', {'rank': 3})) }}">
-
                         </div>
                         <div class="col-12 text-center font-weight-bold podium-3" style="height: 20px;">3</div>
                     </div>

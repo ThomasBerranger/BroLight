@@ -44,12 +44,9 @@ class RelationshipManager
         $userRelationship->setUserTarget($userTarget);
         $userRelationship->setStatus($status);
 
-        if ($this->security->isGranted('edit', $userRelationship)) {
-            $errors = $this->validator->validate($userRelationship);
-            if (count($errors) > 0) {
-                throw new Exception((string) $errors);
-            }
+        $errors = $this->validator->validate($userRelationship);
 
+        if ($this->security->isGranted('edit', $userRelationship) and count($errors) <= 0) {
             $this->entityManager->persist($userRelationship);
             $this->entityManager->flush();
         }
@@ -73,14 +70,11 @@ class RelationshipManager
             'status' => Relationship::STATUS['PENDING_FOLLOW_REQUEST']
         ]);
 
-        if ($this->security->isGranted('edit', $userRelationship)) {
-            $userRelationship->setStatus(Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
+        $userRelationship->setStatus(Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST']);
 
-            $errors = $this->validator->validate($userRelationship);
-            if (count($errors) > 0) {
-                throw new Exception((string) $errors);
-            }
+        $errors = $this->validator->validate($userRelationship);
 
+        if ($this->security->isGranted('edit', $userRelationship) and count($errors) <= 0) {
             $this->entityManager->persist($userRelationship);
             $this->entityManager->flush();
         }
