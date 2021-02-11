@@ -15,10 +15,6 @@ class UserListener
         $this->entityManager = $entityManager;
     }
 
-    public function postLoad(User $user): void
-    {
-    }
-
     public function prePersist(User $user): void
     {
         $user->setroles([User::ROLE_USER]);

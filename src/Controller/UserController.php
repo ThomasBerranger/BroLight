@@ -19,13 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
-    private UserManager $usermanager;
+    private UserManager $userManager;
     private UserService $userService;
 
-    public function __construct(EntityManagerInterface $entityManager, UserManager $usermanager, UserService $userService)
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager, UserService $userService)
     {
         $this->entityManager = $entityManager;
-        $this->usermanager = $usermanager;
+        $this->userManager = $userManager;
         $this->userService = $userService;
     }
 
@@ -60,7 +60,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $currentUser = $form->getData();
 
-            $this->usermanager->save($currentUser);
+            $this->userManager->save($currentUser);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -80,11 +80,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        $this->userService->formattedPodium($user);
-
-        return $this->render('user/details.html.twig', [
-            'user' => $user,
-            'podium' => $this->userService->formattedPodium($this->getUser())
-        ]);
+        dump($this->userService->formattedPodium($user));
+        return $this->render('user/details.html.twig', ['user' => $user, 'podium' => $this->userService->formattedPodium($user)]);
     }
 }
