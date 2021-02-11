@@ -1,12 +1,4 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
-
     encoders:
         # use your user class name here
         App\Entity\User:
@@ -15,17 +7,27 @@ security:
             # (i.e. Sodium when available).
             algorithm: auto
 
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        database_users:
+            entity: { class: App\Entity\User, property: username }
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
+            pattern: ^/
             anonymous: true
             lazy: true
-            provider: app_user_provider
+            provider: database_users
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+                    - App\Security\AppCustomAuthenticator #todo : usefull ?
+                entry_point: App\Security\LoginFormAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
