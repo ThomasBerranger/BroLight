@@ -27,10 +27,7 @@ class UserManager
         if ($this->security->isGranted('edit', $user) and count($errors) <= 0) {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-        } else {
-            dump((string) $errors);
         }
-        die;
 
         return $user;
     }

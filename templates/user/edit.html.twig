@@ -10,7 +10,8 @@
                     <a class="nav-link active" id="user-settings-tab" data-toggle="pill" href="#pills-settings" role="tab" aria-controls="pills-settings" aria-selected="true">Informations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="user-relationships-tab" data-toggle="pill" href="#pills-relationships" role="tab" aria-controls="pills-relationships" aria-selected="false">Contacts</a>
+                    <a class="nav-link" id="user-relationships-tab" data-toggle="pill" href="#pills-relationships" role="tab" aria-controls="pills-relationships" aria-selected="false">
+                        {{ notifications > 0 ? '<i class="far fa-bell"></i>' }} Contacts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="user-activty-tab" data-toggle="pill" href="#pills-activity" role="tab" aria-controls="pills-activity" aria-selected="false">Activité</a>

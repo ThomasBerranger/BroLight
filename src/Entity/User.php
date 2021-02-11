@@ -44,7 +44,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
      * @Assert\Length(min=2, max=50)
      */
     private string $username;
@@ -71,7 +70,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     private string $slug;
 
@@ -374,27 +372,6 @@ class User implements UserInterface
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdateDefaultValues() // todo: event listener
-    {
-        $this->updatedAt = new \DateTime();
-        $this->slug = strtolower($this->firstname.$this->lastname);
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreateDefaultValues() // todo: event listener
-    {
-        $this->updatedAt = new \DateTime();
-        $this->createdAt = new \DateTime();
-        $this->roles = [User::ROLE_USER];
-        $this->slug = strtolower($this->firstname.$this->lastname);
-        $this->username = strtolower($this->firstname.$this->lastname.time());
     }
 
     /**

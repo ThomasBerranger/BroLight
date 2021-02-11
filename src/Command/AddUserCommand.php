@@ -108,10 +108,6 @@ class AddUserCommand extends Command
         $user->setUpdatedAt(new \DateTime());
         $user->setCreatedAt(new \DateTime());
 
-        $avatar = new Avatar();
-        $avatar->setAuthor($user);
-        $this->entityManager->persist($avatar);
-
         // See https://symfony.com/doc/current/security.html#c-encoding-passwords
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
         $user->setPassword($encodedPassword);
