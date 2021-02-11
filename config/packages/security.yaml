@@ -26,7 +26,6 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
-                    - App\Security\AppCustomAuthenticator #todo : usefull ?
                 entry_point: App\Security\LoginFormAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
