@@ -110,11 +110,17 @@ class User implements UserInterface
      */
     private \DateTimeInterface $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Wish::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $wishes;
+
     public function __construct()
     {
         $this->userRelationsAsSource = new ArrayCollection();
         $this->userRelationsAsTarget = new ArrayCollection();
         $this->opinions = new ArrayCollection();
+        $this->wishes = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -376,5 +382,34 @@ class User implements UserInterface
      */
     public function eraseCredentials(): void
     {
+    }
+
+    /**
+     * @return Collection|Wish[]
+     */
+    public function getWishes(): Collection
+    {
+        return $this->wishes;
+    }
+
+    public function addWish(Wish $wish): self
+    {
+        if (!$this->wishes->contains($wish)) {
+            $this->wishes[] = $wish;
+            $wish->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWish(Wish $wish): self
+    {
+        if ($this->wishes->removeElement($wish)) {
+            if ($wish->getAuthor() === $this) {
+                $wish->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }
