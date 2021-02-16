@@ -44,7 +44,7 @@ class OpinionController extends AbstractController
         try {
             $opinion = $this->opinionManager->createView($this->getUser(), $tmdbId);
 
-            return $this->json($opinion, 200, [], ['groups' => 'opinion:read']);
+            return $this->json($opinion, 201, [], ['groups' => 'opinion:read']);
         } catch (Exception $exception) {
             return $this->json($exception->getMessage(), 500);
         }

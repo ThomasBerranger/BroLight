@@ -412,4 +412,15 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getWishTmdbIds(): array
+    {
+        $wishTmdbIds = [];
+
+        foreach ($this->wishes as $wish) {
+            array_push($wishTmdbIds, $wish->getTmdbId());
+        }
+
+        return $wishTmdbIds;
+    }
 }

@@ -85,7 +85,6 @@ class Opinion
         $this->commentedAt = null;
         $this->isSpoiler = false;
         $this->rate = 0;
-//        $this->movie = [];
     }
 
     public function getId(): ?int

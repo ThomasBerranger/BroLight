@@ -2,6 +2,10 @@
     <div class="col-12 col-md-6">
         <div class="card">
             <div class="card-body row">
+                <div class="col-12 text-center mb-2">
+                    <h6><i class="far fa-check-circle"></i> Liste de tes avis ({{ app.user.opinions|length }})</h6>
+                    <hr>
+                </div>
                 {% for opinion in app.user.opinions|reverse %}
                     <div class="col-12">
                         <h6 class="text-center mb-1">{{ opinion.movie.title }}</h6>
@@ -22,14 +26,26 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-
             </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6">
-        <div class="card p-3 text-center">
-            <p>En cours de développement ...</p>
+        <div class="card">
+            <div class="card-body row">
+                <div class="col-12 text-center mb-2">
+                    <h6><i class="far fa-star"></i> Liste de tes envis ({{ app.user.wishes|length }})</h6>
+                    <hr>
+                </div>
+                {% for wish in app.user.wishes|reverse %}
+                    <div class="col-6">
+                        <h6 class="text-center mb-1">{{ wish.movie.title }}</h6>
+                        <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
+                            <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
