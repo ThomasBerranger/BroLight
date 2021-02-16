@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Opinion;
 use App\Entity\User;
 use App\Manager\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,9 +30,11 @@ class AdminController extends AbstractController
     public function home(): Response
     {
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $opinions = $this->getDoctrine()->getRepository(Opinion::class)->findAll();
 
         return $this->render('admin/home.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'opinions' => $opinions
         ]);
     }
 
