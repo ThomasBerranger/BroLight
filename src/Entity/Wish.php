@@ -39,6 +39,8 @@ class Wish
      */
     private ?int $tmdbId;
 
+    private ?array $movie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,6 +66,18 @@ class Wish
     public function setTmdbId(int $tmdbId): self
     {
         $this->tmdbId = $tmdbId;
+
+        return $this;
+    }
+
+    public function getMovie(): ?array
+    {
+        return $this->movie;
+    }
+
+    public function setMovie(?array $movie): self
+    {
+        $this->movie = $movie;
 
         return $this;
     }
