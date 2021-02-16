@@ -6,9 +6,12 @@ use App\Helper\CreatedAtBasicTrait;
 use App\Helper\UpdatedAtBasicTrait;
 use App\Repository\WishRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
+ * @UniqueEntity(fields={"author", "tmdbId"}, message="Cet utilisateur a déjà ajouté ce film à sa liste d'envie.")
  * @ORM\HasLifecycleCallbacks()
  */
 class Wish
@@ -20,6 +23,7 @@ class Wish
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"wish:read"})
      */
     private ?int $id;
 
@@ -31,6 +35,7 @@ class Wish
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"wish:read"})
      */
     private ?int $tmdbId;
 

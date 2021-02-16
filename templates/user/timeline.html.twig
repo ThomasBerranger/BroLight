@@ -55,11 +55,15 @@
                     </div>
                     {% if app.user == event.author %}
                         <div class="card-footer d-flex justify-content-between align-items-center">
-                            {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}
+                            <div>
+                                {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}
+                                {% include 'wish/_button.html.twig' with {'movie': event.movie} %}
+                            </div>
                             <p class="card-text">{{ event.createdAt|customDateFormat }}</p>
                         </div>
                     {% else %}
-                        <div class="card-footer text-right">
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            {% include 'wish/_button.html.twig' with {'movie': event.movie} %}
                             <p class="card-text">{{ event.createdAt|customDateFormat }}</p>
                         </div>
                     {% endif %}

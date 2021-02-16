@@ -1,0 +1,13 @@
+<span id="wishButton-{{ movie.id }}">
+    {% if movie.id in app.user.wishTmdbIds %}
+        <button role="button" class="btn btn-xxs btn-dark"
+                data-wish-action="delete"
+                data-wish-url="{{ absolute_url(path('wish.delete', {'tmdbId': movie.id})) }}"><i class="far fa-star"></i>
+     </button>
+    {% else %}
+        <button role="button" class="btn btn-xxs btn-outline-dark"
+                data-wish-action="add"
+                data-wish-url="{{ absolute_url(path('wish.add', {'tmdbId': movie.id})) }}"><i class="far fa-star"></i>
+    </button>
+    {% endif %}
+</span>
