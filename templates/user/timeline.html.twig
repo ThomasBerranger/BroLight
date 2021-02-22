@@ -38,10 +38,10 @@
                                 </p>
                             </div>
                             {% if event.comment %}
-                                <div class="card-text text-left p-2" style="height: 9vh;">
+                                <div class="card-text text-left p-2">
                                     {% if event.isSpoiler %}
-                                        <div class="spoiler-guard center-container bg-secondary pointer-cursor" style="border-radius: 5px">
-                                            <p class="center-content text-white h6">Spoiler</p>
+                                        <div class="spoiler-guard bg-secondary pointer-cursor text-center" style="border-radius: 5px">
+                                            <p class="text-white py-2"><span class="h6">Spoiler</span><br>Clique pour voir</p>
                                         </div>
                                         <p style="display: none">{{ event.comment|nl2br }}</p>
                                     {% else %}
