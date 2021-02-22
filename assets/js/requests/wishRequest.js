@@ -35,6 +35,7 @@ function deleteRequest(element) {
         success: function (data) {
             $('#alert').trigger("trigger-alert", ["success", "Film supprimé de ta liste !"]);
             updateWishButton(data)
+            updateWishList(data)
         },
         error: function (error) {
         }
@@ -43,13 +44,16 @@ function deleteRequest(element) {
 
 function updateWishButton(data) {
     const currentWishButton = $(`#wishButton-${data['tmdbId']}`);
-    const wishMovieDiv = $(`#wishMovie-${data['tmdbId']}`); //todo: déléguer à page/userEdit
 
     if (currentWishButton.length === 1) {
         currentWishButton.html(data['button']);
     }
+}
+
+function updateWishList(data) {
+    const wishMovieDiv = $(`#wishMovie-${data['tmdbId']}`);
 
     if (wishMovieDiv.length === 1) {
-        wishMovieDiv.fadeOut(500);
+        wishMovieDiv.trigger('update-user-interface', 'remove-wish-movie');
     }
 }
