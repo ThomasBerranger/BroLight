@@ -43,8 +43,13 @@ function deleteRequest(element) {
 
 function updateWishButton(data) {
     const currentWishButton = $(`#wishButton-${data['tmdbId']}`);
+    const wishMovieDiv = $(`#wishMovie-${data['tmdbId']}`); //todo: déléguer à page/userEdit
 
     if (currentWishButton.length === 1) {
         currentWishButton.html(data['button']);
+    }
+
+    if (wishMovieDiv.length === 1) {
+        wishMovieDiv.fadeOut(500);
     }
 }
