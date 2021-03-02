@@ -43,11 +43,11 @@ function deleteRequest(element) {
 }
 
 function updateWishButton(data) {
-    const currentWishButton = $(`#wishButton-${data['tmdbId']}`);
+    const currentWishButtons = $(`.wishButton-${data['tmdbId']}`);
 
-    if (currentWishButton.length === 1) {
-        currentWishButton.html(data['button']);
-    }
+    currentWishButtons.each(function () {
+        $(this).html(data['button']);
+    });
 }
 
 function updateWishList(data) {
