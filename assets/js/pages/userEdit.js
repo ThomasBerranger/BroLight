@@ -57,6 +57,14 @@ $(document).ready(function() {
         }
     });
 
+    $("[id*='wishMovie-']").on("update-user-interface", function(event, type) {
+        switch (type) {
+            case 'remove-wish-movie':
+                removeWishMovie($(this));
+                break;
+        }
+    });
+
 });
 
 function editInputsDisplay() {
@@ -140,4 +148,8 @@ function removeFromFollowers(followerButtonContainer) {
     followerButtonContainer.parent().fadeOut(500, function () {
         $(this).remove();
     });
+}
+
+function removeWishMovie(wishMovieDiv) {
+    wishMovieDiv.fadeOut(500);
 }
