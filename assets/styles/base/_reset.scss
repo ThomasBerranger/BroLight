@@ -18,6 +18,7 @@ hr {
 
 a {
   color: $dark;
+  outline: none;
 
   &:hover, &:active, &:visited {
     text-decoration: none;
@@ -26,9 +27,16 @@ a {
 }
 
 button {
+  outline: none;
+
   &:active, &:focus {
+    outline: none;
     box-shadow: none !important;
   }
+}
+
+input {
+  outline: none;
 }
 
 @for $i from 1 through 6 {

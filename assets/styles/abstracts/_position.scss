@@ -9,11 +9,15 @@
   top: 50%;
   transform: translate(-50%, -50%);
 
-  &-horizontaly {
+  &-horizontally {
+    position: absolute !important;
+    bottom: 0;
     left: 50%;
     transform: translate(-50%, 0)
   }
   &-vertically {
+    position: absolute !important;
+    left: 0;
     top: 50%;
     transform: translate(0, -50%)
   }
