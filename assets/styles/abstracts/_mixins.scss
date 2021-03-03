@@ -2,57 +2,57 @@
   @if($property == 'margin') {
     .m {
       &-#{$value}-#{$unit} {
-        margin: #{$value}#{$unit};
+        margin: #{$value}#{$unit} !important;
       }
 
       &t-#{$value}-#{$unit} {
-        margin-top: #{$value}#{$unit};
+        margin-top: #{$value}#{$unit} !important;
       }
       &r-#{$value}-#{$unit} {
-        margin-right: #{$value}#{$unit};
+        margin-right: #{$value}#{$unit} !important;
       }
       &b-#{$value}-#{$unit} {
-        margin-bottom: #{$value}#{$unit};
+        margin-bottom: #{$value}#{$unit} !important;
       }
       &l-#{$value}-#{$unit} {
-        margin-left: #{$value}#{$unit};
+        margin-left: #{$value}#{$unit} !important;
       }
 
       &x-#{$value}-#{$unit} {
-        margin-left: #{$value}#{$unit};
-        margin-right: #{$value}#{$unit};
+        margin-left: #{$value}#{$unit} !important;
+        margin-right: #{$value}#{$unit} !important;
       }
       &y-#{$value}-#{$unit} {
-        margin-top: #{$value}#{$unit};
-        margin-bottom: #{$value}#{$unit};
+        margin-top: #{$value}#{$unit} !important;
+        margin-bottom: #{$value}#{$unit} !important;
       }
     }
   } @else if($property == 'padding') {
     .p {
       &-#{$value}-#{$unit} {
-        padding: #{$value}#{$unit};
+        padding: #{$value}#{$unit} !important;
       }
 
       &t-#{$value}-#{$unit} {
-        padding-top: #{$value}#{$unit};
+        padding-top: #{$value}#{$unit} !important;
       }
       &r-#{$value}-#{$unit} {
-        padding-right: #{$value}#{$unit};
+        padding-right: #{$value}#{$unit} !important;
       }
       &b-#{$value}-#{$unit} {
-        padding-bottom: #{$value}#{$unit};
+        padding-bottom: #{$value}#{$unit} !important;
       }
       &l-#{$value}-#{$unit} {
-        padding-left: #{$value}#{$unit};
+        padding-left: #{$value}#{$unit} !important;
       }
 
       &x-#{$value}-#{$unit} {
-        padding-left: #{$value}#{$unit};
-        padding-right: #{$value}#{$unit};
+        padding-left: #{$value}#{$unit} !important;
+        padding-right: #{$value}#{$unit} !important;
       }
       &y-#{$value}-#{$unit} {
-        padding-top: #{$value}#{$unit};
-        padding-bottom: #{$value}#{$unit};
+        padding-top: #{$value}#{$unit} !important;
+        padding-bottom: #{$value}#{$unit} !important;
       }
     }
   }

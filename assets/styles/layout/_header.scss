@@ -1,22 +1,28 @@
 nav {
-  font-weight: 500;
-
-  & > a.navbar-brand {
-    margin-right: 0.2rem;
-  }
+  box-shadow: 0 5px 5px 0 $grey;
 
   & > a.navbar-brand > img {
     max-height: 30px;
   }
 
-  & > h1 {
-    font-size: 1.6rem;
-    margin: 0;
+  & > input {
+    width: 50%;
+    padding: 7px;
+    background-color: $grey;
+    text-align: center;
+    border: none;
+    border-radius: 30px;
+
+    &::placeholder {
+      color: $dark;
+    }
   }
 
   & > button.btn-header-sidebar {
     @extend .btn;
     @extend .btn-sm;
+    @extend .d-block;
+    @extend .d-sm-none;
 
     font-size: 15px;
   }
@@ -25,20 +31,7 @@ nav {
 @media screen and (min-width: 576px) {
   nav {
     & > a.navbar-brand > img {
-      max-height: 30px;
-    }
-
-    & > h1 {
-      font-size: 1.6rem;
-      margin: 0;
-    }
-
-    & > div > ul {
-      margin-left: 1vw;
-    }
-
-    & > button.btn-header-sidebar {
-      display: none;
+      max-height: 40px;
     }
   }
 }
