@@ -3,35 +3,26 @@
 {% block title %}{{ parent() }} | Trending{% endblock %}
 
 {% block body %}
+    <div class="row pt-4-vh">
 
-    <div class="row justify-content-center">
-        <h2 class="font-title mb-5">Les films tendances</h2>
+        {% for movie in trendingMovies %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 py-3-vh px-2-vw">
+                {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
+                    <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
+                        <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                    </a>
+                {% endif %}
+                {#                <div class="card-body">#}
+                {#                    <div class="d-flex justify-content-between align-items-center">#}
+                {#                        <div>#}
+                {#                            {% include 'opinion/_button.html.twig' %}#}
+                {#                            {% include 'wish/_button.html.twig' %}#}
+                {#                        </div>#}
+                {#                        <small class="text-muted">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</small>#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+        {% endfor %}
 
-        <div class="card-columns col-10">
-
-            {% for movie in trendingMovies %}
-                <div class="card mb-4">
-                    {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
-                        <div style="overflow: hidden; border-radius: 0.25rem">
-                            <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
-                                <img class="card-img-top poster" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
-                            </a>
-                        </div>
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ movie.title is defined ? movie.title }}</h5>
-                        <p class="card-overview">{{ movie.overview is defined ? movie.overview|textLimit(130) }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                {% include 'opinion/_button.html.twig' %}
-                                {% include 'wish/_button.html.twig' %}
-                            </div>
-                            <small class="text-muted">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</small>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-
-        </div>
     </div>
 {% endblock %}

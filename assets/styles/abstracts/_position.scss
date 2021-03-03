@@ -26,4 +26,7 @@
 @for $i from 1 through 100 {
   @include all-directions-spacer('margin', #{$i}, vh);
   @include all-directions-spacer('padding', #{$i}, vh);
+
+  @include all-directions-spacer('margin', #{$i}, vw);
+  @include all-directions-spacer('padding', #{$i}, vw);
 }
