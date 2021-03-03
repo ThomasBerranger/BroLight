@@ -11,7 +11,7 @@ ul.timeline {
     content: " ";
     margin-left: -1.5px;
     width: 2px;
-    background-color: $white;
+    background-color: $danger;
   }
 
   & > li {
@@ -42,8 +42,8 @@ ul.timeline {
       display: inline-block;
       border-top: 14px solid transparent;
       border-bottom: 14px solid transparent;
-      border-left: 14px solid #fff;
-      border-right: 0 solid #fff;
+      border-left: 14px solid $danger;
+      border-right: 0 solid $danger;
       content: " ";
     }
 
@@ -51,7 +51,7 @@ ul.timeline {
       position: absolute;
       top: 3px;
       right: -12px;
-      color: $white;
+      color: $danger;
       width: 24px;
       height: 24px;
       line-height: 50px;

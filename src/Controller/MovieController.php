@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
+use App\Service\MovieService;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class MovieController extends AbstractController
 {
     private HttpClientInterface $client;
+    private MovieService $movieService;
     private TMDBService $TMDBService;
 
-    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService)
+    public function __construct(HttpClientInterface $httpClient, MovieService $movieService, TMDBService $TMDBService)
     {
         $this->client = $httpClient;
+        $this->movieService = $movieService;
         $this->TMDBService = $TMDBService;
     }
 
@@ -28,7 +31,7 @@ class MovieController extends AbstractController
      */
     public function trending(): Response
     {
-        $trendingMovies = $this->TMDBService->getTrendingMovies();
+        $trendingMovies = $this->movieService->getTrendingMovies();
 
         return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies,]);
     }
