@@ -1,0 +1,20 @@
+.search {
+  position: fixed;
+  height: 0;
+  width: 100%;
+  overflow: auto;
+  z-index: 1;
+
+  background-color: rgba(0, 0, 0, 0.7);
+
+  transition: height 0.8s;
+  -webkit-transition: height 0.8s;
+
+  & > div {
+    width: 60%;
+    margin: 2vh 20%;
+    padding: 2vh 0;
+    background-color: $white;
+    z-index: 2;
+  }
+}

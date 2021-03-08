@@ -12,32 +12,8 @@
   border-radius: .2rem;
 }
 
-.btn-follow {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
-
-  padding: 0.15rem 1.5vw;
-}
-
-.btn-accept-follow {
-  @extend .btn;
-  @extend .btn-xs;
-  @extend .btn-info;
-}
-
-.btn-refuse-follow {
-  @extend .btn;
-  @extend .btn-xs;
-  @extend .btn-danger;
-}
-
 .btn-cancel-follow-request {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
-
-  padding: 0.15rem 1.5vw;
+  cursor: pointer;
   transition: 0.5s;
   -webkit-transition: 0.5s;
 
@@ -46,8 +22,6 @@
   }
 
   &:hover {
-    @extend .btn-danger;
-
     &:after{
       content: 'Annuler ma demande';
     }
@@ -55,21 +29,11 @@
 }
 
 .btn-delete-follow {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
-
-  padding: 0.15rem 1.5vw;
+  cursor: pointer;
   transition: 0.5s;
   -webkit-transition: 0.5s;
 
-  &:after {
-    content: 'Abonné';
-  }
-
   &:hover {
-    @extend .btn-danger;
-
     &:after{
       content: 'Se désabonner';
     }

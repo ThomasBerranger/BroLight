@@ -1,23 +1,24 @@
 {% if user in app.user.followings %}
 
-    <button class="btn-delete-follow"
-            data-custom-confirm="open"
-            data-custom-confirm-configurations='{"entity":"user-relationship", "url": "{{ path('user_relationship.unfollow', {'id': user.id}) }}"}'>
-    </button>
+    <span class="badge badge-danger btn-delete-follow"
+          data-custom-confirm="open"
+          data-custom-confirm-configurations='{"entity":"user-relationship", "url": "{{ path('user_relationship.unfollow', {'id': user.id}) }}"}'>
+        <i class="fas fa-check"></i>
+    </span>
 
 {% elseif user in app.user.pendingFollowings %}
 
-    <button class="btn-cancel-follow-request"
+    <span class="badge badge-danger btn-cancel-follow-request"
             data-user-relationship-action="create"
             data-user-relationship-url="{{ path('user_relationship.unfollow', {'id': user.id}) }}">
-    </button>
+    </span>
 
 {% elseif user != app.user %}
 
-    <button class="btn-follow"
-            data-user-relationship-action="create"
-            data-user-relationship-url="{{ path('user_relationship.follow', {'id': user.id}) }}">
+    <span class="badge badge-danger pointer-cursor"
+          data-user-relationship-action="create"
+          data-user-relationship-url="{{ path('user_relationship.follow', {'id': user.id}) }}">
         S'abonner
-    </button>
+    </span>
 
 {% endif %}

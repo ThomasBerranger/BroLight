@@ -39,4 +39,9 @@ class UserManager
             $this->entityManager->flush();
         }
     }
+
+    public function findByName(string $text): array
+    {
+        return $this->entityManager->getRepository(User::class)->findByName(str_replace(' ', '', $text));
+    }
 }

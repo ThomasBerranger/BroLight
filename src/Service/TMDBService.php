@@ -70,4 +70,22 @@ class TMDBService
             return $exception->getMessage();
         }
     }
+
+    public function updateGenreList(): array
+    {
+        try {
+            $response = $this->client->request('GET', 'https://api.themoviedb.org/3/genre/movie/list', [
+                'query' => [
+                    'api_key' => $this->params->get('app.tmdb.id'),
+                    'language' => 'fr',
+                ],
+            ]);
+
+            $content = $response->toArray();
+
+            return $content;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 }

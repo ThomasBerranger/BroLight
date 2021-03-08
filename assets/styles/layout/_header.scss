@@ -1,13 +1,26 @@
 nav {
+  height: 60px;
   box-shadow: 0 5px 5px 0 $grey;
 
-  & > a.navbar-brand > img {
-    max-height: 30px;
+  & > a {
+    position: absolute; left: 2vw;
+
+    &.navbar-brand > img {
+      max-height: 40px;
+    }
+  }
+
+  & > button {
+    position: absolute; right: 2vw;
   }
 
   & > input {
+    @extend .d-none;
+    @extend .d-md-block;
+    @extend .center-content;
+
     width: 50%;
-    padding: 7px;
+    padding: 5px;
     background-color: $grey;
     text-align: center;
     border: none;
@@ -18,20 +31,41 @@ nav {
     }
   }
 
+  & > img {
+    @extend .d-none;
+    @extend .d-md-block;
+    @extend .center-content;
+
+    height: 20px;
+    margin-left: 23.5%;
+    cursor: pointer;
+  }
+
+  & > .header-right {
+    @extend .d-none;
+    @extend .d-md-block;
+    position: absolute; right: 2vw;
+
+    a > img {
+      max-height: 30px;
+      margin-right: 2vw;
+    }
+  }
+
   & > button.btn-header-sidebar {
     @extend .btn;
     @extend .btn-sm;
     @extend .d-block;
-    @extend .d-sm-none;
-
-    font-size: 15px;
+    @extend .d-md-none;
   }
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 720px) {
   nav {
+    height: 80px;
+
     & > a.navbar-brand > img {
-      max-height: 40px;
+      height: 60px;
     }
   }
 }
