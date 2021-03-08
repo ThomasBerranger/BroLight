@@ -6,7 +6,7 @@ nav {
     position: absolute; left: 2vw;
 
     &.navbar-brand > img {
-      max-height: 40px;
+      height: 40px;
     }
   }
 
@@ -65,7 +65,7 @@ nav {
     height: 80px;
 
     & > a.navbar-brand > img {
-      height: 60px;
+      height: 55px;
     }
   }
 }

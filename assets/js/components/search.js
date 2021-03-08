@@ -12,15 +12,18 @@ $(document).ready(function(){
                 success: function(view) {
                     $("#searchResultDiv").html(view);
                     $(".search").css('height', '100vh');
+                    $(".container").css('opacity', '0.6');
                 }
             });
         } else {
-            $(".search").css('height', '0');
+            $('#searchResultDiv').children().remove();
+            $(".container").css('opacity', '1');
         }
 
     }, 350))
 
     $("nav > img").click(function () {
-        $(".search").css('height', '0');
+        $('#searchResultDiv').children().remove();
+        $(".container").css('opacity', '1');
     });
 });

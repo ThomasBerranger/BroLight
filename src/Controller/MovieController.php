@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
-use App\Entity\User;
+use App\Service\GenreService;
 use App\Service\MovieService;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +19,14 @@ class MovieController extends AbstractController
     private HttpClientInterface $client;
     private MovieService $movieService;
     private TMDBService $TMDBService;
+    private GenreService $genreService;
 
-    public function __construct(HttpClientInterface $httpClient, MovieService $movieService, TMDBService $TMDBService)
+    public function __construct(HttpClientInterface $httpClient, MovieService $movieService, TMDBService $TMDBService, GenreService $genreService)
     {
         $this->client = $httpClient;
         $this->movieService = $movieService;
         $this->TMDBService = $TMDBService;
+        $this->genreService = $genreService;
     }
 
     /**
@@ -34,7 +36,9 @@ class MovieController extends AbstractController
     {
         $trendingMovies = $this->movieService->getTrendingMovies();
 
-        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies]);
+        $genres = $this->genreService->findAndFormatAll();
+
+        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies, 'genres' => $genres]);
     }
 
     /**
