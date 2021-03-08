@@ -1,8 +1,10 @@
-<div class="{{ display is defined and not display ? 'd-none' : 'd-flex' }} user-panel">
+<div class="user-panel">
 
         <span>
             <a href="{{ path('user.show', { 'slug' : user.slug }) }}">
-                <img class="avatar-small" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                <button class="btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="avatar-small center-content-horizontally" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+                </button>
                 {{ user }}
             </a>
         </span>

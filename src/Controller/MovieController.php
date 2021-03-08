@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
+use App\Entity\User;
 use App\Service\MovieService;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,7 @@ class MovieController extends AbstractController
     {
         $trendingMovies = $this->movieService->getTrendingMovies();
 
-        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies,]);
+        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies]);
     }
 
     /**
@@ -42,20 +43,6 @@ class MovieController extends AbstractController
     public function search(): Response
     {
         return $this->render('movie/search.html.twig');
-    }
-
-    /**
-     * @Route("/search_result/{title}", name="search_result")
-     *
-     * @param string $title
-     *
-     * @return Response
-     */
-    public function search_result(string $title): Response
-    {
-        $movies = $this->TMDBService->getSearchedMovies($title);
-
-        return $this->render('movie/_search_result.html.twig', ['movies' => $movies]);
     }
 
     /**
