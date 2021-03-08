@@ -3,7 +3,11 @@ body {
   position: relative;
   padding: 0;
   background-color: $white;
-  min-height: 90vh;
+  min-height: 100vh;
+
+  & > .container {
+    padding: 6vh 0;
+  }
 }
 
 p {
