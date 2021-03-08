@@ -3,18 +3,22 @@
 {% block title %}{{ parent() }} | Trending{% endblock %}
 
 {% block body %}
-    <div class="row pt-4-vh">
+    <div class="row">
         {% for movie in trendingMovies %}
             {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 py-3-vh px-2-vw center-container">
+                <div class="movie-card">
+                    <div class="movie-opinions-indicator">
+                        <img src="{{ asset('images/Popcorn.svg') }}" alt="popcorn logo">
+                        <span>12</span>
+                    </div>
                     <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
                         <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
                     </a>
                     <div class="center-content-horizontally" style="width: 80%; bottom: 20px;">
                         <div class="d-flex justify-content-around">
-                            {% for key, genre in movie.genres %}
-                                {% if key <= 2 %}
-                                    <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre.tmdbId == 878 ? 'SF' : genre.name|upper }}</button>
+                            {% for key, genre_id in movie['genre_ids'] %}
+                                {% if key <= 2 and genres[genre_id] is defined %}
+                                    <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre_id == 878 ? 'SF' : genres[genre_id]|upper }}</button>
                                 {% endif %}
                             {% endfor %}
                         </div>

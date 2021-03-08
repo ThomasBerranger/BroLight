@@ -17,18 +17,6 @@ class MovieService
 
     public function getTrendingMovies(): array
     {
-        $trendingMovies = $this->TMDBService->getTrendingMovies();
-
-        foreach ($trendingMovies as $key => $trendingMovie) {
-            $trendingMovies[$key]['genres'] = $this->getCorrespondingGenres($trendingMovie);
-        }
-
-        return $trendingMovies;
+        return $this->TMDBService->getTrendingMovies();
     }
-
-    private function getCorrespondingGenres(array $movie): array
-    {
-        return $this->genreManager->findSelectedIds($movie['genre_ids']);
-    }
-
 }

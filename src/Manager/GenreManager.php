@@ -14,8 +14,8 @@ class GenreManager
         $this->entityManager = $entityManager;
     }
 
-    public function findSelectedIds(array $ids): array
+    public function findAll(): array
     {
-        return $this->entityManager->getRepository(Genre::class)->findIfExists($ids);
+        return $this->entityManager->getRepository(Genre::class)->findAll();
     }
 }

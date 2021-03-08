@@ -6,7 +6,8 @@ body {
   min-height: 100vh;
 
   & > .container {
-    padding: 6vh 0;
+    padding: 10vh 15px;
+    transition: opacity 0.5s;
   }
 }
 
