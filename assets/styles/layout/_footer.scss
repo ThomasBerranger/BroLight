@@ -2,11 +2,12 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 1rem;
-  background-color: $white;
+  padding: 1rem 20%;
+  color: $white !important;
+  background-color: $dark;
   text-align: center;
-}
 
-footer > a {
-  text-decoration: underline;
+  & > a {
+    color: $white !important;
+  }
 }
