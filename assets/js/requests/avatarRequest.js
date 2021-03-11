@@ -10,9 +10,9 @@ $(document).ready(function() {
             data: $(this).serializePrefixedFormJSON(),
             dataType: "json",
             success: function () {
-                const avatarHeader = $('.btn-avatar');
+                const avatarHeader = $('#headerAvatar');
                 if (avatarHeader.length === 1) {
-                    avatarHeader.parent().load(' .btn-avatar');
+                    avatarHeader.parent().load(' #headerAvatar');
                 }
                 $('#alert').trigger("trigger-alert", ["success", "Avatar sauvegardé !"]);
             },

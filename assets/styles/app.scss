@@ -22,7 +22,6 @@
 @import 'components/carousel';
 @import 'components/slider';
 @import 'components/forms';
-@import "components/timeline";
 @import "components/cards";
 @import "components/hero";
 @import "components/alert";
@@ -36,5 +35,6 @@
 
 @import 'pages/about';
 @import 'pages/login';
+@import "pages/timeline";
 @import 'pages/trending';
 @import 'pages/userEdit';
