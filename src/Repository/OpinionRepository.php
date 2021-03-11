@@ -5,8 +5,10 @@ namespace App\Repository;
 use App\Entity\Opinion;
 use App\Entity\Relationship;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method Opinion|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,18 +23,20 @@ class OpinionRepository extends ServiceEntityRepository
         parent::__construct($registry, Opinion::class);
     }
 
-    public function findFollowingsOpinions(User $user)
+    public function findFollowingsOpinions(User $user, int $offset)
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.author', 'u', 'WITH', 'o.author = u.id')
-            ->innerJoin('u.relationsAsTarget', 'ur', 'WITH', 'u.id = ur.userTarget')
-            ->where('ur.status = :status AND ur.userSource = :userId')
-            ->orWhere('o.author = :userId')
+            ->innerJoin('o.author', 'u')
+            ->innerJoin('u.relationsAsTarget', 'r')
+            ->where('o.author = :userId OR r.status = :status AND r.userSource = :userId')
             ->setParameters([
                 'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
                 'userId' => $user->getId()
             ])
+            ->groupBy('o')
             ->orderBy('o.createdAt', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults(2)
             ->getQuery()
             ->getResult()
             ;

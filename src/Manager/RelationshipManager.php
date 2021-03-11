@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Relationship;
 use App\Entity\User;
+use DateTime;
 use Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -97,5 +98,10 @@ class RelationshipManager
         }
 
         return $userRelationship;
+    }
+
+    public function findAcceptedRelationship(User $userTarget, ?DateTime $dateLimit): array
+    {
+        return $relationships = $this->entityManager->getRepository(Relationship::class)->findAcceptedRelationshipsOf($userTarget, $dateLimit);
     }
 }

@@ -5,14 +5,14 @@
 
     <button class="btn-header-sidebar"><i class="fa fa-bars"></i></button>
 
-    <input id="headerSearchInput" type="text" placeholder="Recherche ..." data-url="{{ path('movie.search_result', {'text': 'replaceMe'}) }}">
+    <input id="headerSearchInput" type="text" placeholder="Recherche ..." data-url="{{ path('search.result', {'text': 'replaceMe'}) }}">
     <img src="{{ asset('images/reload-logo.png') }}" alt="reload logo">
 
     <div class="header-right">
         <a href="{{ path('movie.trending') }}" class="d-inline"><img src="{{ asset('images/Trending-logo.png') }}" alt="tending logo"></a>
         <div class="dropdown d-inline">
             <div class="btn-group">
-                <button class="btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button id="headerAvatar" class="btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="avatar-small center-content-horizontally" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
                 </button>
                 <div class="dropdown-menu dropdown-menu-right mt-2">

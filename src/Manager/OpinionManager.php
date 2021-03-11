@@ -34,9 +34,9 @@ class OpinionManager
         return $opinion;
     }
 
-    public function findFollowingsOpinions(User $user): array
+    public function findFollowingsOpinions(User $user, int $offset): array
     {
-        return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinions($user);
+        return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinions($user, $offset);
     }
 
     public function createView(User $author, int $tmdbId): Opinion

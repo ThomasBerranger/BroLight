@@ -5,21 +5,40 @@ namespace App\Service;
 use App\Entity\Podium;
 use App\Entity\User;
 use App\Manager\OpinionManager;
+use App\Manager\RelationshipManager;
+use DateTime;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\Date;
 
 class UserService
 {
-    private OpinionManager $opinionManager;
+    private Security $security;
     private TMDBService $TMDBService;
+    private OpinionManager $opinionManager;
+    private RelationshipManager $relationshipManager;
 
-    public function __construct(OpinionManager $opinionManager, TMDBService $TMDBService)
+    public function __construct(Security $security, TMDBService $TMDBService, OpinionManager $opinionManager, RelationshipManager $relationshipManager)
     {
-        $this->opinionManager = $opinionManager;
+        $this->security = $security;
         $this->TMDBService = $TMDBService;
+        $this->opinionManager = $opinionManager;
+        $this->relationshipManager = $relationshipManager;
     }
 
-    public function getTimeline(User $user): array
+    public function getTimelineEvents(User $user, int $offset = 0): array
     {
-        return $this->opinionManager->findFollowingsOpinions($user);
+        $followingsOpinions = $this->opinionManager->findFollowingsOpinions($user, $offset);
+
+//        $followingsOpinions ? $dateLimit = $followingsOpinions[count($followingsOpinions)-1]->getCreatedAt() : $dateLimit = null;
+//        $acceptedRelationships = $this->relationshipManager->findAcceptedRelationship($user, $dateLimit);
+
+        $timelineEvents = array_merge([], $followingsOpinions);
+
+        usort($timelineEvents, function ($object1, $object2) {
+            return $object1->getCreatedAt() < $object2->getCreatedAt();
+        });
+
+        return $timelineEvents;
     }
 
     public function formattedPodium(User $user): array

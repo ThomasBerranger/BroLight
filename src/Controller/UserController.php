@@ -9,6 +9,7 @@ use App\Manager\UserManager;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,9 +35,23 @@ class UserController extends AbstractController
      */
     public function timeline(): Response
     {
-        $timeline = $this->userService->getTimeline($this->getUser());
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser());
 
-        return $this->render('user/timeline.html.twig', ['timeline' => $timeline]);
+        return $this->render('user/timeline.html.twig', ['timelineEvents' => $timelineEvents]);
+    }
+
+    /**
+     * @Route("/load_timeline_events/{offset}", name="load_timeline_events", methods={"GET"})
+     *
+     * @param int $offset
+     *
+     * @return Response
+     */
+    public function loadTimeline(int $offset): Response
+    {
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), $offset);
+
+        return new JsonResponse([$this->renderView('user/_timeline_events.html.twig', ['timelineEvents' => $timelineEvents])], 200);
     }
 
     /**
