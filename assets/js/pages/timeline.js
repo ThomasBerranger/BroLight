@@ -14,17 +14,20 @@ $(document).ready(function () {
 
     $('#loadTimelineEvents').click(function () {
         const element = $(this);
+        const buttonTimelineLoad = element.find('i');
+
+        const isInverted = ($('ul.timeline > li').length-1) % 2 !== 0 ? 1 : 0;
 
         element.data("offset", element.data('offset') + element.data('limit'));
 
-        element.find('i').addClass('fa-spin');
+        buttonTimelineLoad.addClass('fa-spin');
 
         $.ajax({
-            url: `${element.data('url')}/${element.data('offset')}/${element.data('limit')}`,
+            url: `${element.data('url')}/${element.data('offset')}/${element.data('limit')}/${isInverted}`,
             success: function (data) {
                 element.before(data);
                 manageTimelineEventSpacing();
-                element.find('button.timeline-load > i').removeClass('fa-spin');
+                buttonTimelineLoad.removeClass('fa-spin');
             },
             error: function (error) {
                 console.log(error);

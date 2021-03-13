@@ -67,15 +67,20 @@ ul.timeline {
     &.timeline-inverted > .timeline-badge {
       left: -12px;
     }
+  }
 
-    & > button.timeline-load {
-      @extend .btn;
-      @extend .btn-sm;
-      @extend .btn-danger;
+  & > button.timeline-load {
+    @extend .btn;
+    @extend .btn-sm;
+    @extend .btn-danger;
+    @extend .center-content-horizontally;
 
-      position: absolute;
-      right: -16px;
-    }
+    bottom: 0;
+  }
+
+  & > .timeline-end {
+    float: none;
+    width: 0;
   }
 }
 
@@ -114,11 +119,11 @@ ul.timeline {
       &.timeline-inverted > .timeline-badge {
         left: -9px;
       }
-
-      & > button.timeline-load {
-        left: -14px;
-      }
     }
 
+    & > button.timeline-load {
+      width: 100%;
+      bottom: -30px;
+    }
   }
 }
