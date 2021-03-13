@@ -23,7 +23,7 @@ class OpinionRepository extends ServiceEntityRepository
         parent::__construct($registry, Opinion::class);
     }
 
-    public function findFollowingsOpinions(User $user, int $offset)
+    public function findFollowingsOpinions(User $user, int $offset, int $limit): array
     {
         return $this->createQueryBuilder('o')
             ->innerJoin('o.author', 'u')
@@ -34,9 +34,9 @@ class OpinionRepository extends ServiceEntityRepository
                 'userId' => $user->getId()
             ])
             ->groupBy('o')
-            ->orderBy('o.createdAt', 'DESC')
+            ->orderBy('o.updatedAt', 'DESC')
             ->setFirstResult($offset)
-            ->setMaxResults(2)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
             ;

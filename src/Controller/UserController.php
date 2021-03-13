@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Relationship;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
@@ -35,21 +36,22 @@ class UserController extends AbstractController
      */
     public function timeline(): Response
     {
-        $timelineEvents = $this->userService->getTimelineEvents($this->getUser());
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), 0, User::DEFAULT_TIMELINE_LIMIT);
 
-        return $this->render('user/timeline.html.twig', ['timelineEvents' => $timelineEvents]);
+        return $this->render('user/timeline.html.twig', ['timelineEvents' => $timelineEvents, 'timelineDefaultLimit' => User::DEFAULT_TIMELINE_LIMIT]);
     }
 
     /**
-     * @Route("/load_timeline_events/{offset}", name="load_timeline_events", methods={"GET"})
+     * @Route("/load_timeline_events/{offset}/{limit}", name="load_timeline_events", methods={"GET"})
      *
      * @param int $offset
+     * @param int $limit
      *
      * @return Response
      */
-    public function loadTimeline(int $offset): Response
+    public function loadTimeline(int $offset = 0, int $limit = User::DEFAULT_TIMELINE_LIMIT): Response
     {
-        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), $offset);
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), $offset, $limit);
 
         return new JsonResponse([$this->renderView('user/_timeline_events.html.twig', ['timelineEvents' => $timelineEvents])], 200);
     }

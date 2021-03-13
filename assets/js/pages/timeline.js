@@ -15,13 +15,12 @@ $(document).ready(function () {
     $('#loadTimelineEvents').click(function () {
         const element = $(this);
 
-        element.data("offset", element.data('offset') + 2);
-        console.log(element.data('offset'));
+        element.data("offset", element.data('offset') + element.data('limit'));
 
         element.find('i').addClass('fa-spin');
 
         $.ajax({
-            url: element.data('url').replace(0, element.data('offset')),
+            url: `${element.data('url')}/${element.data('offset')}/${element.data('limit')}`,
             success: function (data) {
                 element.before(data);
                 manageTimelineEventSpacing();

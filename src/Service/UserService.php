@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Opinion;
 use App\Entity\Podium;
 use App\Entity\User;
 use App\Manager\OpinionManager;
@@ -25,17 +26,33 @@ class UserService
         $this->relationshipManager = $relationshipManager;
     }
 
-    public function getTimelineEvents(User $user, int $offset = 0): array
+    public function getTimelineEvents(User $user, int $offset, int $limit): array
     {
-        $followingsOpinions = $this->opinionManager->findFollowingsOpinions($user, $offset);
+        $limit += 1; // dépasser la limite de 1 pour encadrer les autres events
 
-//        $followingsOpinions ? $dateLimit = $followingsOpinions[count($followingsOpinions)-1]->getCreatedAt() : $dateLimit = null;
-//        $acceptedRelationships = $this->relationshipManager->findAcceptedRelationship($user, $dateLimit);
+        $followingsOpinions = $this->opinionManager->findFollowingsOpinions($user, $offset, $limit);
 
-        $timelineEvents = array_merge([], $followingsOpinions);
+        if(!$followingsOpinions)
+            return [];
+
+        if ($offset === 0) { // first call
+            $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, null);
+            unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
+        } elseif (count($followingsOpinions) != $limit) { // last call
+            $olderOpinion = $followingsOpinions[0];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
+        } else { // normal call
+            $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
+            $olderOpinion = $followingsOpinions[0];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
+            unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
+        }
+
+        $timelineEvents = array_merge($followingsOpinions, $acceptedRelationships);
 
         usort($timelineEvents, function ($object1, $object2) {
-            return $object1->getCreatedAt() < $object2->getCreatedAt();
+            return $object1->getUpdatedAt() < $object2->getUpdatedAt();
         });
 
         return $timelineEvents;
