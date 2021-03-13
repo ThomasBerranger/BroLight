@@ -100,8 +100,8 @@ class RelationshipManager
         return $userRelationship;
     }
 
-    public function findAcceptedRelationship(User $userTarget, ?DateTime $dateLimit): array
+    public function findAcceptedRelationshipsOfBetween(User $userTarget, ?DateTime $dateMin, ?DateTime $dateMax): array
     {
-        return $relationships = $this->entityManager->getRepository(Relationship::class)->findAcceptedRelationshipsOf($userTarget, $dateLimit);
+        return $relationships = $this->entityManager->getRepository(Relationship::class)->findAcceptedRelationshipsOfBetween($userTarget, $dateMin, $dateMax);
     }
 }

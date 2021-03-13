@@ -1,12 +1,18 @@
-.font {
+.custom-font {
   &-title {
-    font-family: 'Lobster Two', cursive;
+    color: $dark;
+    font-family: 'Shadows Into Light Two', cursive;
+  }
+  &-text {
+    color: $dark;
+    font-family: 'Truculenta', sans-serif;
   }
 }
 
-//font-family: 'Open Sans', sans-serif;
-//font-family: 'Roboto', sans-serif;
-
 .custom-bold-600 {
   font-weight: 600;
+}
+
+.text-grey {
+  color: $grey !important;
 }
