@@ -1,7 +1,11 @@
 {% for event in timelineEvents %}
-    {% if event.author is defined %}
-        <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
-            <div class="timeline-badge {{ app.user == event.author ? 'text-grey' }}"><i class="fa fa-circle"></i></div>
+    <li{{ isInverted is not defined and loop.index is divisible by(2)
+    or isInverted is defined and not isInverted and loop.index is divisible by(2)
+    or isInverted is defined and isInverted and loop.index is not divisible by(2) ? ' class="timeline-inverted"' }} >
+
+        <div class="timeline-badge {{ event.author is defined and app.user == event.author ? 'text-grey' }}"><i class="fa fa-circle"></i></div>
+
+        {% if event.author is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
                 <div class="card-body row">
                     <div class="col-12 col-md-4">
@@ -10,16 +14,16 @@
                         </a>
                     </div>
                     <div class="col-12 col-md-8 pl-0">
-                        <div class="card-title d-flex justify-content-start align-items-center">
+                        <div class="d-flex justify-content-start align-items-center">
                             <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar" type="button">
                                 <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
                             </a>
-                            <p class="ml-2 custom-font-text">
+                            <p class="ml-2 custom-font-text font-weight-bold">
                                 <a href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
                             </p>
                         </div>
                         {% if event.comment %}
-                            <div class="card-text text-left p-2">
+                            <div class="p-2">
                                 {% if event.isSpoiler %}
                                     <div class="spoiler-guard bg-secondary pointer-cursor text-center" style="border-radius: 5px">
                                         <p class="text-white py-2 custom-font-text"><span class="h6">Spoiler</span><br>Clique pour voir</p>
@@ -32,39 +36,37 @@
                                 {% endif %}
                             </div>
                         {% else %}
-                            <div class="card-text text-left p-2">J'ai vu ce film !</div>
+                            <div class="p-2">J'ai vu ce film !</div>
                         {% endif %}
                     </div>
                 </div>
-{#                {% if app.user == event.author %}#}
-{#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
-{#                        <div>#}
-{#                            {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}#}
-{#                            {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
-{#                        </div>#}
-{#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
-{#                    </div>#}
-{#                {% else %}#}
-{#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
-{#                        {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
-{#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
-{#                    </div>#}
-{#                {% endif %}#}
+                {#                {% if app.user == event.author %}#}
+                {#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
+                {#                        <div>#}
+                {#                            {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}#}
+                {#                            {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
+                {#                        </div>#}
+                {#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
+                {#                    </div>#}
+                {#                {% else %}#}
+                {#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
+                {#                        {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
+                {#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
+                {#                    </div>#}
+                {#                {% endif %}#}
             </div>
-        </li>
-    {% elseif event.status is defined %}
-        <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
-            <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+        {% elseif event.status is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
                 <div class="card-body row">
                     <div class="col-12 d-flex align-items-center">
                         <a href="{{ path('user.show', {'slug': event.userSource.slug}) }}" class="btn-avatar" type="button">
                             <img class="avatar-small center-content-horizontally" src="{{ event.userSource.avatar|formatAvatarData }}" alt="{{ event.userSource }} avatar">
                         </a>
-                        <p class="ml-2"><span class="font-weight-bold">{{ event.userSource }}</span> a commencé à vous suivre ! ({{ event.updatedAt|date('d/m/Y') }})</p>
+                        <p class="ml-2 custom-font-text"><span class="font-weight-bold">{{ event.userSource }}</span> a commencé à vous suivre !</p>
                     </div>
                 </div>
             </div>
-        </li>
-    {% endif %}
+        {% endif %}
+
+    </li>
 {% endfor %}

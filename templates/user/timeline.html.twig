@@ -14,11 +14,12 @@
     {% else %}
         <ul class="timeline">
             {{ include('user/_timeline_events.html.twig') }}
-            <li id="loadTimelineEvents"
-                data-offset=0
-                data-limit={{ timelineDefaultLimit }}
-                data-url="{{ path('user.load_timeline_events') }}"><button class="timeline-load"><i class="fas fa-sync-alt"></i></button></li>
-            <li style="float: none;"></li> {# Timline end #}
+            <button id="loadTimelineEvents" class="timeline-load"
+                    data-offset=0
+                    data-limit={{ timelineDefaultLimit }}
+                    data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
+            </button>
+            <li class="timeline-end"></li> {# Timline end #}
         </ul>
     {% endif %}
 {% endblock %}

@@ -42,18 +42,19 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/load_timeline_events/{offset}/{limit}", name="load_timeline_events", methods={"GET"})
+     * @Route("/load_timeline_events/{offset}/{limit}/{isInverted}", name="load_timeline_events", methods={"GET"})
      *
-     * @param int $offset
-     * @param int $limit
+     * @param int  $offset
+     * @param int  $limit
+     * @param bool $isInverted
      *
      * @return Response
      */
-    public function loadTimeline(int $offset = 0, int $limit = User::DEFAULT_TIMELINE_LIMIT): Response
+    public function loadTimeline(int $offset = 0, int $limit = User::DEFAULT_TIMELINE_LIMIT, bool $isInverted = false): Response
     {
         $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), $offset, $limit);
 
-        return new JsonResponse([$this->renderView('user/_timeline_events.html.twig', ['timelineEvents' => $timelineEvents])], 200);
+        return new JsonResponse([$this->renderView('user/_timeline_events.html.twig', ['timelineEvents' => $timelineEvents, 'isInverted' => $isInverted])], 200);
     }
 
     /**
