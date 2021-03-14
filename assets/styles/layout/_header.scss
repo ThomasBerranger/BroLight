@@ -43,12 +43,17 @@ nav {
 
   & > .header-right {
     @extend .d-none;
-    @extend .d-md-block;
+    @extend .d-md-flex;
+    @extend .align-items-center;
+
     position: absolute; right: 2vw;
 
-    a > img {
-      max-height: 30px;
-      margin-right: 2vw;
+    & > a:first-child {
+      margin-right: 1vw;
+
+      & > img {
+        max-height: 30px;
+      }
     }
   }
 
