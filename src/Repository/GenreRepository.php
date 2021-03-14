@@ -28,4 +28,13 @@ class GenreRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findAllTMDBIdAndName(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(['g.tmdbId', 'g.name'])
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

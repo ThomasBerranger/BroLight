@@ -13,15 +13,8 @@ class GenreService
         $this->genreManager = $genreManager;
     }
 
-    public function findAndFormatAll(): array
+    public function findAllTMDBIdAndName(): array
     {
-        $genres = $this->genreManager->findAll();
-        $result = [];
-
-        foreach ($genres as $genre) {
-            $result[$genre->getTmdbId()] = $genre->getName();
-        }
-
-        return $result;
+        return $this->genreManager->findAllTMDBIdAndName();
     }
 }

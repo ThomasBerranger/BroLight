@@ -14,8 +14,8 @@ class GenreManager
         $this->entityManager = $entityManager;
     }
 
-    public function findAll(): array
+    public function findAllTMDBIdAndName(): array
     {
-        return $this->entityManager->getRepository(Genre::class)->findAll();
+        return $this->entityManager->getRepository(Genre::class)->findAllTMDBIdAndName();
     }
 }

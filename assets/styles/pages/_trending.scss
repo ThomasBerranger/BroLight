@@ -25,6 +25,13 @@
       font-weight: 500;
     }
   }
+
+  .tags-div {
+    @extend .center-content-horizontally;
+
+    width: 80%;
+    bottom: 20px;
+  }
 }
 
 @media screen and (max-width: 576px) {
