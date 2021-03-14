@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-12 col-md-8 pl-0">
                         <div class="d-flex justify-content-start align-items-center">
-                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar" type="button">
+                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
                                 <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
                             </a>
                             <p class="ml-2 custom-font-text font-weight-bold">
@@ -59,7 +59,7 @@
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
                 <div class="card-body row">
                     <div class="col-12 d-flex align-items-center">
-                        <a href="{{ path('user.show', {'slug': event.userSource.slug}) }}" class="btn-avatar" type="button">
+                        <a href="{{ path('user.show', {'slug': event.userSource.slug}) }}" class="btn-avatar">
                             <img class="avatar-small center-content-horizontally" src="{{ event.userSource.avatar|formatAvatarData }}" alt="{{ event.userSource }} avatar">
                         </a>
                         <p class="ml-2 custom-font-text"><span class="font-weight-bold">{{ event.userSource }}</span> a commencé à vous suivre !</p>

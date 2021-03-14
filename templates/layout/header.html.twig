@@ -9,18 +9,10 @@
     <img src="{{ asset('images/reload-logo.png') }}" alt="reload logo">
 
     <div class="header-right">
-        <a href="{{ path('movie.trending') }}" class="d-inline"><img src="{{ asset('images/Trending-logo.png') }}" alt="tending logo"></a>
-        <div class="dropdown d-inline">
-            <div class="btn-group">
-                <button id="headerAvatar" class="btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="avatar-small center-content-horizontally" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
-                </button>
-                <div class="dropdown-menu dropdown-menu-right mt-2">
-                    <a class="dropdown-item" href="{{ path('user.edit') }}"><i class="fa fa-user-edit mr-2"></i>Mon profil</a>
-                    <hr class="my-2">
-                    <a class="dropdown-item text-danger" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt mr-2"></i>Déconnexion</a>
-                </div>
-            </div>
-        </div>
+        <a href="{{ path('movie.trending') }}"><img src="{{ asset('images/Trending-logo.png') }}" alt="trending logo"></a>
+        <a href="{{ path('user.edit') }}" id="headerAvatar" class="btn-avatar">
+            <img class="avatar-small center-content-horizontally" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
+        </a>
     </div>
+
 </nav>
