@@ -9,15 +9,15 @@
                 <div class="movie-card">
                     <div class="movie-opinions-indicator">
                         <img src="{{ asset('images/Popcorn.svg') }}" alt="popcorn logo">
-                        <span>12</span>
+                        <span>{{ opinionsNumberByTrendingMovies[movie.id] is defined ? opinionsNumberByTrendingMovies[movie.id] : 0 }}</span>
                     </div>
                     <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
                         <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
                     </a>
-                    <div class="center-content-horizontally" style="width: 80%; bottom: 20px;">
+                    <div class="tags-div">
                         <div class="d-flex justify-content-around">
-                            {% for key, genre_id in movie['genre_ids'] %}
-                                {% if key <= 2 and genres[genre_id] is defined %}
+                            {% for key, genre_id in movie.genre_ids %}
+                                {% if key < 3 and genres[genre_id] is defined %}
                                     <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre_id == 878 ? 'SF' : genres[genre_id]|upper }}</button>
                                 {% endif %}
                             {% endfor %}

@@ -41,4 +41,22 @@ class OpinionRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findFollowingsOpinionNumber(User $user, array $tmdbIds): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(['o.tmdbId', 'COUNT(DISTINCT o) as opinionsNumber'])
+            ->innerJoin('o.author', 'u')
+            ->innerJoin('u.relationsAsTarget', 'r')
+            ->where('o.tmdbId IN (:tmdbIds) AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
+            ->setParameters([
+                'tmdbIds' => $tmdbIds,
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+                'userId' => $user->getId()
+            ])
+            ->groupBy('o.tmdbId')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
