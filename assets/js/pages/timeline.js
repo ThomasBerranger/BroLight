@@ -37,9 +37,10 @@ $(document).ready(function () {
 });
 
 function manageTimelineEventSpacing() {
-    $('.timeline-inverted').each(function () {
+    $('li').each(function () {
         const element = $(this)
-        if (element.prev().offset().top - 10 <= element.offset().top && element.offset().top <= element.prev().offset().top + 10) {
+
+        if (element.prev().length === 1 && element.prev().offset().top - 10 <= element.offset().top && element.offset().top <= element.prev().offset().top + 10) {
             element.css("margin-top", "30px");
         }
     });

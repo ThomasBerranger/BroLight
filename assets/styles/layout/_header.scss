@@ -55,6 +55,10 @@ nav {
         max-height: 30px;
       }
     }
+
+    & > a:last-child {
+      border: black solid 1px;
+    }
   }
 
   & > button.btn-header-sidebar {

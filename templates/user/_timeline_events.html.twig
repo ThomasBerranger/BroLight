@@ -8,13 +8,23 @@
         {% if event.author is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
                 <div class="card-body row">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 d-block d-md-none mb-2">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
+                                <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                            </a>
+                            <p class="ml-2 custom-font-text font-weight-bold">
+                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 text-center">
                         <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
                             <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
                         </a>
                     </div>
                     <div class="col-12 col-md-8 pl-0">
-                        <div class="d-flex justify-content-start align-items-center">
+                        <div class="d-none d-md-flex justify-content-start align-items-center">
                             <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
                                 <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
                             </a>
@@ -30,9 +40,8 @@
                                     </div>
                                     <p style="display: none">{{ event.comment|nl2br }}</p>
                                 {% else %}
-                                    <p class="custom-font-text">
-                                        <span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}<br>
-                                        <span class="card-date">{{ event.updatedAt|date('d/m/Y') }}</span></p>
+                                    <p class="custom-font-text mb-2"><span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}</p>
+                                    <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
                                 {% endif %}
                             </div>
                         {% else %}

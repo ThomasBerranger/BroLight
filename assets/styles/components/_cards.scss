@@ -14,9 +14,12 @@
   }
 
   &-date {
+    @extend .custom-font-text;
+
     position: absolute;
     bottom: 0;
     right: 10px;
+    font-weight: 500;
     font-size: 0.8rem;
   }
 }

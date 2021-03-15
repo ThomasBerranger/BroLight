@@ -16,7 +16,7 @@ ul.timeline {
 
   & > li {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     width: 50%;
     float: left;
     clear: left;
@@ -92,11 +92,7 @@ ul.timeline {
     }
 
     & > li {
-      position: relative;
-      margin-bottom: 20px;
       width:100%;
-      float: left;
-      clear: left;
 
       & > .timeline-panel {
         float: right;
@@ -106,7 +102,6 @@ ul.timeline {
       }
 
       &.timeline-inverted {
-        margin-top: 30px;
         margin-bottom: 30px;
         float: left;
         clear: left;
