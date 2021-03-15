@@ -48,25 +48,26 @@ ul.timeline {
       text-align: center;
     }
 
-    &.timeline-inverted > .timeline-panel {
-      float: right;
-
-      &:after {
-        left: -10px;
-        right: auto;
-        border-left-width: 0;
-        border-right-width: 15px;
-      }
-    }
-
     &.timeline-inverted {
       float: right;
       clear: right;
+
+      & > .timeline-panel {
+        float: right;
+
+        &:after {
+          left: -10px;
+          right: auto;
+          border-left-width: 0;
+          border-right-width: 15px;
+        }
+      }
+
+      & > .timeline-badge {
+        left: -12px;
+      }
     }
 
-    &.timeline-inverted > .timeline-badge {
-      left: -12px;
-    }
   }
 
   & > button.timeline-load {

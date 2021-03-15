@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.project.title: 'BroLight'
+    app.project.title: 'Brolight'
     app.tmdb.id: 'ed2f041a286fa97f37bdde584dbbadb0'
 
 services:

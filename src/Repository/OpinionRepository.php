@@ -59,4 +59,22 @@ class OpinionRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findAllFollowingsOpinionFor(User $user, int $tmdbId): array
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.author', 'u')
+            ->innerJoin('u.relationsAsTarget', 'r')
+            ->where('o.tmdbId = :tmdbId AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
+            ->setParameters([
+                'tmdbId' => $tmdbId,
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+                'userId' => $user->getId()
+            ])
+            ->groupBy('o')
+            ->orderBy('o.updatedAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

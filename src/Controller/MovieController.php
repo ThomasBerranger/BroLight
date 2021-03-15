@@ -61,7 +61,7 @@ class MovieController extends AbstractController
     {
         $movie = $this->TMDBService->getMovieById($tmdbId);
 
-        $opinions = $this->getDoctrine()->getRepository(Opinion::class)->findBy(['tmdbId'=>$tmdbId]);
+        $opinions = $this->opinionManager->findAllFollowingsOpinionFor($this->getUser(), $tmdbId);
 
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,
