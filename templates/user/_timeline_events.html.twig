@@ -3,7 +3,7 @@
     or isInverted is defined and not isInverted and loop.index is divisible by(2)
     or isInverted is defined and isInverted and loop.index is not divisible by(2) ? ' class="timeline-inverted"' }} >
 
-        <div class="timeline-badge {{ event.author is defined and app.user == event.author ? 'text-grey' }}"><i class="fa fa-circle"></i></div>
+        <div class="timeline-badge {{ event.author is defined and app.user == event.author ? 'text-primary' }}"><i class="fa fa-circle"></i></div>
 
         {% if event.author is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
@@ -49,20 +49,20 @@
                         {% endif %}
                     </div>
                 </div>
-                {#                {% if app.user == event.author %}#}
-                {#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
-                {#                        <div>#}
-                {#                            {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}#}
-                {#                            {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
-                {#                        </div>#}
-                {#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
-                {#                    </div>#}
-                {#                {% else %}#}
-                {#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
-                {#                        {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
-                {#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
-                {#                    </div>#}
-                {#                {% endif %}#}
+{#                {% if app.user == event.author %}#}
+{#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
+{#                        <div>#}
+{#                            {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}#}
+{#                            {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
+{#                        </div>#}
+{#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
+{#                    </div>#}
+{#                {% else %}#}
+{#                    <div class="card-footer d-flex justify-content-between align-items-center">#}
+{#                        {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}#}
+{#                        <p class="card-text">{{ event.createdAt|customDateFormat }}</p>#}
+{#                    </div>#}
+{#                {% endif %}#}
             </div>
         {% elseif event.status is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">

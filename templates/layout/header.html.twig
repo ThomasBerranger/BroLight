@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-md fixed-top bg-white">
     <a class="navbar-brand" href="{{ path('home') }}">
-        <img src="{{ asset('images/Logo.svg') }}" alt="{{ project_title }} logo">
+        <img src="{{ asset('images/logo.svg') }}" alt="{{ project_title }} logo">
     </a>
 
     <button class="btn-header-sidebar"><i class="fa fa-bars"></i></button>
 
-    <input id="headerSearchInput" type="text" placeholder="Recherche ..." data-url="{{ path('search.result', {'text': 'replaceMe'}) }}">
+    <input id="headerSearchInput" type="text" class="custom-font-text" placeholder="Recherche ..." data-url="{{ path('search.result', {'text': 'replaceMe'}) }}">
     <img src="{{ asset('images/reload-logo.png') }}" alt="reload logo">
 
     <div class="header-right">
-        <a href="{{ path('movie.trending') }}"><img src="{{ asset('images/Trending-logo.png') }}" alt="trending logo"></a>
+        <a href="{{ path('movie.trending') }}" class="custom-font-text">Tendances</a>
         <a href="{{ path('user.edit') }}" id="headerAvatar" class="btn-avatar">
             <img class="avatar-small center-content-horizontally" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
         </a>
