@@ -6,7 +6,7 @@
     <div class="row">
         {% for movie in trendingMovies %}
             {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
-                <div class="movie-card">
+                <div class="trending-movie-card">
                     <div class="movie-opinions-indicator">
                         <img src="{{ asset('images/Popcorn.svg') }}" alt="popcorn logo">
                         <span>{{ opinionsNumberByTrendingMovies[movie.id] is defined ? opinionsNumberByTrendingMovies[movie.id] : 0 }}</span>

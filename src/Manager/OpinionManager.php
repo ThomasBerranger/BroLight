@@ -44,6 +44,11 @@ class OpinionManager
         return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinionNumber($user, $tmdbIds);
     }
 
+    public function findAllFollowingsOpinionFor(User $user, int $tmdbId): array
+    {
+        return $this->entityManager->getRepository(Opinion::class)->findAllFollowingsOpinionFor($user, $tmdbId);
+    }
+
     public function createView(User $author, int $tmdbId): Opinion
     {
         $opinion = $this->findOrCreate($author, $tmdbId);

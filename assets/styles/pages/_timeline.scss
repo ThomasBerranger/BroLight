@@ -11,12 +11,12 @@ ul.timeline {
     content: " ";
     margin-left: -1.5px;
     width: 1px;
-    background-color: $grey;
+    background-color: $primary;
   }
 
   & > li {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     width: 50%;
     float: left;
     clear: left;
@@ -48,25 +48,26 @@ ul.timeline {
       text-align: center;
     }
 
-    &.timeline-inverted > .timeline-panel {
-      float: right;
-
-      &:after {
-        left: -10px;
-        right: auto;
-        border-left-width: 0;
-        border-right-width: 15px;
-      }
-    }
-
     &.timeline-inverted {
       float: right;
       clear: right;
+
+      & > .timeline-panel {
+        float: right;
+
+        &:after {
+          left: -10px;
+          right: auto;
+          border-left-width: 0;
+          border-right-width: 15px;
+        }
+      }
+
+      & > .timeline-badge {
+        left: -12px;
+      }
     }
 
-    &.timeline-inverted > .timeline-badge {
-      left: -12px;
-    }
   }
 
   & > button.timeline-load {
@@ -92,11 +93,7 @@ ul.timeline {
     }
 
     & > li {
-      position: relative;
-      margin-bottom: 20px;
       width:100%;
-      float: left;
-      clear: left;
 
       & > .timeline-panel {
         float: right;
@@ -106,7 +103,6 @@ ul.timeline {
       }
 
       &.timeline-inverted {
-        margin-top: 30px;
         margin-bottom: 30px;
         float: left;
         clear: left;

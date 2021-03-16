@@ -2,6 +2,8 @@ import $ from "jquery";
 
 $(document).ready(function(){
 
+    $('.details-movie-opinions').css('max-height', $('.details-movie-card').height())
+
     $('#movieDetailsOpinionDiv').on("update-opinion", function(event, opinionId) {
         const selectedOpinion = $(`#opinionMovieDetails-${opinionId}`);
 

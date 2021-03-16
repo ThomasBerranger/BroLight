@@ -35,13 +35,13 @@ class UserService
         if(!$followingsOpinions)
             return [];
 
-        if ($offset === 0) { // first call
+        if (count($followingsOpinions) != $limit) { // last call
+            $olderOpinion = $followingsOpinions[0];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
+        } elseif ($offset === 0) { // first call
             $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
             $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, null);
             unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
-        } elseif (count($followingsOpinions) != $limit) { // last call
-            $olderOpinion = $followingsOpinions[0];
-            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
         } else { // normal call
             $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
             $olderOpinion = $followingsOpinions[0];

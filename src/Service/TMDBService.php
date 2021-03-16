@@ -60,10 +60,13 @@ class TMDBService
                 'query' => [
                     'api_key' => $this->params->get('app.tmdb.id'),
                     'language' => 'fr',
+                    'append_to_response' => 'watch/providers,credits,similar'
                 ],
             ]);
 
             $content = $response->toArray();
+
+            dump($content);
 
             return $content;
         } catch (Exception $exception) {

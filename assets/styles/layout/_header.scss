@@ -1,12 +1,12 @@
 nav {
   height: 60px;
-  box-shadow: 0 5px 5px 0 $grey;
+  box-shadow: 0 5px 5px 0 $primary;
 
   & > a {
     position: absolute; left: 2vw;
 
     &.navbar-brand > img {
-      height: 40px;
+      height: 50px;
     }
   }
 
@@ -21,7 +21,7 @@ nav {
 
     width: 50%;
     padding: 5px;
-    background-color: $grey;
+    background-color: $primary;
     text-align: center;
     border: none;
     border-radius: 30px;
@@ -50,10 +50,10 @@ nav {
 
     & > a:first-child {
       margin-right: 1vw;
+    }
 
-      & > img {
-        max-height: 30px;
-      }
+    & > a:last-child {
+      border: black solid 1px;
     }
   }
 
@@ -70,7 +70,7 @@ nav {
     height: 80px;
 
     & > a.navbar-brand > img {
-      height: 55px;
+      height: 70px;
     }
   }
 }

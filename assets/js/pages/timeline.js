@@ -25,9 +25,13 @@ $(document).ready(function () {
         $.ajax({
             url: `${element.data('url')}/${element.data('offset')}/${element.data('limit')}/${isInverted}`,
             success: function (data) {
-                element.before(data);
-                manageTimelineEventSpacing();
-                buttonTimelineLoad.removeClass('fa-spin');
+                if (data[0].length !== 0) {
+                    element.before(data);
+                    manageTimelineEventSpacing();
+                    buttonTimelineLoad.removeClass('fa-spin');
+                } else {
+                    buttonTimelineLoad.parent().html('<span class="custom-font-text text-white">The end.</span>');
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -37,9 +41,10 @@ $(document).ready(function () {
 });
 
 function manageTimelineEventSpacing() {
-    $('.timeline-inverted').each(function () {
+    $('li').each(function () {
         const element = $(this)
-        if (element.prev().offset().top - 10 <= element.offset().top && element.offset().top <= element.prev().offset().top + 10) {
+
+        if (element.prev().length === 1 && element.prev().offset().top - 20 <= element.offset().top && element.offset().top <= element.prev().offset().top + 20) {
             element.css("margin-top", "30px");
         }
     });
