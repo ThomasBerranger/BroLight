@@ -36,6 +36,7 @@
     margin-bottom: 0.5vh;
     padding: 0.8vh 1vw 0.5vh 1vw;
     background-color: $primary;
+    border-radius: 3px;
 
     & > * {
       @extend .custom-font-text;
@@ -54,9 +55,11 @@
   }
 }
 
-.details-movie {
-  background-color: #FFFFFF;
-  padding: 1vh 15px;
+.details-movie > div {
+
+  &:first-child {
+    padding-top: 0.5vh;
+  }
 
   & > h2 {
     margin: 0;
@@ -69,6 +72,15 @@
 
   & > p {
     font-weight: 600;
+
+    & > span {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  }
+
+  & > img {
+    max-height: 35px;
   }
 }
 
@@ -79,5 +91,11 @@
     & > .movie-opinions-indicator {
       right: 5px;
     }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .details-movie-opinions {
+    margin-top: 0.5vh;
   }
 }

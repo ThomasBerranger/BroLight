@@ -5,6 +5,7 @@
 {% block body %}
 
     <section class="row">
+
         <div class="col-12 col-md-6 offset-lg-1 col-lg-5 text-center">
             <div class="details-movie-card">
                 <div class="movie-opinions-indicator">
@@ -16,103 +17,90 @@
                 </a>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-5 details-movie-opinions">
 
-            {% for opinion in opinions %}
-                <div class="{{ app.user == opinion.author ? 'bg-danger' }}" style="border-radius: 3px">
-                    <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
-                    <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}</p>
-                    <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
-                </div>
-            {% endfor %}
-
-            <button role="button" class="btn btn-sm btn-primary mt-2 float-right"
-                    data-title="{{ movie.title }}"
-                    data-opinion-action="open-form"
-                    data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
-            </button>
-
-        </div>
-        <div class="col-12 offset-lg-1 col-lg-10 mt-3 mt-md-0">
-            <div class="details-movie">
-                <h2 class="custom-font-text">{{ movie.title is defined ? movie.title }} <span>"{{ movie.tagline is defined ? movie.tagline }}"</span></h2>
-                {% for genre in movie.genres %}
-                    <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre.name|upper }}</button>
-                {% endfor %}
-                <p class="custom-font-text mt-2">{{ movie.overview is defined ? movie.overview }}</p>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="row d-none">
-        <div class="col-12 mb-3">
-            <div class="row">
-                {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
-                    <div class="d-none d-md-block col-4">
-                        <img class="card-img-top" src="https://image.tmdb.org/t/p/w780{{ movie.poster_path }}" alt="{{ movie.title }} poster">
-                    </div>
+        <div id="movieDetailsOpinionDiv" class="col-12 col-md-6 col-lg-5">
+            <div class="details-movie-opinions">
+                {% if opinions is empty %}
+                    <p class="text-center custom-font-text">Aucun de tes abonnements n'a commenté {{ movie.title }}.</p>
+                {% else %}
+                    {% for opinion in opinions %}
+                        <div id="opinionMovieDetails-{{ opinion.id }}" {{ app.user == opinion.author ? 'class="bg-danger"' }}>
+                            <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
+                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}</p>
+                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
+                        </div>
+                    {% endfor %}
                 {% endif %}
-                <div class="col">
-                    <h2 class="font-title">{{ movie.title is defined ? movie.title }}</h2>
-                    <p class="mb-3"><em>"{{ movie.tagline is defined ? movie.tagline }}"</em></p>
-                    <p class="mb-3">{{ movie.overview is defined ? movie.overview }}</p>
-                    <p class="mb-3">{{ movie.release_date is defined ? movie.release_date|date("m/d/Y") }}</p>
-                    <p class="mb-3">{{ movie.vote_average is defined ? movie.vote_average~'/10' }}</p>
-                    <p>{% for genre in movie.genres %}{{ genre.name }}{{ loop.revindex0 == 0 ? null :  ', ' }}{% endfor %}</p>
+                <button role="button" class="btn btn-sm btn-primary mt-2 float-right"
+                        data-title="{{ movie.title }}"
+                        data-opinion-action="open-form"
+                        data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12 offset-lg-1 col-lg-10 mt-3 mt-md-0">
+            <div class="details-movie row">
+                <div class="col-12">
+                    <h2 class="custom-font-text">{{ movie.title is defined ? movie.title }}{% if movie.tagline != "" %} <br class="d-block d-sm-none"><span>"{{ movie.tagline }}"</span>{% endif %}</h2>
+                    {% for genre in movie.genres %}
+                        <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre.name|upper }}</button>
+                    {% endfor %}
+                    {% if movie.overview is defined %}<p class="custom-font-text mt-2">{{ movie.overview }}</p>{% endif %}
+                </div>
+                <div class=" col-md-10">
+                    <p class="custom-font-text mt-2">
+                        {% if movie.director is defined %}
+                            <span>Réalisé par:</span>
+                            {% for director in movie.director %}
+                                {{ loop.index > 1 ? ' et ' }}{{ director.name }}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        {% if movie.credits.cast is defined %}
+                            Avec:
+                            {% for actor in movie.credits.cast %}
+                                {% if loop.index <= 5 %}
+                                    {{ actor.name }}{{ loop.index < 5 ? ', ' : ' ...' }}
+                                {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        {% if movie.scriptwriter is defined %}
+                            <span>Scénario:</span>
+                            {% for scriptwriter in movie.scriptwriter %}
+                                {{ loop.index > 1 ? ' et ' }}{{ scriptwriter.name }}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        {% if movie.composer is defined %}
+                            <span>Musique:</span>
+                            {% for composer in movie.composer %}
+                                {{ loop.index > 1 ? ' et ' }}{{ composer.name }}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        {% if movie.composer is defined %}
+                            <span>Photographie:</span>
+                            {% for photograph in movie.photograph %}
+                                {{ loop.index > 1 ? ' et ' }}{{ photograph.name }}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-12 col-md-2 text-center">
+                    {% if movie['watch/providers']['results']['FR']['flatrate'] is defined %}
+                        <p class="custom-font-text">Disponible:</p>
+                        {% for provider in movie['watch/providers']['results']['FR']['flatrate'] %}
+                            <img class="mt-2" src="https://image.tmdb.org/t/p/w45{{ provider['logo_path'] }}" alt="provider logo" data-toggle="tooltip" data-placement="bottom" title="{{ provider['provider_name'] }}">
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        {#        <div class="col-12">#}
-        {#            <div class="card" id="movieDetailsOpinionDiv">#}
-        {#                <div class="card-body">#}
-        {#                    <h5 class="card-title text-center py-2">Commentaires</h5>#}
-
-        {#                    {% for opinion in opinions %}#}
-        {#                        <div class="mb-3-vh">#}
-        {#                            <div id="opinionMovieDetails-{{ opinion.id }}" class="card-text d-flex flex-row">#}
-        {#                                <a style="position: relative" class="mr-2" href="{{ path('user.show', {'slug': opinion.author.slug}) }}">#}
-        {#                                    <img class="avatar-medium" src="{{ opinion.author.avatar|formatAvatarData }}" alt="{{ opinion.author }} avatar">#}
-        {#                                    {% if opinion.rate > 0%}#}
-        {#                                        {% if opinion.rate %}#}
-        {#                                            <img class="rate-emoji-md" style="position: absolute; top: 60px; right: 0;" src="{{ opinion.rate|associatedEmojiURL }}" alt="rate emoji">#}
-        {#                                        {% endif %}#}
-        {#                                    {% endif %}#}
-        {#                                </a>#}
-        {#                                <div class="w-100">#}
-        {#                                    <a class="font-weight-bolder" style="font-size: 1rem" href="{{ path('user.show', {'slug': opinion.author.slug}) }}">{{ opinion.author }}</a>#}
-        {#                                    <p class="text-muted">{{ opinion.createdAt|customDateFormat }}</p>#}
-        {#                                    {% if opinion.isSpoiler %}#}
-        {#                                        <div class="spoiler-guard center-container bg-secondary pointer-cursor" style="border-radius: 5px">#}
-        {#                                            <p class="center-content text-white h6">Spoiler</p>#}
-        {#                                        </div>#}
-        {#                                        <p style="display: none">{{ opinion.comment|nl2br }}</p>#}
-        {#                                    {% else %}#}
-        {#                                        <p>{{ opinion.comment|nl2br }}</p>#}
-        {#                                    {% endif %}#}
-        {#                                </div>#}
-        {#                                {% if opinion.author == app.user %}#}
-
-        {#                                    <button role="button" class="btn btn-xxs btn-dark"#}
-        {#                                            data-title="{{ movie.title }}"#}
-        {#                                            data-opinion-action="open-form"#}
-        {#                                            data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">#}
-        {#                                        <i class="far fa-edit pointer-cursor"></i>#}
-        {#                                    </button>#}
-        {#                                {% endif %}#}
-        {#                            </div>#}
-        {#                        </div>#}
-        {#                        {% if loop.index != opinions|length %}#}
-        {#                            <hr class="m-2-vh">#}
-        {#                        {% endif %}#}
-        {#                    {% endfor %}#}
-
-
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
-    </div>
+    </section>
 
 {% endblock %}
 

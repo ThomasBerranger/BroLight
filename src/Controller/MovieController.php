@@ -59,7 +59,7 @@ class MovieController extends AbstractController
      */
     public function details(int $tmdbId): Response
     {
-        $movie = $this->TMDBService->getMovieById($tmdbId);
+        $movie = $this->TMDBService->getDetailedMovieById($tmdbId);
 
         $opinions = $this->opinionManager->findAllFollowingsOpinionFor($this->getUser(), $tmdbId);
 

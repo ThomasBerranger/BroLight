@@ -22,3 +22,7 @@ if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).then();
     navigator.serviceWorker.ready.then();
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

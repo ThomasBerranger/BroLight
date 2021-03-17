@@ -8,7 +8,7 @@
         {% if event.author is defined %}
             <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
                 <div class="card-body row">
-                    <div class="col-12 d-block d-md-none mb-2">
+                    <div class="col-12 d-block d-md-none mb-3">
                         <div class="d-flex justify-content-start align-items-center">
                             <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
                                 <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">

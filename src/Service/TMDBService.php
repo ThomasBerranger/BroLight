@@ -59,6 +59,26 @@ class TMDBService
             $response = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/'.$tmdbId, [
                 'query' => [
                     'api_key' => $this->params->get('app.tmdb.id'),
+                    'language' => 'fr'
+                ],
+            ]);
+
+            $content = $response->toArray();
+
+            dump($content); //todo: me retirer
+
+            return $content;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function getDetailedMovieById(int $tmdbId)
+    {
+        try {
+            $response = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/'.$tmdbId, [
+                'query' => [
+                    'api_key' => $this->params->get('app.tmdb.id'),
                     'language' => 'fr',
                     'append_to_response' => 'watch/providers,credits,similar'
                 ],
@@ -66,7 +86,21 @@ class TMDBService
 
             $content = $response->toArray();
 
-            dump($content);
+            usort($content['credits']['cast'], function ($actor1, $actor2) {
+                return $actor1['popularity'] < $actor2['popularity'];
+            });
+
+            foreach ($content['credits']['crew'] as $member) {
+                if ($member['job'] == 'Director') {
+                    $content['director'][$member['id']] = $member;
+                } elseif ($member['job'] == 'Story' or $member['job'] == 'Screenplay') {
+                    !array_key_exists('scriptwriter', $content) || !array_key_exists($member['id'], $content['scriptwriter']) ? $content['scriptwriter'][$member['id']] = $member : null;
+                } elseif ($member['job'] == 'Original Music Composer') {
+                    $content['composer'][$member['id']] = $member;
+                } elseif ($member['job'] == 'Director of Photography') {
+                    $content['photograph'][$member['id']] = $member;
+                }
+            }
 
             return $content;
         } catch (Exception $exception) {
