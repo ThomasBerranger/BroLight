@@ -34,6 +34,23 @@ ul.timeline {
       width: 95%;
       border: none;
       float: left;
+
+      & img.timeline-poster {
+        margin: 0 0 0.5rem 0;
+      }
+
+      a.timeline-movie-link > svg {
+        position: absolute;
+        top: 218px;
+        left: 67%;
+        height: 20px;
+
+        -webkit-transform:rotate(-10deg);
+        -moz-transform: rotate(-10deg);
+        -ms-transform: rotate(-10deg);
+        -o-transform: rotate(-10deg);
+        transform: translate(-50%, 0) rotate(-10deg);
+      }
     }
 
     & > .timeline-badge {
@@ -121,5 +138,27 @@ ul.timeline {
       width: 100%;
       bottom: -30px;
     }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  img.timeline-poster {
+    float: left;
+    margin: 0 15px 0 0 !important;
+  }
+
+  a.timeline-movie-link > svg {
+    left: 145px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  img.timeline-poster {
+    float: left;
+    margin: 0 15px 0 0 !important;
+  }
+
+  a.timeline-movie-link > svg {
+    left: 145px !important;
   }
 }

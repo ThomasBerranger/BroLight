@@ -7,9 +7,9 @@
                 data-opinion-action="open-form"
                 data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">
             {% if movie.id in app.user.opinionsTmdbIds %}
-                <i class="far fa-check-circle"></i>
+                    <i class="far fa-edit"></i>
             {% else %}
-                <i class="far fa-question-circle"></i>
+                    <i class="far fa-edit"></i>
             {% endif %}
         </button>
 </span>

@@ -5,11 +5,8 @@
 {% block body %}
 
     {% if timelineEvents|length == 0 %}
-        <div class="card">
-            <div class="card-body text-center">
-                <p class="mb-2">Abonne toi à tes amis pour savoir quels flms ils ont vu !</p>
-                <a role="button" href="{{ path('user.edit') }}" class="btn btn-sm btn-info">Liste d'abonnés</a>
-            </div>
+        <div class="text-center">
+            <p class="mb-2 custom-font-text custom-bold-600">Abonne toi à tes amis pour savoir quels flms ils ont vu !</p>
         </div>
     {% else %}
         <ul class="timeline">

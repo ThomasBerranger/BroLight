@@ -2,26 +2,25 @@
 
 namespace App\Service;
 
-use App\Entity\Opinion;
 use App\Entity\Podium;
 use App\Entity\User;
 use App\Manager\OpinionManager;
 use App\Manager\RelationshipManager;
-use DateTime;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Date;
 
 class UserService
 {
     private Security $security;
     private TMDBService $TMDBService;
+    private PopulateMovieService $populateMovieService;
     private OpinionManager $opinionManager;
     private RelationshipManager $relationshipManager;
 
-    public function __construct(Security $security, TMDBService $TMDBService, OpinionManager $opinionManager, RelationshipManager $relationshipManager)
+    public function __construct(Security $security, TMDBService $TMDBService, PopulateMovieService $populateMovieService, OpinionManager $opinionManager, RelationshipManager $relationshipManager)
     {
         $this->security = $security;
         $this->TMDBService = $TMDBService;
+        $this->populateMovieService = $populateMovieService;
         $this->opinionManager = $opinionManager;
         $this->relationshipManager = $relationshipManager;
     }
@@ -48,6 +47,8 @@ class UserService
             $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
             unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
         }
+
+        $this->populateMovieService->movieHydrate($followingsOpinions);
 
         $timelineEvents = array_merge($followingsOpinions, $acceptedRelationships);
 

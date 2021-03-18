@@ -26,8 +26,8 @@ class OpinionRepository extends ServiceEntityRepository
     public function findFollowingsOpinions(User $user, int $offset, int $limit): array
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.author', 'u')
-            ->innerJoin('u.relationsAsTarget', 'r')
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
             ->where('o.author = :userId OR r.status = :status AND r.userSource = :userId')
             ->setParameters([
                 'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
@@ -46,8 +46,8 @@ class OpinionRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('o')
             ->select(['o.tmdbId', 'COUNT(DISTINCT o) as opinionsNumber'])
-            ->innerJoin('o.author', 'u')
-            ->innerJoin('u.relationsAsTarget', 'r')
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
             ->where('o.tmdbId IN (:tmdbIds) AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
             ->setParameters([
                 'tmdbIds' => $tmdbIds,
@@ -63,8 +63,8 @@ class OpinionRepository extends ServiceEntityRepository
     public function findAllFollowingsOpinionFor(User $user, int $tmdbId): array
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.author', 'u')
-            ->innerJoin('u.relationsAsTarget', 'r')
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
             ->where('o.tmdbId = :tmdbId AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
             ->setParameters([
                 'tmdbId' => $tmdbId,
