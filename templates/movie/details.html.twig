@@ -42,7 +42,17 @@
         <div class="col-12 offset-lg-1 col-lg-10 mt-3 mt-md-0">
             <div class="details-movie row">
                 <div class="col-12">
-                    <h2 class="custom-font-text">{{ movie.title is defined ? movie.title }}{% if movie.tagline != "" %} <br class="d-block d-sm-none"><span>"{{ movie.tagline }}"</span>{% endif %}</h2>
+                    <div class="float-right pt-1">
+                        {% include 'wish/_buttonContainer.html.twig' with {'movie': movie} %}
+                    </div>
+
+                    <h2 class="custom-font-text">
+                        {{ movie.title is defined ? movie.title }}
+                        {% if movie.tagline != "" %}
+                            <br class="d-block d-md-none">
+                            <span>"{{ movie.tagline }}"</span>
+                        {% endif %}
+                    </h2>
                     {% for genre in movie.genres %}
                         <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre.name|upper }}</button>
                     {% endfor %}

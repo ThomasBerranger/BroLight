@@ -65,8 +65,6 @@ class TMDBService
 
             $content = $response->toArray();
 
-            dump($content); //todo: me retirer
-
             return $content;
         } catch (Exception $exception) {
             return $exception->getMessage();
