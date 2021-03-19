@@ -15,11 +15,11 @@
     </div>
 </div>
 
-{% if app.flashes('firstTime') %}
+{#{% if app.flashes('firstTime') %}#}
     <span id="trigger-first-time-modal" class="d-none"
           data-user-firstname="{{ app.user.firstname }}"
           data-user-edit-link="{{ absolute_url(path('user.edit')) }}"
           data-user-avatar="{{ app.user.avatar|formatAvatarData }}">
         Bienvenue sur {{ project_title }} !
     </span>
-{% endif %}
+{#{% endif %}#}

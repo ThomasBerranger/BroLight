@@ -18,10 +18,11 @@ $(document).ready(function(){
     if(spanFirstTime.length === 1) {
         modal.trigger("trigger-custom-modal", [
             spanFirstTime.text(),
-            `Te voila enfin ${spanFirstTime.data('user-firstname')} ! <i class="far fa-laugh-beam"></i><br>` +
-            `Tu peux commencer par modifier ton avatar <br>` +
+            `<div class="text-center">Te voila enfin ${spanFirstTime.data('user-firstname')} 🎉<br>` +
+            `Tu peux commencer par modifier ton avatar:<br>` +
             `<a role="button" class="btn btn-light" href="${spanFirstTime.data('user-edit-link')}"><img class="avatar-medium" src="${spanFirstTime.data('user-avatar')}" alt="${spanFirstTime.data('user-firstname')} avatar"></a><br>` +
-            `Ensuite tu pourras ajouter des amis à ta liste d'abonnements`,
+            `Ensuite tu pourras ajouter des amis à ta liste d'abonnements !</div>`,
+            true,
             {keyboard: false, backdrop: 'static'}
         ]);
     }
