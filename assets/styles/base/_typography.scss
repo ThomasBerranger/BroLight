@@ -10,6 +10,8 @@
   }
 }
 
-.custom-bold-600 {
-  font-weight: 600;
+@for $i from 1 through 9 {
+  .custom-bold-#{$i}00 {
+    font-weight: #{$i*100};
+  }
 }
