@@ -12,66 +12,16 @@
   border-radius: .2rem;
 }
 
-.btn-follow {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
 
-  padding: 0.15rem 1.5vw;
-}
+.btn-avatar {
+  position: relative;
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: #F5F5F5;
 
-.btn-accept-follow {
-  @extend .btn;
-  @extend .btn-xs;
-  @extend .btn-info;
-}
-
-.btn-refuse-follow {
-  @extend .btn;
-  @extend .btn-xs;
-  @extend .btn-danger;
-}
-
-.btn-cancel-follow-request {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
-
-  padding: 0.15rem 1.5vw;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-
-  &:after {
-    content: 'Demande en attente';
-  }
-
-  &:hover {
-    @extend .btn-danger;
-
-    &:after{
-      content: 'Annuler ma demande';
-    }
-  }
-}
-
-.btn-delete-follow {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
-
-  padding: 0.15rem 1.5vw;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-
-  &:after {
-    content: 'Abonné';
-  }
-
-  &:hover {
-    @extend .btn-danger;
-
-    &:after{
-      content: 'Se désabonner';
-    }
+  &:focus, &:active {
+    outline: none;
   }
 }

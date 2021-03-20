@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
+use App\Manager\OpinionManager;
+use App\Service\GenreService;
+use App\Service\MovieService;
 use App\Service\TMDBService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +18,18 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class MovieController extends AbstractController
 {
     private HttpClientInterface $client;
+    private MovieService $movieService;
     private TMDBService $TMDBService;
+    private GenreService $genreService;
+    private OpinionManager $opinionManager;
 
-    public function __construct(HttpClientInterface $httpClient, TMDBService $TMDBService)
+    public function __construct(HttpClientInterface $httpClient, MovieService $movieService, TMDBService $TMDBService, GenreService $genreService, OpinionManager $opinionManager)
     {
         $this->client = $httpClient;
+        $this->movieService = $movieService;
         $this->TMDBService = $TMDBService;
+        $this->genreService = $genreService;
+        $this->opinionManager = $opinionManager;
     }
 
     /**
@@ -28,31 +37,17 @@ class MovieController extends AbstractController
      */
     public function trending(): Response
     {
-        $trendingMovies = $this->TMDBService->getTrendingMovies();
+        $trendingMovies = $this->movieService->getTrendingMovies();
 
-        return $this->render('movie/trending.html.twig', ['trendingMovies' => $trendingMovies,]);
-    }
+        $opinionsNumberByTrendingMovies = $this->opinionManager->findFollowingsOpinionNumber($this->getUser(), array_column($trendingMovies, 'id'));
 
-    /**
-     * @Route("/search", name="search")
-     */
-    public function search(): Response
-    {
-        return $this->render('movie/search.html.twig');
-    }
+        $genres = $this->genreService->findAllTMDBIdAndName();
 
-    /**
-     * @Route("/search_result/{title}", name="search_result")
-     *
-     * @param string $title
-     *
-     * @return Response
-     */
-    public function search_result(string $title): Response
-    {
-        $movies = $this->TMDBService->getSearchedMovies($title);
-
-        return $this->render('movie/_search_result.html.twig', ['movies' => $movies]);
+        return $this->render('movie/trending.html.twig', [
+            'trendingMovies' => $trendingMovies,
+            'genres' => array_column($genres, 'name', 'tmdbId'),
+            'opinionsNumberByTrendingMovies' => array_column($opinionsNumberByTrendingMovies, 'opinionsNumber', 'tmdbId')
+        ]);
     }
 
     /**
@@ -64,9 +59,9 @@ class MovieController extends AbstractController
      */
     public function details(int $tmdbId): Response
     {
-        $movie = $this->TMDBService->getMovieById($tmdbId);
+        $movie = $this->TMDBService->getDetailedMovieById($tmdbId);
 
-        $opinions = $this->getDoctrine()->getRepository(Opinion::class)->findBy(['tmdbId'=>$tmdbId]);
+        $opinions = $this->opinionManager->findAllFollowingsOpinionFor($this->getUser(), $tmdbId);
 
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,

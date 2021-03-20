@@ -3,21 +3,21 @@
 {% block title %}{{ parent() }} | Inscription{% endblock %}
 
 {% block body %}
-    <div class="row full-page-y center-container">
+    <div class="row full-page-y center-container custom-font-text custom-bold-500">
         {{ form_start(registrationForm, {'attr': {'class': 'col-10 col-sm-8 col-md-6 center-content security-form'}}) }}
 
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
 
-        <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
+        <h1 class="h3 mb-2 text-center display-4 custom-font-text">{{ project_title }}</h1>
 
         {{ form_label(registrationForm.email, 'Ton email :') }}
         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
         <div class="alert-danger">
             {{ form_errors(registrationForm.email) }}
         </div>
-        <small id="emailHelp" class="form-text text-muted mb-2">Promis ton email ne sera pas diffusé.</small>
+        <small id="emailHelp" class="form-text text-muted mb-2">Promis ton email ne sera pas partagé.</small>
 
         {{ form_label(registrationForm.firstname, 'Ton prénom :', {'attr': {'class': 'mt-2'}}) }}
         {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}

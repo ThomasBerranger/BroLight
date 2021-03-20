@@ -8,7 +8,7 @@
 
         <div class="col-12 col-md-6 form-group mb-4">
             <label for="movieSearchInput">Titre du film :</label>
-            <input type="text" class="form-control" data-search-url="{{ path('movie.search_result', {'title': 'replaceMe'}) }}" id="movieSearchInput" placeholder="Inception">
+            <input type="text" class="form-control" data-search-url="{{ path('search.result', {'text': 'replaceMe'}) }}" id="movieSearchInput" placeholder="Inception">
         </div>
 
         <div id="moviesResult" class="col-10"></div>

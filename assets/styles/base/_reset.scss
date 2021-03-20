@@ -2,8 +2,12 @@
 body {
   position: relative;
   padding: 0;
-  background-color: $light-info;
-  min-height: 90vh;
+  background-color: $white;
+  min-height: 100vh;
+
+  & > .container {
+    padding: 11vh 15px;
+  }
 }
 
 p {
@@ -14,10 +18,16 @@ p {
 
 hr {
   margin: 0;
+
+  &.w-75-centered {
+    width: 75%;
+    margin: 0 12.5% 0 12.5%;
+  }
 }
 
 a {
   color: $dark;
+  outline: none;
 
   &:hover, &:active, &:visited {
     text-decoration: none;
@@ -26,9 +36,16 @@ a {
 }
 
 button {
+  outline: none;
+
   &:active, &:focus {
+    outline: none;
     box-shadow: none !important;
   }
+}
+
+input {
+  outline: none;
 }
 
 @for $i from 1 through 6 {

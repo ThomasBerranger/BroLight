@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Entity\Relationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,6 +29,21 @@ class UserRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.id != :userId')
             ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return user[] Returns an array of user objects
+     */
+    public function findByName(string $text): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.slug LIKE :text')
+            ->setParameter('text', '%'.$text.'%')
             ->getQuery()
             ->getResult()
             ;

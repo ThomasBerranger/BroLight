@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Opinion;
 use App\Entity\User;
 use App\Entity\Relationship;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,9 +24,9 @@ class RelationshipRepository extends ServiceEntityRepository
 
     public function findPendingFollowersOf(User $user): array
     {
-        return $this->createQueryBuilder('ur')
-            ->where('ur.userTarget = :userId')
-            ->andWhere('ur.status = :status')
+        return $this->createQueryBuilder('r')
+            ->where('r.userTarget = :userId')
+            ->andWhere('r.status = :status')
             ->setParameters([
                 'userId' => $user->getId(),
                 'status' => Relationship::STATUS['PENDING_FOLLOW_REQUEST']
@@ -32,5 +34,22 @@ class RelationshipRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findAcceptedRelationshipsOfBetween(User $user, ?DateTime $dateMin, ?DateTime $dateMax): array
+    {
+        $relations = $this->createQueryBuilder('r')
+            ->where('r.userTarget = :userId')
+            ->andWhere('r.status = :status')
+            ->setParameters([
+                'userId' => $user->getId(),
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+            ])
+        ;
+
+        $dateMin ? $relations->andWhere('r.updatedAt >= :dateMin')->setParameter('dateMin', $dateMin) : null;
+        $dateMax ? $relations->andWhere('r.updatedAt < :dateMax')->setParameter('dateMax', $dateMax) : null;
+
+        return $relations->getQuery()->getResult();
     }
 }

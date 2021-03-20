@@ -4,29 +4,20 @@
 
 {% block body %}
     <div class="row vertical-center-container full-page-y">
-
-        <div class="col-10 center-content card p-4">
-
-            <h1 class="h3 mb-2 text-center display-4 font-title">{{ project_title }}</h1>
-
-            <p class="text-center my-4">
+        <div class="col-6 center-content card p-2">
+            <h1 class="h3 mb-2 text-center display-4 custom-font-text">{{ project_title }}</h1>
+            <p class="text-center my-2 custom-font-text">
                 <span class="font-weight-bold">{{ project_title }}</span> est un hommage à Auguste et Louis Lumière.
                 <br>
-                Thomas est actuellement en train de faire évoluer cette application ! <i class="fas fa-rocket"></i>
+                De nouvelle fonctionnalités sont en cours de développement ! <i class="fas fa-rocket"></i>
+                <br>
+                Si tu as une question ou que tu veux faire un feedback c'est possible à cette adresse:
+                <br>
+                <strong>brolight.application@gmail.com</strong>
             </p>
-
-            <img src="{{ asset('images/popcorn.png') }}" class="mx-auto img-sm" alt="{{ project_title }} logo">
-            <div class="text-center">
-                Icone réalisé par <a class="text-primary" target="_blank" href="https://www.flaticon.com/authors/photo3idea-studio" title="photo3idea_studio">photo3idea_studio</a>
-                disponible sur <a class="text-primary" target="_blank" href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
-            </div>
-
-            <img class="mt-4 img-sm" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Red&eyeType=Squint&eyebrowType=UpDownNatural&mouthType=Smile&skinColor=Pale'/>
-            <div class="text-center">Avatars générés par <a class="text-primary" target="_blank" href="https://github.com/fangpenlin/avataaars-generator" title="avataaars generator website">avataaars generator</a>.</div>
-
-            <a type="button" class="btn btn-sm btn-info mt-4" href="{{ path('home') }}">Retour à {{ project_title }} ici !</a>
-
+            <img class="mt-2 img-sm" src='https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Red&eyeType=Squint&eyebrowType=UpDownNatural&mouthType=Smile&skinColor=Pale'/>
+            <div class="text-center mt-3 custom-font-text">Avatars générés par <a class="custom-bold-600" target="_blank" href="https://github.com/fangpenlin/avataaars-generator" title="avataaars generator website">avataaars generator</a>.</div>
+            <a type="button" class="btn btn-sm btn-danger text-white mt-4" href="{{ path('home') }}">Retour à {{ project_title }} ici !</a>
         </div>
-
     </div>
 {% endblock %}

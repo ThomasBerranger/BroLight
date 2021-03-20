@@ -1,0 +1,16 @@
+.search {
+  position: fixed;
+  height: 0;
+  width: 100%;
+  margin-top: 6vh;
+  z-index: 3;
+
+  & > div {
+    width: 60%;
+    max-height: 100vh;
+    margin: 0 20%;
+    background-color: $white;
+    overflow: auto;
+    z-index: 2;
+  }
+}

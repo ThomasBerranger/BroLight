@@ -5,142 +5,52 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-12 col-lg-4 mb-2">
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-12 mb-3">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <img class="img-fluid img-md" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
-                        </div>
-                        <h3 class="text-center">{{ user }}</h3>
-                        <div class="d-flex justify-content-center mb-2">
-                        <span id="followerButtonContainer-{{ user.id }}">
-                            {{ include('user/_partials/_followerButton.html.twig') }}
-                        </span>
-                            <span id="followingButtonContainer-{{ user.id }}">
-                            {{ include('user/_partials/_followingButton.html.twig') }}
-                        </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-12 mb-3">
-                    <div class="card">
-                        <div class="row px-4">
-                            <div class="col-4">
-                                <div class="row">
-                                    <div class="col-12 my-1-vh">
-                                        {% if podium is not empty and podium[2] is not null %}
-                                            <a href="{{ path('movie.details', {'tmdbId': podium[2]['id']}) }}">
-                                                <img class="podium-img-2" src="https://image.tmdb.org/t/p/w154{{ podium[2]['poster_path'] }}" alt="{{ podium[2]['title'] }} poster">
-                                            </a>
-                                        {% else %}
-                                            <img class="podium-img-2" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-12 text-center font-weight-bold podium-2">
-                                        2
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="row">
-                                    <div class="col-12 my-1-vh">
-                                        {% if podium is not empty and podium[1] is not null %}
-                                            <a href="{{ path('movie.details', {'tmdbId': podium[1]['id']}) }}">
-                                                <img class="podium-img-1" src="https://image.tmdb.org/t/p/w154{{ podium[1]['poster_path'] }}" alt="{{ podium[1]['title'] }} poster">
-                                            </a>
-                                        {% else %}
-                                            <img class="podium-img-1" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-12 text-center font-weight-bold podium-1">
-                                        1
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="row">
-                                    <div class="col-12 my-1-vh">
-                                        {% if podium is not empty and podium[3] is not null %}
-                                            <a href="{{ path('movie.details', {'tmdbId': podium[3]['id']}) }}">
-                                                <img class="podium-img-3" src="https://image.tmdb.org/t/p/w154{{ podium[3]['poster_path'] }}" alt="{{ podium[3]['title'] }} poster">
-                                            </a>
-                                        {% else %}
-                                            <img class="podium-img-3" src="https://everyfad.com/static/images/movie_poster_placeholder.29ca1c87.svg" alt="Movie poster placeholder">
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-12 text-center font-weight-bold podium-3">
-                                        3
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+        <div class="col-12 col-md-4">
+            <div id="avatar-container" class="text-center">
+                <img class="img-fluid" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
             </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <p class="font-weight-bold">{{ user.opinions|length }} Avi{{ user.opinions|length > 1 ? 's' }}</p>
-                    <hr class="my-2">
-                    <div class="row">
-                        {% for opinion in user.opinions|reverse %}
-                            <div class="col-12">
-                                <h6 class="text-center mb-1">{{ opinion.movie.title }}</h6>
-                            </div>
-                            <div class="col-4 mb-3">
-                                <a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">
-                                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ opinion.movie.poster_path }}" alt="{{ opinion.movie.title }} poster">
-                                    {% if opinion.rate < 0 %}
-                                        <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ opinion.rate|associatedEmojiURL }}" alt="rate emoji">
-                                    {% endif %}
-                                </a>
-                            </div>
-                            <div class="col-8">
-                                {% if opinion.comment %}
-                                    <div class="card-text text-left p-2">
-                                        <p>{{ opinion.comment|nl2br }}</p>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </div>
+        <div class="col-12 col-md-8">
+            <div class="row relationship-container">
+                <div class="col-12 col-md-6">
+                    <h5 class="custom-font-text custom-bold-600 text-center">Ses abonnés:</h5>
+                    <hr class="w-75-centered">
+                    {% for user in user.followers %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': false} %}
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <h5 class="custom-font-text custom-bold-600 text-center">Ses abonnements:</h5>
+                    <hr class="w-75-centered">
+                    {% for user in user.followings %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': false} %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <ul class="nav nav-pills mb-3 d-flex justify-content-center" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="user-followers-tab" data-toggle="pill" href="#pills-followers" role="tab" aria-controls="pills-settings" aria-selected="true">{{ user.followers|length }} Abonné{{ user.followers|length > 1 ? 's' }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="user-followings-tab" data-toggle="pill" href="#pills-followings" role="tab" aria-controls="pills-relationships" aria-selected="false">{{ user.followings|length }} Abonnement{{ user.followings|length > 1 ? 's' }}</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="user-followers-tab">
-                            {% for user in user.followers %}
-                                {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower'} %}
-                            {% endfor %}
-                        </div>
-                        <div class="tab-pane fade" id="pills-followings" role="tabpanel" aria-labelledby="user-followings-tab">
-                            {% for user in user.followings %}
-                                {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following'} %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-12 col-lg-6">
+            <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Ses derniers avis:</h5>
+            <hr class="w-75 mb-2">
+            {% for opinion in lastCurrentUserOpinions|reverse %}
+                <p class="custom-font-text" style="text-align: justify"><a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}" class="text-danger">{{ opinion.movie.title }} |</a> {{ opinion.comment|nl2br }}</p>
+            {% endfor %}
         </div>
-
+        <div class="col-12 col-lg-6 list-container">
+            {{ source('@public_path'~asset('/images/ticket.svg')) }}
+            <h5 class="custom-font-text d-inline-block">Sa liste:</h5>
+            <hr class="w-75 mb-2">
+            {% for wish in currentUserWishes|reverse %}
+                <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
+                    <img src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster" class="img-fluid mb-1">
+                </a>
+            {% endfor %}
+        </div>
     </div>
+
 {% endblock %}
 
-
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('userEdit') }}
+{% endblock %}

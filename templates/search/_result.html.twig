@@ -1,0 +1,32 @@
+{% if users is empty and movies is empty %}
+    <p class="text-center w-100 pt-5 pb-3 font-weight-bold">Aucun utilisateur ne porte ce nom et aucun film non plus.</p>
+{% else %}
+    <div class="col-12 pt-5"></div>
+
+    <div class="col-12">
+        <div class="row">
+            {% for user in users %}
+                <div class="col-12 col-sm-6 mb-1">
+                    {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if users is not empty and movies is not empty %}<div class="col-10 offset-1 my-3"><hr></div>{% endif %}
+
+    <div class="col-12">
+        <div class="row">
+            {% for movie in movies %}
+                {% if movie.poster_path is defined and movie.poster_path and movie.title is defined %}
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 p-3 text-center custom-bold-600">
+                        <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
+                            <img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                            {{ movie.title }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

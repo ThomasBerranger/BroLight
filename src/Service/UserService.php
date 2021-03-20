@@ -5,21 +5,58 @@ namespace App\Service;
 use App\Entity\Podium;
 use App\Entity\User;
 use App\Manager\OpinionManager;
+use App\Manager\RelationshipManager;
+use Symfony\Component\Security\Core\Security;
 
 class UserService
 {
-    private OpinionManager $opinionManager;
+    private Security $security;
     private TMDBService $TMDBService;
+    private PopulateMovieService $populateMovieService;
+    private OpinionManager $opinionManager;
+    private RelationshipManager $relationshipManager;
 
-    public function __construct(OpinionManager $opinionManager, TMDBService $TMDBService)
+    public function __construct(Security $security, TMDBService $TMDBService, PopulateMovieService $populateMovieService, OpinionManager $opinionManager, RelationshipManager $relationshipManager)
     {
-        $this->opinionManager = $opinionManager;
+        $this->security = $security;
         $this->TMDBService = $TMDBService;
+        $this->populateMovieService = $populateMovieService;
+        $this->opinionManager = $opinionManager;
+        $this->relationshipManager = $relationshipManager;
     }
 
-    public function getTimeline(User $user): array
+    public function getTimelineEvents(User $user, int $offset, int $limit): array
     {
-        return $this->opinionManager->findFollowingsOpinions($user);
+        $limit += 1; // dépasser la limite de 1 pour encadrer les autres events
+
+        $followingsOpinions = $this->opinionManager->findFollowingsOpinions($user, $offset, $limit);
+
+        if(!$followingsOpinions)
+            return [];
+
+        if (count($followingsOpinions) != $limit) { // last call
+            $olderOpinion = $followingsOpinions[0];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
+        } elseif ($offset === 0) { // first call
+            $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, null);
+            unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
+        } else { // normal call
+            $youngestOpinion = $followingsOpinions[count($followingsOpinions)-1];
+            $olderOpinion = $followingsOpinions[0];
+            $acceptedRelationships = $this->relationshipManager->findAcceptedRelationshipsOfBetween($user, $youngestOpinion ? $youngestOpinion->getUpdatedAt() : null, $olderOpinion ? $olderOpinion->getUpdatedAt() : null);
+            unset($followingsOpinions[count($followingsOpinions)-1]); // remove last opinion
+        }
+
+        $this->populateMovieService->movieHydrate($followingsOpinions);
+
+        $timelineEvents = array_merge($followingsOpinions, $acceptedRelationships);
+
+        usort($timelineEvents, function ($object1, $object2) {
+            return $object1->getUpdatedAt() < $object2->getUpdatedAt();
+        });
+
+        return $timelineEvents;
     }
 
     public function formattedPodium(User $user): array
@@ -35,5 +72,22 @@ class UserService
         }
 
         return $formattedPodium;
+    }
+
+    public function moviePopulateLasOpinionsAndWishOf(User $user): array
+    {
+        $userOpinions = $user->getOpinions()->toArray();
+
+        usort($userOpinions, function ($opinion1, $opinion2) {
+            return $opinion1->getUpdatedAt() > $opinion2->getUpdatedAt();
+        });
+
+        $lastCurrentUserOpinions = array_slice($userOpinions, count($userOpinions)-5);
+
+        $userWishes = $user->getWishes()->toArray();
+
+        $this->populateMovieService->movieHydrate(array_merge($lastCurrentUserOpinions, $userWishes));
+
+        return ['opinions' => $lastCurrentUserOpinions, 'wishes' => $userWishes];
     }
 }

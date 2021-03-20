@@ -29,7 +29,7 @@ security:
                 entry_point: App\Security\LoginFormAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
+                lifetime: 15778476 # 6 months in seconds
             logout:
                 path: app_logout
 

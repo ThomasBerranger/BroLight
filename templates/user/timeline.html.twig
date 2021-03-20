@@ -3,76 +3,22 @@
 {% block title %}{{ parent() }} | Timeline{% endblock %}
 
 {% block body %}
-    <ul class="timeline">
 
-        {% if timeline|length == 0 %}
-            <div class="card">
-                <div class="card-body text-center">
-                    <p class="mb-2">Donne un premier avi et abonne toi à tes amis pour savoir quels flms ils ont vu !</p>
-                    <a role="button" href="{{ path('user.edit') }}" class="btn btn-sm btn-info">Liste d'abonnés</a>
-                </div>
-            </div>
-        {% endif %}
-
-        {% for event in timeline %}
-            <li {{ loop.index is divisible by(2)? 'class="timeline-inverted"'}}>
-                <div class="timeline-badge"><i class="fa fa-circle"></i></div>
-                <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
-                    <div class="card-body row">
-                        <div class="col-4">
-                            <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">
-                                <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
-                                {% if event.rate > 0 %}
-                                    <img class="float-right rate-emoji-lg" style="position: absolute; bottom: -5px; right: -5px;" src="{{ event.rate|associatedEmojiURL }}" alt="rate emoji">
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="col-8 pl-0">
-                            <div class="card-title d-flex justify-content-start align-items-center">
-                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="d-flex align-items-center">
-                                    <img class="avatar-small" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
-                                </a>
-                                <p class="ml-2">
-                                    <a class="font-weight-bold" href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
-                                    <span>{{ event.movie.title }}</span>
-                                </p>
-                            </div>
-                            {% if event.comment %}
-                                <div class="card-text text-left p-2">
-                                    {% if event.isSpoiler %}
-                                        <div class="spoiler-guard bg-secondary pointer-cursor text-center" style="border-radius: 5px">
-                                            <p class="text-white py-2"><span class="h6">Spoiler</span><br>Clique pour voir</p>
-                                        </div>
-                                        <p style="display: none">{{ event.comment|nl2br }}</p>
-                                    {% else %}
-                                        <p>{{ event.comment|nl2br }}</p>
-                                    {% endif %}
-                                </div>
-                            {% else %}
-                                <div class="card-text text-left p-2">J'ai vu ce film !</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% if app.user == event.author %}
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <div>
-                                {% include 'opinion/_button.html.twig' with {'movie': event.movie} %}
-                                {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}
-                            </div>
-                            <p class="card-text">{{ event.createdAt|customDateFormat }}</p>
-                        </div>
-                    {% else %}
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            {% include 'wish/_buttonContainer.html.twig' with {'movie': event.movie} %}
-                            <p class="card-text">{{ event.createdAt|customDateFormat }}</p>
-                        </div>
-                    {% endif %}
-                </div>
-            </li>
-        {% endfor %}
-
-        <li style="float: none;"></li> {# Timline end #}
-    </ul>
+    {% if timelineEvents|length == 0 %}
+        <div class="text-center">
+            <p class="mb-2 custom-font-text custom-bold-600">Abonne toi à tes amis pour savoir quels flms ils ont vu !</p>
+        </div>
+    {% else %}
+        <ul class="timeline">
+            {{ include('user/_timeline_events.html.twig') }}
+            <button id="loadTimelineEvents" class="timeline-load"
+                    data-offset=0
+                    data-limit={{ timelineDefaultLimit }}
+                    data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
+            </button>
+            <li class="timeline-end"></li> {# Timline end #}
+        </ul>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

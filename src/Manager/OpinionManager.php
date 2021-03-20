@@ -34,9 +34,19 @@ class OpinionManager
         return $opinion;
     }
 
-    public function findFollowingsOpinions(User $user): array
+    public function findFollowingsOpinions(User $user, int $offset, int $limit): array
     {
-        return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinions($user);
+        return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinions($user, $offset, $limit);
+    }
+
+    public function findFollowingsOpinionNumber(User $user, array $tmdbIds): array
+    {
+        return $this->entityManager->getRepository(Opinion::class)->findFollowingsOpinionNumber($user, $tmdbIds);
+    }
+
+    public function findAllFollowingsOpinionFor(User $user, int $tmdbId): array
+    {
+        return $this->entityManager->getRepository(Opinion::class)->findAllFollowingsOpinionFor($user, $tmdbId);
     }
 
     public function createView(User $author, int $tmdbId): Opinion

@@ -5,8 +5,10 @@ namespace App\Repository;
 use App\Entity\Opinion;
 use App\Entity\Relationship;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method Opinion|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,18 +23,56 @@ class OpinionRepository extends ServiceEntityRepository
         parent::__construct($registry, Opinion::class);
     }
 
-    public function findFollowingsOpinions(User $user)
+    public function findFollowingsOpinions(User $user, int $offset, int $limit): array
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.author', 'u', 'WITH', 'o.author = u.id')
-            ->innerJoin('u.relationsAsTarget', 'ur', 'WITH', 'u.id = ur.userTarget')
-            ->where('ur.status = :status AND ur.userSource = :userId')
-            ->orWhere('o.author = :userId')
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
+            ->where('o.author = :userId OR r.status = :status AND r.userSource = :userId')
             ->setParameters([
                 'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
                 'userId' => $user->getId()
             ])
-            ->orderBy('o.createdAt', 'DESC')
+            ->groupBy('o')
+            ->orderBy('o.updatedAt', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findFollowingsOpinionNumber(User $user, array $tmdbIds): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(['o.tmdbId', 'COUNT(DISTINCT o) as opinionsNumber'])
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
+            ->where('o.tmdbId IN (:tmdbIds) AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
+            ->setParameters([
+                'tmdbIds' => $tmdbIds,
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+                'userId' => $user->getId()
+            ])
+            ->groupBy('o.tmdbId')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findAllFollowingsOpinionFor(User $user, int $tmdbId): array
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.author', 'u')
+            ->leftJoin('u.relationsAsTarget', 'r')
+            ->where('o.tmdbId = :tmdbId AND (o.author = :userId OR r.status = :status AND r.userSource = :userId)')
+            ->setParameters([
+                'tmdbId' => $tmdbId,
+                'status' => Relationship::STATUS['ACCEPTED_FOLLOW_REQUEST'],
+                'userId' => $user->getId()
+            ])
+            ->groupBy('o')
+            ->orderBy('o.updatedAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;

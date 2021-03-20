@@ -20,6 +20,7 @@ class User implements UserInterface
 {
     const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
+    const DEFAULT_TIMELINE_LIMIT = 10;
 
     /**
      * @ORM\Id

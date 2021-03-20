@@ -1,0 +1,45 @@
+.trending-movie-card {
+  @extend .col-12;
+  @extend .col-sm-6;
+  @extend .col-md-4;
+  @extend .col-lg-3;
+
+  position: relative;
+  padding: 3vh 25px;
+
+  & > .movie-opinions-indicator {
+    position: absolute;
+    top: 4vh;
+    right: -5px;
+
+    & > img {
+      height: 75px;
+      width: 60px;
+    }
+
+    & > span {
+      @extend .center-content-horizontally;
+
+      bottom: 9px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .tags-div {
+    @extend .center-content-horizontally;
+
+    width: 80%;
+    bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .movie-card {
+    padding: 3vh 35px;
+
+    & > .movie-opinions-indicator {
+      right: 5px;
+    }
+  }
+}

@@ -1,0 +1,102 @@
+.details-movie-card {
+  position: relative;
+
+  & > .movie-opinions-indicator {
+    position: absolute;
+    top: 2vh;
+    right: -30px;
+
+    & > img {
+      height: 75px;
+      width: 60px;
+    }
+
+    & > span {
+      @extend .center-content-horizontally;
+
+      bottom: 9px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .tags-div {
+    @extend .center-content-horizontally;
+
+    width: 80%;
+    bottom: -10px;
+  }
+}
+
+.details-movie-opinions {
+  overflow-y: auto;
+
+  & > div {
+    width: 100%;
+    margin-bottom: 0.5vh;
+    padding: 0.8vh 1vw 0.5vh 1vw;
+    background-color: $primary;
+    border-radius: 3px;
+
+    & > * {
+      @extend .custom-font-text;
+      font-weight: 500;
+
+      &:first-child {
+        margin-bottom: 0.2rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      &:last-child {
+        text-align: right;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.details-movie > div {
+  position: relative;
+
+  &:first-child {
+    padding-top: 0.5vh;
+  }
+
+  & > h2 {
+    margin: 0;
+
+    & > span {
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+  }
+
+  & > p {
+    font-weight: 600;
+
+    & > span {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  }
+
+  & > img {
+    max-height: 35px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .details-movie-card {
+    padding: 3vh 35px;
+
+    & > .movie-opinions-indicator {
+      right: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .details-movie-opinions {
+    margin-top: 0.5vh;
+  }
+}

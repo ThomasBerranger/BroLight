@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user_relationship", name="user_relationship.")
+ * @Route("/relationship", name="relationship.")
  */
 class RelationshipController extends AbstractController
 {
@@ -20,6 +20,49 @@ class RelationshipController extends AbstractController
     public function __construct(RelationshipManager $relationshipManager)
     {
         $this->relationshipManager = $relationshipManager;
+    }
+
+    /**
+     * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
+     *
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function acceptFollow(User $user): Response
+    {
+        try {
+            $this->relationshipManager->acceptFollowRelationship($user, $this->getUser());
+
+            return $this->json([
+                'button' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
+                'userId' => $user->getId()
+            ], 201);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
+    }
+
+    /**
+     * @Route("/refuse/{id}", name="refuse", methods={"GET"})
+     *
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @throws Exception
+     */
+    public function refuse(User $user): Response
+    {
+        try {
+            $this->relationshipManager->deleteFollowRelationship($user, $this->getUser());
+
+            return $this->json($user->getId(), 201);
+        } catch (Exception $exception) {
+            return $this->json($exception, 500);
+        }
     }
 
     /**
@@ -63,52 +106,6 @@ class RelationshipController extends AbstractController
                 'button' => $this->renderView('user/_partials/_followingButton.html.twig', ['user' => $user]),
                 'userId' => $user->getId()
             ], 200);
-        } catch (Exception $exception) {
-            return $this->json($exception, 500);
-        }
-    }
-
-    /**
-     * @Route("/accept_follow/{id}", name="accept_follow", methods={"GET"})
-     *
-     * @param User $user
-     *
-     * @return Response
-     *
-     * @throws Exception
-     */
-    public function acceptFollow(User $user): Response
-    {
-        try {
-            $this->relationshipManager->acceptFollowRelationship($user, $this->getUser());
-
-            return $this->json([
-                'button' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
-                'userId' => $user->getId()
-            ], 201);
-        } catch (Exception $exception) {
-            return $this->json($exception, 500);
-        }
-    }
-
-    /**
-     * @Route("/refuse/{id}", name="refuse", methods={"GET"})
-     *
-     * @param User $user
-     *
-     * @return Response
-     *
-     * @throws Exception
-     */
-    public function refuse(User $user): Response
-    {
-        try {
-            $this->relationshipManager->deleteFollowRelationship($user, $this->getUser());
-
-            return $this->json([
-                'button' => $this->renderView('user/_partials/_followerButton.html.twig', ['user' => $user]),
-                'userId' => $user->getId()
-            ], 201);
         } catch (Exception $exception) {
             return $this->json($exception, 500);
         }

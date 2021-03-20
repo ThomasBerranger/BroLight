@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Relationship;
 use App\Entity\User;
+use DateTime;
 use Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -97,5 +98,10 @@ class RelationshipManager
         }
 
         return $userRelationship;
+    }
+
+    public function findAcceptedRelationshipsOfBetween(User $userTarget, ?DateTime $dateMin, ?DateTime $dateMax): array
+    {
+        return $relationships = $this->entityManager->getRepository(Relationship::class)->findAcceptedRelationshipsOfBetween($userTarget, $dateMin, $dateMax);
     }
 }

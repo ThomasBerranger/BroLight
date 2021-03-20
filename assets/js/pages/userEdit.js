@@ -3,27 +3,6 @@ import $ from "jquery";
 $(document).ready(function() {
     editInputsDisplay();
 
-    $("#userSearchInput").on("keyup", function() {
-        const value = $(this).val().toLowerCase();
-
-        if (value.length > 1) {
-            $("#usersList div").filter(function() {
-                if ($(this).text().toLowerCase().indexOf(value) > -1) {
-                    $(this).addClass('d-flex');
-                    $(this).removeClass('d-none');
-                } else {
-                    $(this).addClass('d-none');
-                    $(this).removeClass('d-flex');
-                }
-            });
-        } else {
-            $("#usersList div").each(function () {
-                $(this).addClass('d-none');
-                $(this).removeClass('d-flex');
-            });
-        }
-    });
-
     $("form[name='avatar'] select").on("change", function () {
         const accessoriesType = $('#avatar_accessoriesType').val();
         const clotheColor = $('#avatar_clotheColor').val();
@@ -46,25 +25,20 @@ $(document).ready(function() {
         editInputsDisplay();
     });
 
-    $("[id*='followerButtonContainer-']").on("update-user-interface", function(event, type) {
+    $("[id*='followerContainer-']").on("update-user-interface", function(event, type, button = null) {
         switch (type) {
-            case 'move-to-followers':
-                moveToFollowers($(this));
+            case 'accepted-as-follower':
+                $(this).html(button);
+                decrementPendingFollowerNumber();
                 break;
-            case 'remove-from-followers':
-                removeFromFollowers($(this));
+            case 'removed-from-followers':
+                $(this).parent().fadeOut(500, function () {
+                    decrementPendingFollowerNumber();
+                    $(this).remove();
+                });
                 break;
         }
     });
-
-    $("[id*='wishMovie-']").on("update-user-interface", function(event, type) {
-        switch (type) {
-            case 'remove-wish-movie':
-                removeWishMovie($(this));
-                break;
-        }
-    });
-
 });
 
 function editInputsDisplay() {
@@ -138,18 +112,7 @@ function disable(elements) {
     }
 }
 
-function moveToFollowers(followerButtonContainer) {
-    followerButtonContainer.parent().fadeOut(500, function () {
-        followerButtonContainer.parent().appendTo('#followersDiv').fadeIn(500);
-    });
-}
-
-function removeFromFollowers(followerButtonContainer) {
-    followerButtonContainer.parent().fadeOut(500, function () {
-        $(this).remove();
-    });
-}
-
-function removeWishMovie(wishMovieDiv) {
-    wishMovieDiv.fadeOut(500);
+function decrementPendingFollowerNumber() {
+    const pendingFollowerNumberBadge = $('#pendingFollowerNumberBadge');
+    parseInt(pendingFollowerNumberBadge.text()) === 1 ? pendingFollowerNumberBadge.remove() : pendingFollowerNumberBadge.text(parseInt(pendingFollowerNumberBadge.text())-1)
 }

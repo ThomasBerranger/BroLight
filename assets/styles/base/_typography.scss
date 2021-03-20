@@ -1,8 +1,17 @@
-.font {
-  &-title {
-    font-family: 'Lobster Two', cursive;
+.custom-font {
+  //&-title {
+  //  color: $dark;
+  //  font-family: 'Shadows Into Light Two', cursive;
+  //}
+  &-text {
+    color: $dark;
+    font-family: 'Truculenta', sans-serif;
+    line-height: 1.5;
   }
 }
 
-//font-family: 'Open Sans', sans-serif;
-//font-family: 'Roboto', sans-serif;
+@for $i from 1 through 9 {
+  .custom-bold-#{$i}00 {
+    font-weight: #{$i*100};
+  }
+}

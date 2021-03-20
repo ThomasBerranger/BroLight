@@ -1,0 +1,65 @@
+{% for event in timelineEvents %}
+    <li{{ isInverted is not defined and loop.index is divisible by(2)
+    or isInverted is defined and not isInverted and loop.index is divisible by(2)
+    or isInverted is defined and isInverted and loop.index is not divisible by(2) ? ' class="timeline-inverted"' }} >
+
+        <div class="timeline-badge {{ event.author is defined and app.user == event.author ? 'text-primary' }}"><i class="fa fa-circle"></i></div>
+
+        {% if event.author is defined %}
+            <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
+                <div class="card-body row">
+
+                    {% if app.user == event.author %}
+                        <div class="timeline-opinion-edit">
+                            <i class="fas fa-pencil-alt"
+                               data-title="{{ event.movie.title }}"
+                               data-opinion-action="open-form"
+                               data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': event.tmdbId})) }}"></i>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-12 d-sm-none d-md-block d-lg-none mb-3">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
+                                <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                            </a>
+                            <p class="ml-2 custom-font-text font-weight-bold">
+                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <a href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}" class="timeline-movie-link">
+                            <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154{{ event.movie.poster_path }}" alt="{{ event.movie.title }} poster">
+                            {% if event.movie.id in app.user.wishTmdbIds %}{{ source('@public_path'~asset('/images/ticket.svg')) }}{% endif %}
+                        </a>
+                        <div class="d-none d-sm-flex d-md-none d-lg-flex justify-content-start align-items-center mb-2">
+                            <a href="{{ path('user.show', {'slug': event.author.slug}) }}" class="btn-avatar">
+                                <img class="avatar-small center-content-horizontally" src="{{ event.author.avatar|formatAvatarData }}" alt="{{ event.author }} avatar">
+                            </a>
+                            <p class="ml-2 custom-font-text font-weight-bold">
+                                <a href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
+                            </p>
+                        </div>
+                        <p class="custom-font-text" style="text-align: justify"><span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}</p>
+                        <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
+                    </div>
+
+                </div>
+            </div>
+        {% elseif event.status is defined %}
+            <div class="timeline-panel" id="timelinePanel-{{ event.id }}">
+                <div class="card-body row">
+                    <div class="col-12 d-flex align-items-center">
+                        <a href="{{ path('user.show', {'slug': event.userSource.slug}) }}" class="btn-avatar">
+                            <img class="avatar-small center-content-horizontally" src="{{ event.userSource.avatar|formatAvatarData }}" alt="{{ event.userSource }} avatar">
+                        </a>
+                        <p class="ml-2 custom-font-text"><span class="font-weight-bold">{{ event.userSource }}</span> a commencé à vous suivre !</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </li>
+{% endfor %}

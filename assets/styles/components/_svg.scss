@@ -1,0 +1,19 @@
+.ticket-list-add {
+  height: 20px;
+  fill: $dark;
+  cursor: pointer;
+
+  &:hover {
+    fill: $danger;
+  }
+}
+
+.ticket-list-remove {
+  height: 20px;
+  fill: $danger;
+  cursor: pointer;
+
+  &:hover {
+    fill: $dark;
+  }
+}

@@ -18,24 +18,22 @@
 @import 'layout/footer';
 @import 'layout/sidebar';
 
+@import 'components/badge';
 @import 'components/buttons';
-@import 'components/carousel';
 @import 'components/slider';
 @import 'components/forms';
-@import "components/timeline";
 @import "components/cards";
-@import "components/hero";
 @import "components/alert";
 @import "components/avatar";
-@import "components/flash";
 @import "components/rate";
 @import "components/image";
-@import "components/userPanel";
 @import "components/podium";
+@import "components/search";
+@import "components/svg";
 
-@import 'pages/login';
-@import 'pages/userEdit';
 @import 'pages/about';
-
-@import 'themes/theme';
-@import 'themes/admin';
+@import 'pages/login';
+@import 'pages/movieDetails';
+@import "pages/timeline";
+@import 'pages/trending';
+@import 'pages/userEdit';

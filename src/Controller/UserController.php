@@ -6,9 +6,11 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
 use App\Manager\UserManager;
+use App\Service\PopulateMovieService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,15 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    private UserService $userService;
+    private PopulateMovieService $populateMovieService;
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
-    private UserService $userService;
 
-    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager, UserService $userService)
+    public function __construct(UserService $userService, PopulateMovieService $populateMovieService, EntityManagerInterface $entityManager, UserManager $userManager)
     {
+        $this->userService = $userService;
+        $this->populateMovieService = $populateMovieService;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
-        $this->userService = $userService;
     }
 
     /**
@@ -34,9 +38,25 @@ class UserController extends AbstractController
      */
     public function timeline(): Response
     {
-        $timeline = $this->userService->getTimeline($this->getUser());
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), 0, User::DEFAULT_TIMELINE_LIMIT);
 
-        return $this->render('user/timeline.html.twig', ['timeline' => $timeline]);
+        return $this->render('user/timeline.html.twig', ['timelineEvents' => $timelineEvents, 'timelineDefaultLimit' => User::DEFAULT_TIMELINE_LIMIT]);
+    }
+
+    /**
+     * @Route("/load_timeline_events/{offset}/{limit}/{isInverted}", name="load_timeline_events", methods={"GET"})
+     *
+     * @param int  $offset
+     * @param int  $limit
+     * @param bool $isInverted
+     *
+     * @return Response
+     */
+    public function loadTimeline(int $offset = 0, int $limit = User::DEFAULT_TIMELINE_LIMIT, bool $isInverted = false): Response
+    {
+        $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), $offset, $limit);
+
+        return new JsonResponse([$this->renderView('user/_timeline_events.html.twig', ['timelineEvents' => $timelineEvents, 'isInverted' => $isInverted])], 200);
     }
 
     /**
@@ -63,11 +83,13 @@ class UserController extends AbstractController
             $this->userManager->save($currentUser);
         }
 
+        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($currentUser);
+
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'podium' => $this->userService->formattedPodium($this->getUser()),
-            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()), //todo remplacer par une recherche ajax
+            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
+            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
         ]);
     }
 
@@ -80,6 +102,12 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/details.html.twig', ['user' => $user, 'podium' => $this->userService->formattedPodium($user)]);
+        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($user);
+
+        return $this->render('user/details.html.twig', [
+            'user' => $user,
+            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
+            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
+        ]);
     }
 }
