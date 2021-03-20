@@ -12,7 +12,7 @@ $(document).ready(function() {
             success: function () {
                 const avatarHeader = $('#headerAvatar');
                 if (avatarHeader.length === 1) {
-                    avatarHeader.parent().load(' #headerAvatar');
+                    avatarHeader.load(' #headerAvatar>img');
                 }
                 $('#alert').trigger("trigger-alert", ["success", "Avatar sauvegardé !"]);
             },

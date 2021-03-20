@@ -28,7 +28,7 @@
                                 <td>{{ user.opinions|length }} opinion{{ user.opinions|length > 1 ? 's' }}</td>
                                 <td>{{ user.createdAt|date('d/m/Y') }}</td>
                                 <td class="text-center">
-                                    <a href="{{ path('admin.user.delete', {'id': user.id}) }}"><i class="fa fa-trash"></i></a>
+{#                                    <a href="{{ path('admin.user.delete', {'id': user.id}) }}"><i class="fa fa-trash"></i></a>#}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-12 mb-2">
             <div class="card">
                 <div class="card-body">
@@ -57,7 +58,7 @@
                             <tr>
                                 <th scope="row">{{ opinion.id }}</th>
                                 <td><a href="{{ path('user.show', {'slug': opinion.author.slug}) }}">{{ opinion.author }}</a></td>
-                                <td>{{ opinion.movie.title }}</td>
+                                <td><a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">{{ opinion.tmdbId }}</a></td>
                                 <td>{{ opinion.viewedAt|date('d/m/Y') }}</td>
                                 <td>{{ opinion.commentedAt|date('d/m/Y') }}</td>
                                 <td class="text-center">

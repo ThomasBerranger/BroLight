@@ -3,27 +3,6 @@ import $ from "jquery";
 $(document).ready(function() {
     editInputsDisplay();
 
-    $("#userSearchInput").on("keyup", function() {
-        const value = $(this).val().toLowerCase();
-
-        if (value.length > 1) {
-            $("#usersList div").filter(function() {
-                if ($(this).text().toLowerCase().indexOf(value) > -1) {
-                    $(this).addClass('d-flex');
-                    $(this).removeClass('d-none');
-                } else {
-                    $(this).addClass('d-none');
-                    $(this).removeClass('d-flex');
-                }
-            });
-        } else {
-            $("#usersList div").each(function () {
-                $(this).addClass('d-none');
-                $(this).removeClass('d-flex');
-            });
-        }
-    });
-
     $("form[name='avatar'] select").on("change", function () {
         const accessoriesType = $('#avatar_accessoriesType').val();
         const clotheColor = $('#avatar_clotheColor').val();
@@ -60,15 +39,6 @@ $(document).ready(function() {
                 break;
         }
     });
-
-    $("[id*='wishMovie-']").on("update-user-interface", function(event, type) {
-        switch (type) {
-            case 'remove-wish-movie':
-                removeWishMovie($(this));
-                break;
-        }
-    });
-
 });
 
 function editInputsDisplay() {
@@ -140,16 +110,6 @@ function disable(elements) {
     } else {
         elements.prop('disabled', true);
     }
-}
-
-// function moveToFollowers(followerContainer) {
-//     followerContainer.parent().fadeOut(500, function () {
-//         followerContainer.parent().appendTo('#followersDiv').fadeIn(500);
-//     });
-// }
-
-function removeWishMovie(wishMovieDiv) {
-    wishMovieDiv.fadeOut(500);
 }
 
 function decrementPendingFollowerNumber() {

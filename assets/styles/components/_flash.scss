@@ -1,8 +1,0 @@
-div.custom-flash-container {
-  @extend .center-container;
-
-  & > div.custom-flash {
-    @extend .center-content;
-
-  }
-}

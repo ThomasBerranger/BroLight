@@ -18,11 +18,6 @@ class OpinionListener
         $this->entityManager = $entityManager;
     }
 
-    public function postLoad(Opinion $opinion): void
-    {
-        $opinion->setMovie($this->TMDBService->getMovieById($opinion->getTmdbId()));
-    }
-
     public function prePersist(Opinion $opinion, LifecycleEventArgs $event): void
     {
         $this->updateViewedAt($opinion, $event);

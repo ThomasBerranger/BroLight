@@ -5,12 +5,10 @@
 {% block body %}
     <div class="row vertical-center-container full-page-y">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4 center-content card p-4">
-
-            <h1 class="mb-3">Oups !</h1>
-            <p class="mb-3">Désolé mais cette page n'existe pas !</p>
+            <h1 class="mb-3 custom-font-text">Oups !</h1>
+            <p class="mb-3 custom-font-text">Désolé mais cette page n'existe pas !</p>
             <img class="img-fluid mb-3" src="{{ asset('images/notfound.gif') }}" alt="Not found gif"/>
-            <a type="button" class="btn btn-sm btn-info" href="{{ path('home') }}">Retour à {{ project_title }} ici !</a>
-
+            <a type="button" class="btn btn-sm btn-danger text-white custom-font-text" href="{{ path('home') }}">Retour à {{ project_title }} ici !</a>
         </div>
     </div>
 {% endblock %}
