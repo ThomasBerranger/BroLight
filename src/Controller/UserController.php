@@ -102,6 +102,12 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/details.html.twig', ['user' => $user, 'podium' => $this->userService->formattedPodium($user)]);
+        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($user);
+
+        return $this->render('user/details.html.twig', [
+            'user' => $user,
+            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
+            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
+        ]);
     }
 }
