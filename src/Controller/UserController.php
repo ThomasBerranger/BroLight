@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Relationship;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AvatarType;
 use App\Manager\UserManager;
+use App\Service\PopulateMovieService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,15 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    private UserService $userService;
+    private PopulateMovieService $populateMovieService;
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
-    private UserService $userService;
 
-    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager, UserService $userService)
+    public function __construct(UserService $userService, PopulateMovieService $populateMovieService, EntityManagerInterface $entityManager, UserManager $userManager)
     {
+        $this->userService = $userService;
+        $this->populateMovieService = $populateMovieService;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
-        $this->userService = $userService;
     }
 
     /**
@@ -81,11 +83,13 @@ class UserController extends AbstractController
             $this->userManager->save($currentUser);
         }
 
+        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($currentUser);
+
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'avatarForm' => $avatarForm->createView(),
-            'podium' => $this->userService->formattedPodium($this->getUser()),
-            'users' => $this->getDoctrine()->getRepository(User::class)->findAllExcept($this->getUser()), //todo remplacer par une recherche ajax
+            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
+            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
         ]);
     }
 

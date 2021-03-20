@@ -10,8 +10,8 @@
                 <div class="card-body row">
 
                     {% if app.user == event.author %}
-                        <div style="position: absolute; top: 0; right: 0; padding: 10px 15px 15px 20px; background-color: #F5F5F5; border-radius: 0 0 0 75%; z-index: 2">
-                            <i class="far fa-edit" style="cursor: pointer"
+                        <div class="timeline-opinion-edit">
+                            <i class="fas fa-pencil-alt"
                                data-title="{{ event.movie.title }}"
                                data-opinion-action="open-form"
                                data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': event.tmdbId})) }}"></i>
@@ -45,7 +45,6 @@
                         <p class="custom-font-text" style="text-align: justify"><span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}</p>
                         <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
                     </div>
-
 
                 </div>
             </div>

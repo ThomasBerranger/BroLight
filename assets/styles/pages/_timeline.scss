@@ -35,6 +35,20 @@ ul.timeline {
       border: none;
       float: left;
 
+      & .timeline-opinion-edit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px 15px 15px 20px;
+        background-color: #F5F5F5;
+        border-radius: 0 0 0 75%;
+        z-index: 2;
+
+        & > i {
+          cursor: pointer;
+        }
+      }
+
       & img.timeline-poster {
         margin: 0 0 0.5rem 0;
       }

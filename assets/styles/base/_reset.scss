@@ -18,6 +18,11 @@ p {
 
 hr {
   margin: 0;
+
+  &.w-75-centered {
+    width: 75%;
+    margin: 0 12.5% 0 12.5%;
+  }
 }
 
 a {

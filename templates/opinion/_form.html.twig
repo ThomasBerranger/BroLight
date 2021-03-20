@@ -5,11 +5,13 @@
     {{ form_widget(form.comment, {'attr': {'class': 'form-control form-control-sm mb-3', 'rows': '4'}}) }}
 </div>
 
-<div class="col-12">
+<div class="col-12 col-md-6">
     <label class="pointer-cursor">
         {{ form_widget(form.isViewed) }}
         J'ai vu ce film
     </label>
+</div>
+<div class="col-12 col-md-6">
     <label class="pointer-cursor">
         {{ form_widget(form.isSpoiler) }}
         Attention je spoil !
@@ -21,7 +23,7 @@
 </div>
 
 <div class="col-12 text-center pointer-cursor mt-3">
-    <button class="btn btn-sm btn-success px-4" type="submit">Valider</button>
+    <button class="btn btn-sm btn-primary px-4" type="submit">Valider</button>
 </div>
 
 {{ form_end(form) }}

@@ -12,33 +12,6 @@
   border-radius: .2rem;
 }
 
-.btn-cancel-follow-request {
-  cursor: pointer;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-
-  &:after {
-    content: 'Demande en attente';
-  }
-
-  &:hover {
-    &:after{
-      content: 'Annuler ma demande';
-    }
-  }
-}
-
-.btn-delete-follow {
-  cursor: pointer;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-
-  &:hover {
-    &:after{
-      content: 'Se désabonner';
-    }
-  }
-}
 
 .btn-avatar {
   position: relative;

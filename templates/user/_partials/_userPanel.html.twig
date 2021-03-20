@@ -1,23 +1,24 @@
-<div class="user-panel">
+<div class="d-flex justify-content-between align-items-center px-1">
 
-        <span>
-            <a href="{{ path('user.show', { 'slug' : user.slug }) }}">
-                <button class="btn-avatar" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="avatar-small center-content-horizontally" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
-                </button>
-                {{ user }}
-            </a>
-        </span>
+    <div class="d-flex align-items-center">
+        <a href="{{ path('user.show', {'slug': user.slug}) }}" class="btn-avatar">
+            <img class="avatar-small center-content-horizontally" src="{{ user.avatar|formatAvatarData }}" alt="{{ user }} avatar">
+        </a>
+
+        <p class="ml-2 custom-font-text custom-bold-500">
+            <a href="{{ path('user.show', {'slug': user.slug}) }}">{{ user }}</a><br>
+        </p>
+    </div>
 
     {% if context == "follower" and buttonDisplay is defined %}
 
-        <span id="followerButtonContainer-{{ user.id }}">
+        <span id="followerContainer-{{ user.id }}" class="ml-2">
             {{ include('user/_partials/_followerButton.html.twig') }}
         </span>
 
     {% elseif context == "following" and buttonDisplay is defined %}
 
-        <span id="followingButtonContainer-{{ user.id }}">
+        <span id="followingContainer-{{ user.id }}" class="ml-2">
             {{ include('user/_partials/_followingButton.html.twig') }}
         </span>
 

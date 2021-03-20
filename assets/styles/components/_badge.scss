@@ -1,0 +1,16 @@
+.change-icon {
+  cursor: pointer;
+
+  & > i:last-child {
+    display: none;
+  }
+
+  &:hover {
+    & > i:first-child {
+      display: none;
+    }
+    & > i:last-child {
+      display: block;
+    }
+  }
+}

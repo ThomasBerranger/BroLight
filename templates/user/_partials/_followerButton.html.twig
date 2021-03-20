@@ -1,31 +1,30 @@
 {% if user in app.user.followers %}
 
-    <span class="badge badge-danger pointer-cursor"
+    <span class="badge badge-danger pointer-cursor change-icon"
           data-custom-confirm="open"
           data-custom-confirm-configurations='{
-            "entity":"user-relationship",
+            "entity":"relationship",
             "action":"refuse",
-             "url": "{{ path('user_relationship.refuse', {'id': user.id}) }}"
-             }'>
-        <i class="fa fa-user-times"></i>
+            "url": "{{ path('relationship.refuse', {'id': user.id}) }}"
+            }'>
+        <i class="fas fa-check"></i>
+        <i class="fa fa-times"></i>
    </span>
 
 {% elseif user in app.user.pendingFollowers %}
-
-    <span class="badge badge-danger pointer-cursor"
-          data-user-relationship-action="accept"
-          data-user-relationship-url="{{ path('user_relationship.accept_follow', {'id': user.id}) }}">
-        <i class="fa fa-user-check"></i>
-    </span>
-
     <span class="badge badge-danger pointer-cursor"
           data-custom-confirm="open"
           data-custom-confirm-configurations='{
-            "entity":"user-relationship",
+            "entity":"relationship",
             "action":"refuse",
-            "url": "{{ path('user_relationship.refuse', {'id': user.id}) }}"
+            "url": "{{ path('relationship.refuse', {'id': user.id}) }}"
             }'>
-        <i class="fa fa-user-times"></i>
+        <i class="fas fa-times"></i>
     </span>
 
+    <span class="badge badge-danger pointer-cursor"
+          data-relationship-action="accept"
+          data-relationship-url="{{ path('relationship.accept_follow', {'id': user.id}) }}">
+        <i class="fas fa-check"></i>
+    </span>
 {% endif %}
