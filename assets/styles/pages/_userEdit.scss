@@ -1,5 +1,45 @@
-button.modal-avatar-edit {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.container > .row > div {
+  margin-bottom: 1.5rem;
+}
+
+.relationship-container > div {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.list-container {
+
+  & > svg {
+    height: 20px;
+
+    -webkit-transform:rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    -ms-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+
+  & > h5 {
+    display: inline;
+  }
+
+  & > div {
+    overflow-x: hidden;
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .relationship-container > div {
+    max-height: 340px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container > .row > div {
+    margin-bottom: 0.5rem;
+  }
+  .relationship-container > div {
+    max-height: 400px;
+  }
 }

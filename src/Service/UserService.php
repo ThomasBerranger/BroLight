@@ -73,4 +73,21 @@ class UserService
 
         return $formattedPodium;
     }
+
+    public function moviePopulateLasOpinionsAndWishOf(User $user): array
+    {
+        $userOpinions = $user->getOpinions()->toArray();
+
+        usort($userOpinions, function ($opinion1, $opinion2) {
+            return $opinion1->getUpdatedAt() > $opinion2->getUpdatedAt();
+        });
+
+        $lastCurrentUserOpinions = array_slice($userOpinions, count($userOpinions)-5);
+
+        $userWishes = $user->getWishes()->toArray();
+
+        $this->populateMovieService->movieHydrate(array_merge($lastCurrentUserOpinions, $userWishes));
+
+        return ['opinions' => $lastCurrentUserOpinions, 'wishes' => $userWishes];
+    }
 }

@@ -1,36 +1,145 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | User edit{% endblock %}
+{% block title %}{{ parent() }} | Mon compte{% endblock %}
 
 {% block body %}
-    <section class="row">
-        <div class="col-12 d-flex justify-content-around">
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="user-settings-tab" data-toggle="pill" href="#pills-settings" role="tab" aria-controls="pills-settings" aria-selected="true">Informations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="user-relationships-tab" data-toggle="pill" href="#pills-relationships" role="tab" aria-controls="pills-relationships" aria-selected="false">
-                        {{ notifications > 0 ? '<i class="far fa-bell"></i>' }} Contacts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="user-activty-tab" data-toggle="pill" href="#pills-activity" role="tab" aria-controls="pills-activity" aria-selected="false">Activité</a>
-                </li>
-            </ul>
-        </div>
-    </section>
+    <div class="row">
 
-    <section class="tab-content">
-        <div class="tab-pane fade show active" id="pills-settings" role="tabpanel" aria-labelledby="user-settings-tab">
-            {% include 'user/_edit_tabs/_settings.html.twig' %}
+        <div class="col-12 col-md-4">
+            <div id="avatar-container" class="text-center">
+                <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
+                <button class="btn btn-block btn-sm btn-primary mt-2" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false">Modifier mon avatar</button>
+                <button class="btn btn-block btn-sm btn-primary mt-2" data-toggle="collapse" data-target="#collapseUserEdit" aria-expanded="false">Modifier mes informations</button>
+                <a href="{{ path('app_logout') }}" class="btn btn-block btn-xs btn-danger text-white mt-2">Me déconnecter</a>
+            </div>
         </div>
-        <div class="tab-pane fade col-12" id="pills-relationships" role="tabpanel" aria-labelledby="user-relationships-tab">
-            {% include 'user/_edit_tabs/_relationships.html.twig' %}
+
+        <div class="col-12 col-md-8">
+            <div id="collapseUserEdit" class="mb-4 collapse custom-font-text custom-bold-600">
+                {{ form_start(form, {'attr': {'class': 'row'}}) }}
+                <div class="col-12 col-md-6">
+                    {{ form_label(form.firstname, 'Ton prénom :') }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-12 col-md-6">
+                    {{ form_label(form.lastname, 'Ton prénom :') }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-12 col-md-6">
+                    {{ form_label(form.email, 'Ton email :') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    <div class="alert-danger">
+                        {{ form_errors(form.email) }}
+                    </div>
+                </div>
+                <div class="w-100 text-center mt-4">
+                    <button class="btn btn-sm btn-primary">Sauvegarder mes informations</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div id="collapseAvatarEdit" class="mb-4 collapse custom-font-text custom-bold-600">
+                {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyeType) }}
+                    {{ form_widget(avatarForm.eyeType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.eyebrowType) }}
+                    {{ form_widget(avatarForm.eyebrowType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.mouthType) }}
+                    {{ form_widget(avatarForm.mouthType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.skinColor) }}
+                    {{ form_widget(avatarForm.skinColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-12">
+                    {{ form_label(avatarForm.topType) }}
+                    {{ form_widget(avatarForm.topType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.accessoriesType) }}
+                    {{ form_widget(avatarForm.accessoriesType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.hatColor) }}
+                    {{ form_widget(avatarForm.hatColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.hairColor) }}
+                    {{ form_widget(avatarForm.hairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairType) }}
+                    {{ form_widget(avatarForm.facialHairType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.facialHairColor) }}
+                    {{ form_widget(avatarForm.facialHairColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-12">
+                    {{ form_label(avatarForm.clotheType) }}
+                    {{ form_widget(avatarForm.clotheType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.clotheColor) }}
+                    {{ form_widget(avatarForm.clotheColor, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_label(avatarForm.graphicType) }}
+                    {{ form_widget(avatarForm.graphicType, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-sm btn-primary mr-2" data-toggle="collapse" data-target="#collapseAvatarEdit">Sauvegarder</button>
+                    <button class="btn btn-sm btn-danger" type="button" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false" aria-controls="collapseExample">Fermer</button>
+                </div>
+                {{ form_end(avatarForm) }}
+            </div>
+            <div class="row relationship-container">
+                <div class="col-12 col-md-6">
+                    <h5 class="custom-font-text custom-bold-600 text-center">{% if app.user.pendingFollowers|length > 0 %}<span id="pendingFollowerNumberBadge" class="badge badge-danger">{{ app.user.pendingFollowers|length }}</span> {% endif %}Tes abonnés:</h5>
+                    <hr class="w-75-centered">
+                    {% for user in app.user.pendingFollowers %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
+                    {% endfor %}
+                    {% for user in app.user.followers %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <h5 class="custom-font-text custom-bold-600 text-center">Tes abonnements:</h5>
+                    <hr class="w-75-centered">
+                    {% for user in app.user.pendingFollowings %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
+                    {% endfor %}
+                    {% for user in app.user.followings %}
+                        {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="tab-pane fade col-12" id="pills-activity" role="tabpanel" aria-labelledby="user-activty-tab">
-            {% include 'user/_edit_tabs/_activity.html.twig' %}
+        <div class="col-12 col-lg-6">
+            <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Tes derniers avis:</h5>
+            <hr class="w-75 mb-2">
+            {% for opinion in lastCurrentUserOpinions|reverse %}
+                <p class="custom-font-text" style="text-align: justify"><a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}" class="text-danger">{{ opinion.movie.title }} |</a> {{ opinion.comment|nl2br }}</p>
+            {% endfor %}
         </div>
-    </section>
+        <div class="col-12 col-lg-6 list-container">
+            {{ source('@public_path'~asset('/images/ticket.svg')) }}
+            <h5 class="custom-font-text d-inline-block">Ta liste:</h5>
+            <hr class="w-75 mb-2">
+            {% for wish in currentUserWishes|reverse %}
+                <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
+                    <img src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster" class="img-fluid mb-1">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}

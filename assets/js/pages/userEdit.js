@@ -46,13 +46,17 @@ $(document).ready(function() {
         editInputsDisplay();
     });
 
-    $("[id*='followerButtonContainer-']").on("update-user-interface", function(event, type) {
+    $("[id*='followerContainer-']").on("update-user-interface", function(event, type, button = null) {
         switch (type) {
-            case 'move-to-followers':
-                moveToFollowers($(this));
+            case 'accepted-as-follower':
+                $(this).html(button);
+                decrementPendingFollowerNumber();
                 break;
-            case 'remove-from-followers':
-                removeFromFollowers($(this));
+            case 'removed-from-followers':
+                $(this).parent().fadeOut(500, function () {
+                    decrementPendingFollowerNumber();
+                    $(this).remove();
+                });
                 break;
         }
     });
@@ -138,18 +142,17 @@ function disable(elements) {
     }
 }
 
-function moveToFollowers(followerButtonContainer) {
-    followerButtonContainer.parent().fadeOut(500, function () {
-        followerButtonContainer.parent().appendTo('#followersDiv').fadeIn(500);
-    });
-}
-
-function removeFromFollowers(followerButtonContainer) {
-    followerButtonContainer.parent().fadeOut(500, function () {
-        $(this).remove();
-    });
-}
+// function moveToFollowers(followerContainer) {
+//     followerContainer.parent().fadeOut(500, function () {
+//         followerContainer.parent().appendTo('#followersDiv').fadeIn(500);
+//     });
+// }
 
 function removeWishMovie(wishMovieDiv) {
     wishMovieDiv.fadeOut(500);
+}
+
+function decrementPendingFollowerNumber() {
+    const pendingFollowerNumberBadge = $('#pendingFollowerNumberBadge');
+    parseInt(pendingFollowerNumberBadge.text()) === 1 ? pendingFollowerNumberBadge.remove() : pendingFollowerNumberBadge.text(parseInt(pendingFollowerNumberBadge.text())-1)
 }

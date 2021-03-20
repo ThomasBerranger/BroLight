@@ -33,10 +33,9 @@ $(document).ready(function(){
         modal.trigger("trigger-custom-modal", [
             'Attention !',
             $('<div class="text-center">' +
-                '<p>Toute suppression est définitive !</p>' +
-                '<p>Êtes vous sûr de ce que vous faites ?</p><br>' +
-                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-opinion-action="" data-user-relationship-action="">Confirmer</button>' +
-                '<button class="btn btn-info mx-2 px-4" data-dismiss="modal">Annuler</button>' +
+                '<p class="custom-font-text">Toute suppression est définitive ! <br>Tu es sûr de toi ?</p><br>' +
+                '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-opinion-action="" data-relationship-action="">Oui</button>' +
+                '<button class="btn btn-primary mx-2 px-4" data-dismiss="modal">Non</button>' +
                 '</div>'),
             false
         ]);

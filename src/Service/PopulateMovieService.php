@@ -21,7 +21,9 @@ class PopulateMovieService
         } elseif (is_array($object)) {
             $objects = $object;
             foreach ($objects as $object) {
-                $this->populate($object);
+                if ($object instanceof Opinion or $object instanceof Wish) {
+                    $this->populate($object);
+                }
             }
         }
     }
