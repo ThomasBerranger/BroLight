@@ -10,14 +10,14 @@ $(document).ready(function(){
 
       switch (type) {
          case 'success':
-            alert.addClass('alert-success');
+            alert.addClass('alert-primary bg-primary');
             break;
          case 'error':
             alert.addClass('alert-danger');
             break
       }
 
-      alert.fadeIn(400).delay(3400).fadeOut(400);
+      alert.fadeIn(300).delay(2000).fadeOut(300);
    });
 });
 

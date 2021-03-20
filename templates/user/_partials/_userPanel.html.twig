@@ -10,13 +10,13 @@
         </p>
     </div>
 
-    {% if context == "follower" and buttonDisplay is defined %}
+    {% if context == "follower" and buttonDisplay is defined and buttonDisplay %}
 
         <span id="followerContainer-{{ user.id }}" class="ml-2">
             {{ include('user/_partials/_followerButton.html.twig') }}
         </span>
 
-    {% elseif context == "following" and buttonDisplay is defined %}
+    {% elseif context == "following" and buttonDisplay is defined and buttonDisplay%}
 
         <span id="followingContainer-{{ user.id }}" class="ml-2">
             {{ include('user/_partials/_followingButton.html.twig') }}
