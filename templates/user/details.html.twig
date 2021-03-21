@@ -33,7 +33,12 @@
             <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Ses derniers avis:</h5>
             <hr class="w-75 mb-2">
             {% for opinion in lastCurrentUserOpinions|reverse %}
-                <p class="custom-font-text" style="text-align: justify"><a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}" class="text-danger">{{ opinion.movie.title }} |</a> {{ opinion.comment|nl2br }}</p>
+                <p class="custom-font-text text-justify"><a href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}" class="text-danger">{{ opinion.movie.title }} |</a> {{ opinion.comment|nl2br }}
+                    {{ opinion.comment is not null ? "<br>" }}
+                    {% for i in 1..5 %}
+                        {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
+                    {% endfor %}
+                </p>
             {% endfor %}
         </div>
         <div class="col-12 col-lg-6 list-container">

@@ -42,9 +42,15 @@
                                 <a href="{{ path('user.show', {'slug': event.author.slug}) }}">{{ event.author }}</a><br>
                             </p>
                         </div>
-                        <p class="custom-font-text" style="text-align: justify"><span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}</p>
-                        <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
+                        <p class="custom-font-text mb-2 text-justify">
+                            <span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}
+                            {{ event.comment is not null ? "<br>" }}
+                            {% for i in 1..5 %}
+                                {{ i <= event.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
+                            {% endfor %}
+                        </p>
                     </div>
+                    <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
 
                 </div>
             </div>

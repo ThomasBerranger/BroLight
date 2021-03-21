@@ -4,11 +4,11 @@
 
 {% block body %}
     <div class="row justify-content-center">
-        <h2 class="col-12 text-center font-title mb-5">Recherche de film</h2>
+        <h2 class="col-12 text-center custom-font-text mb-5">Recherche d'amis et films</h2>
 
         <div class="col-12 col-md-6 form-group mb-4">
-            <label for="movieSearchInput">Titre du film :</label>
-            <input type="text" class="form-control" data-search-url="{{ path('search.result', {'text': 'replaceMe'}) }}" id="movieSearchInput" placeholder="Inception">
+            <label for="movieSearchInput" class="custom-font-text">Titre ou nom:</label>
+            <input type="text" class="form-control custom-font-text" data-search-url="{{ path('search.result', {'text': 'replaceMe'}) }}" id="movieSearchInput" placeholder="Inception">
         </div>
 
         <div id="moviesResult" class="col-10"></div>

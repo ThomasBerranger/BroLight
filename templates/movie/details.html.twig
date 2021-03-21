@@ -26,7 +26,12 @@
                     {% for opinion in opinions %}
                         <div id="opinionMovieDetails-{{ opinion.id }}" {{ app.user == opinion.author ? 'class="bg-danger"' }}>
                             <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
-                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}</p>
+                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}
+                                {{ opinion.comment is not null ? "<br>" }}
+                                {% for i in 1..5 %}
+                                    {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
+                                {% endfor %}
+                            </p>
                             <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
                         </div>
                     {% endfor %}
@@ -90,7 +95,7 @@
                             {% endfor %}
                             <br>
                         {% endif %}
-                        {% if movie.composer is defined %}
+                        {% if movie.photograph is defined %}
                             <span>Photographie:</span>
                             {% for photograph in movie.photograph %}
                                 {{ loop.index > 1 ? ' et ' }}{{ photograph.name }}

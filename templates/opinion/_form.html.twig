@@ -18,13 +18,13 @@
     </label>
 </div>
 
-<div id="ratingDiv" class="col-12 rating" style="display: none">
-    {{ include('opinion/_rate.html.twig') }}
-</div>
+{{ include('opinion/_rate.html.twig') }}
+
 
 <div class="col-12 text-center pointer-cursor mt-3">
     <button class="btn btn-sm btn-primary px-4" type="submit">Valider</button>
 </div>
+
 
 {{ form_end(form) }}
 
