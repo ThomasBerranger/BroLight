@@ -36,9 +36,9 @@
                         <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
                     </div>
                 {% else %}
-                    <p class="text-center custom-font-text">Aucun de tes abonnements n'a commenté {{ movie.title }}.</p>
+                    <p class="text-center">Aucun de tes abonnements n'a commenté {{ movie.title }}.</p>
                 {% endfor %}
-                <button role="button" class="btn btn-sm btn-primary mt-2 float-right"
+                <button role="button" class="btn btn-sm btn-primary mt-2 float-right custom-font-text custom-bold-600"
                         data-title="{{ movie.title }}"
                         data-opinion-action="open-form"
                         data-opinion-url="{{ absolute_url(path('opinion.form', {'tmdbId': movie.id})) }}">Et toi ? T'en penses quoi ?
@@ -52,7 +52,7 @@
                     <div class="float-right pt-1">
                         {% include 'wish/_buttonContainer.html.twig' with {'movie': movie} %}
                     </div>
-                    <h2 class="custom-font-text">
+                    <h2>
                         {{ movie.title is defined ? movie.title }}
                         {% if movie.tagline != "" %}
                             <br class="d-block d-md-none">
@@ -62,10 +62,10 @@
                     {% for genre in movie.genres %}
                         <button class="btn btn-xxs btn-danger font-weight-bold" style="font-size: 0.6rem">{{ genre.name|upper }}</button>
                     {% endfor %}
-                    {% if movie.overview is defined %}<p class="custom-font-text mt-2">{{ movie.overview }}</p>{% endif %}
+                    {% if movie.overview is defined %}<p class="mt-2">{{ movie.overview }}</p>{% endif %}
                 </div>
                 <div class=" col-md-10">
-                    <p class="custom-font-text mt-2">
+                    <p class="mt-2">
                         {% if movie.director is defined %}
                             <span>Réalisé par:</span>
                             {% for director in movie.director %}{{ loop.index > 1 ? ' et ' }}{{ director.name }}{% endfor %}
@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-12 col-md-2 text-center">
                     {% if movie['watch/providers']['results']['FR']['flatrate'] is defined %}
-                        <p class="custom-font-text">Disponible:</p>
+                        <p>Disponible:</p>
                         {% for provider in movie['watch/providers']['results']['FR']['flatrate'] %}
                             <img class="mt-2" src="https://image.tmdb.org/t/p/w45{{ provider['logo_path'] }}" alt="provider logo" data-toggle="tooltip" data-placement="bottom" title="{{ provider['provider_name'] }}">
                         {% endfor %}
