@@ -20,22 +20,20 @@
 
         <div id="movieDetailsOpinionDiv" class="col-12 col-md-6 col-lg-5">
             <div class="details-movie-opinions">
-                {% if opinions is empty %}
-                    <p class="text-center custom-font-text">Aucun de tes abonnements n'a commenté {{ movie.title }}.</p>
+                {% for opinion in opinions %}
+                    <div id="opinionMovieDetails-{{ opinion.id }}" {{ app.user == opinion.author ? 'class="bg-danger"' }}>
+                        <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
+                        <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}
+                            {{ opinion.comment is not null ? "<br>" }}
+                            {% for i in 1..5 %}
+                                {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
+                            {% endfor %}
+                        </p>
+                        <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
+                    </div>
                 {% else %}
-                    {% for opinion in opinions %}
-                        <div id="opinionMovieDetails-{{ opinion.id }}" {{ app.user == opinion.author ? 'class="bg-danger"' }}>
-                            <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
-                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}
-                                {{ opinion.comment is not null ? "<br>" }}
-                                {% for i in 1..5 %}
-                                    {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
-                                {% endfor %}
-                            </p>
-                            <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.updatedAt|date('d/m/Y') }}</p>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                    <p class="text-center custom-font-text">Aucun de tes abonnements n'a commenté {{ movie.title }}.</p>
+                {% endfor %}
                 <button role="button" class="btn btn-sm btn-primary mt-2 float-right"
                         data-title="{{ movie.title }}"
                         data-opinion-action="open-form"
@@ -50,7 +48,6 @@
                     <div class="float-right pt-1">
                         {% include 'wish/_buttonContainer.html.twig' with {'movie': movie} %}
                     </div>
-
                     <h2 class="custom-font-text">
                         {{ movie.title is defined ? movie.title }}
                         {% if movie.tagline != "" %}
@@ -67,39 +64,29 @@
                     <p class="custom-font-text mt-2">
                         {% if movie.director is defined %}
                             <span>Réalisé par:</span>
-                            {% for director in movie.director %}
-                                {{ loop.index > 1 ? ' et ' }}{{ director.name }}
-                            {% endfor %}
+                            {% for director in movie.director %}{{ loop.index > 1 ? ' et ' }}{{ director.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.credits.cast is defined %}
                             Avec:
                             {% for actor in movie.credits.cast %}
-                                {% if loop.index <= 5 %}
-                                    {{ actor.name }}{{ loop.index < 5 ? ', ' : ' ...' }}
-                                {% endif %}
+                                {% if loop.index <= 5 %}{{ actor.name }}{{ loop.index < 5 ? ', ' : ' ...' }}{% endif %}
                             {% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.scriptwriter is defined %}
                             <span>Scénario:</span>
-                            {% for scriptwriter in movie.scriptwriter %}
-                                {{ loop.index > 1 ? ' et ' }}{{ scriptwriter.name }}
-                            {% endfor %}
+                            {% for scriptwriter in movie.scriptwriter %}{{ loop.index == movie.scriptwriter|length ? ' et ' : loop.index > 1 ? ', ' }}{{ scriptwriter.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.composer is defined %}
                             <span>Musique:</span>
-                            {% for composer in movie.composer %}
-                                {{ loop.index > 1 ? ' et ' }}{{ composer.name }}
-                            {% endfor %}
+                            {% for composer in movie.composer %}{{ loop.index > 1 ? ' et ' }}{{ composer.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.photograph is defined %}
                             <span>Photographie:</span>
-                            {% for photograph in movie.photograph %}
-                                {{ loop.index > 1 ? ' et ' }}{{ photograph.name }}
-                            {% endfor %}
+                            {% for photograph in movie.photograph %}{{ loop.index > 1 ? ' et ' }}{{ photograph.name }}{% endfor %}
                             <br>
                         {% endif %}
                     </p>

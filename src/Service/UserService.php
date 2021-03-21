@@ -82,7 +82,7 @@ class UserService
             return $opinion1->getUpdatedAt() > $opinion2->getUpdatedAt();
         });
 
-        $lastCurrentUserOpinions = array_slice($userOpinions, count($userOpinions)-5);
+        count($userOpinions) >= 10 ? $lastCurrentUserOpinions =  array_slice($userOpinions, count($userOpinions)-5) : $lastCurrentUserOpinions = $userOpinions;
 
         $userWishes = $user->getWishes()->toArray();
 
