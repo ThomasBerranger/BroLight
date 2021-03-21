@@ -23,7 +23,11 @@
                 {% for opinion in opinions %}
                     <div id="opinionMovieDetails-{{ opinion.id }}" {{ app.user == opinion.author ? 'class="bg-danger"' }}>
                         <h6 {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.author }}</h6>
-                        <p {{ app.user == opinion.author ? 'class="text-white"' }}>{{ opinion.comment }}
+                        <p {{ app.user == opinion.author ? 'class="text-white"' }}>
+                            <span{{ opinion.isSpoiler ? ' style="color: transparent; text-shadow: 0 0 8px #000;"' }}>{{ opinion.comment|nl2br }}</span>
+                            {% if opinion.isSpoiler %}
+                                <button class="btn btn-xs btn-danger spoiler-guard">Afficher le spoil</button>
+                            {% endif %}
                             {{ opinion.comment is not null ? "<br>" }}
                             {% for i in 1..5 %}
                                 {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}

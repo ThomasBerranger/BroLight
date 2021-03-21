@@ -43,11 +43,15 @@
                             </p>
                         </div>
                         <p class="custom-font-text mb-2 text-justify">
-                            <span class="text-danger">{{ event.movie.title }} |</span> {{ event.comment|nl2br }}
-                            {{ event.comment is not null ? "<br>" }}
+                            <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': event.tmdbId}) }}">{{ event.movie.title }}</a> | </span>
                             {% for i in 1..5 %}
                                 {{ i <= event.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
                             {% endfor %}
+                            <br>
+                            <span{{ event.isSpoiler ? ' style="color: transparent; text-shadow: 0 0 8px #000;"' }}>{{ event.comment|nl2br }}</span>
+                            {% if event.isSpoiler %}
+                                <button class="btn btn-xs btn-danger spoiler-guard">Afficher le spoil</button>
+                            {% endif %}
                         </p>
                     </div>
                     <p class="card-date">{{ event.updatedAt|date('d/m/Y') }}</p>
