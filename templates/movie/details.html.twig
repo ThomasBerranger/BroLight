@@ -68,7 +68,7 @@
                     <p class="mt-2">
                         {% if movie.director is defined %}
                             <span>Réalisé par:</span>
-                            {% for director in movie.director %}{{ loop.index > 1 ? ' et ' }}{{ director.name }}{% endfor %}
+                            {% for director in movie.director %}{{ loop.index > 1 ? loop.index == movie.director|length ? ' et ' : loop.index > 1 ? ', ' }}{{ director.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.credits.cast is defined %}
@@ -80,17 +80,17 @@
                         {% endif %}
                         {% if movie.scriptwriter is defined %}
                             <span>Scénario:</span>
-                            {% for scriptwriter in movie.scriptwriter %}{{ loop.index == movie.scriptwriter|length ? ' et ' : loop.index > 1 ? ', ' }}{{ scriptwriter.name }}{% endfor %}
+                            {% for scriptwriter in movie.scriptwriter %}{{ loop.index > 1 ? loop.index == movie.scriptwriter|length ? ' et ' : loop.index > 1 ? ', ' }}{{ scriptwriter.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.composer is defined %}
                             <span>Musique:</span>
-                            {% for composer in movie.composer %}{{ loop.index > 1 ? ' et ' }}{{ composer.name }}{% endfor %}
+                            {% for composer in movie.composer %}{{ loop.index > 1 ? loop.index == movie.composer|length ? ' et ' : loop.index > 1 ? ', ' }}{{ composer.name }}{% endfor %}
                             <br>
                         {% endif %}
                         {% if movie.photograph is defined %}
                             <span>Photographie:</span>
-                            {% for photograph in movie.photograph %}{{ loop.index > 1 ? ' et ' }}{{ photograph.name }}{% endfor %}
+                            {% for photograph in movie.photograph %}{{ loop.index > 1 ? loop.index == movie.photograph|length ? ' et ' : loop.index > 1 ? ', ' }}{{ photograph.name }}{% endfor %}
                             <br>
                         {% endif %}
                     </p>
@@ -104,6 +104,24 @@
                     {% endif %}
                 </div>
             </div>
+        </div>
+
+        <div class="col-12 offset-lg-1 col-lg-10">
+            {% if movie.similar.results is defined %}
+                <div class="row">
+                    <div class="col-12">
+                        <hr class="w-75-centered my-2-vh">
+                        <h4 class="custom-bold-500">Si tu as aimé {{ movie.title }} tu aimeras surement:</h4>
+                    </div>
+                    {% for movie in movie.similar.results|sort((a, b) => a.vote_average <=> b.vote_average)|reverse|slice(0, 6) %}
+                        <div class="col-2">
+                            <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
+                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
     </section>

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Opinion;
 use App\Manager\OpinionManager;
 use App\Service\GenreService;
 use App\Service\MovieService;
