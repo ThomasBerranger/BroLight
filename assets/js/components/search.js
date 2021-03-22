@@ -14,17 +14,13 @@ $(document).ready(function(){
             $.ajax({
                 url: url.replace("replaceMe", text),
                 success: function(view) {
-
-                    $('.container').css('position', 'fixed');
                     $("#searchResultDiv").html(view);
                     icon.removeClass('fa-search');
                     icon.addClass('fa-times pointer-cursor');
-                    searchDiv.css({'height': '100vh'});
-
+                    searchDiv.css('height', '100vh');
                 }
             });
         } else {
-            $('.container').css('position', 'static');
             $('#searchResultDiv').children().remove();
             icon.addClass('fa-search');
             icon.removeClass('fa-times pointer-cursor');
@@ -35,7 +31,6 @@ $(document).ready(function(){
 
     icon.click(function () {
         if (headerSearchInput.val().length > 2) {
-            $('.container').css('position', 'static');
             $('#searchResultDiv').children().remove();
             $(this).addClass('fa-search');
             $(this).removeClass('fa-times pointer-cursor');

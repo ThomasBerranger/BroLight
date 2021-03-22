@@ -114,9 +114,9 @@
                         <h4 class="custom-bold-500">Si tu as aimé {{ movie.title }} tu aimeras surement:</h4>
                     </div>
                     {% for movie in movie.similar.results|sort((a, b) => a.vote_average <=> b.vote_average)|reverse|slice(0, 6) %}
-                        <div class="col-2">
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3 text-center">
                             <a href="{{ path('movie.details', {'tmdbId': movie.id}) }}">
-                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                                <img class="img-fluid" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }} poster">
                             </a>
                         </div>
                     {% endfor %}
