@@ -31,14 +31,12 @@ nav {
     }
   }
 
-  & > img {
+  & > i {
     @extend .d-none;
     @extend .d-md-block;
     @extend .center-content;
 
-    height: 20px;
     margin-left: 23.5%;
-    cursor: pointer;
   }
 
   & > .header-right {
