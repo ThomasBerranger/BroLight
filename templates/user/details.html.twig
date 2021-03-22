@@ -5,14 +5,14 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4 order-0">
             <div id="avatar-container" class="text-center">
                 <img class="img-fluid" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
+                <span id="followingContainer-{{ user.id }}" class="bg-white center-content-horizontally">{{ include('user/_partials/_followingButton.html.twig') }}</span>
             </div>
-            <span id="followerContainer-{{ user.id }}" class="ml-2">{{ include('user/_partials/_followingButton.html.twig') }}</span>
         </div>
 
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-8 order-4 order-md-1">
             <div class="row relationship-container">
                 <div class="col-12 col-md-6">
                     <h5 class="custom-font-text custom-bold-600 text-center">Ses abonnés:</h5>
@@ -30,36 +30,44 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 order-2">
             <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Ses derniers avis:</h5>
             <hr class="w-75 mb-2">
-            {% for opinion in lastCurrentUserOpinions|reverse %}
-                <p class="custom-font-text text-justify">
-                    <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">{{ opinion.movie.title }}</a> | </span>
-                    {% for i in 1..5 %}
-                        {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
-                    {% endfor %}
-                    <br>
-                    <span{{ opinion.isSpoiler ? ' style="color: transparent; text-shadow: 0 0 8px #000;"' }}>{{ opinion.comment|nl2br }}</span>
-                    {% if opinion.isSpoiler %}
-                        <button class="btn btn-xs btn-danger spoiler-guard">Afficher le spoil</button>
-                    {% endif %}
-                </p>
+            {% if user in app.user.followings %}
+                {% for opinion in lastCurrentUserOpinions|reverse %}
+                    <p class="custom-font-text text-justify">
+                        <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': opinion.tmdbId}) }}">{{ opinion.movie.title }}</a> | </span>
+                        {% for i in 1..5 %}
+                            {{ i <= opinion.rate ? '<i class="fa fa-star"></i>' : '<i class="far fa-star"></i>' }}
+                        {% endfor %}
+                        <br>
+                        <span{{ opinion.isSpoiler ? ' style="color: transparent; text-shadow: 0 0 8px #000;"' }}>{{ opinion.comment|nl2br }}</span>
+                        {% if opinion.isSpoiler %}
+                            <button class="btn btn-xs btn-danger spoiler-guard">Afficher le spoil</button>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p>Aucun commentaire pour le moment.</p>
+                {% endfor %}
             {% else %}
-                <p>Aucun commentaire pour le moment.</p>
-            {% endfor %}
+                <p>Abonne toi à {{ user.firstname }} pour voir ses derniers avis !</p>
+            {% endif %}
         </div>
-        <div class="col-12 col-lg-6 list-container">
+        <div class="col-12 col-lg-6 list-container order-3">
             {{ source('@public_path'~asset('/images/ticket.svg')) }}
             <h5 class="custom-font-text d-inline-block">Sa liste:</h5>
             <hr class="w-75 mb-2">
-            {% for wish in currentUserWishes|reverse %}
-                <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
-                    <img src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster" class="img-fluid mb-1">
-                </a>
+            {% if user in app.user.followings %}
+                {% for wish in currentUserWishes|reverse %}
+                    <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
+                        <img src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster" class="img-fluid mb-1">
+                    </a>
+                {% else %}
+                    <p>Sa liste est vide.</p>
+                {% endfor %}
             {% else %}
-                <p>Sa liste est vide.</p>
-            {% endfor %}
+                <p>Abonne toi à {{ user.firstname }} pour voir sa liste !</p>
+            {% endif %}
         </div>
     </div>
 

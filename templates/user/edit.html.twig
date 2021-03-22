@@ -5,7 +5,7 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4 order-0">
             <div id="avatar-container" class="text-center">
                 <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
                 <button class="btn btn-block btn-sm btn-primary mt-2" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false">Modifier mon avatar</button>
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-8 order-4 order-md-1">
             <div id="collapseUserEdit" class="mb-4 collapse custom-font-text custom-bold-600">
                 {{ form_start(form, {'attr': {'class': 'row'}}) }}
                 <div class="col-12 col-md-6">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 order-2">
             <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Tes derniers avis:</h5>
             <hr class="w-75 mb-2">
             {% for opinion in lastCurrentUserOpinions|reverse %}
@@ -138,7 +138,7 @@
                 </p>
             {% endfor %}
         </div>
-        <div class="col-12 col-lg-6 list-container">
+        <div class="col-12 col-lg-6 list-container order-3">
             {{ source('@public_path'~asset('/images/ticket.svg')) }}
             <h5 class="custom-font-text d-inline-block">Ta liste:</h5>
             <hr class="w-75 mb-2">
