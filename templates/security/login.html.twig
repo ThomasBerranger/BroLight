@@ -16,7 +16,7 @@
             <label for="inputEmail" class="mt-2">Ton adresse email :</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
 
-            <label for="inputPassword" class="mt-2">Tom mot de passe :</label>
+            <label for="inputPassword" class="mt-2">Ton mot de passe :</label>
             <input type="password" name="password" id="inputPassword" class="form-control" required>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
