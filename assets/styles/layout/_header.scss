@@ -52,8 +52,18 @@ nav {
       margin-right: 1vw;
     }
 
-    & > a:last-child {
+    & > a:nth-child(2) {
       border: black solid 1px;
+    }
+
+    & > a > .notifications {
+      position: absolute;
+      bottom: -5px;
+      right: 36px;
+      padding: 5px;
+      border-radius: 15px;
+      color: $danger;
+      background-color: $white;
     }
   }
 
@@ -62,6 +72,10 @@ nav {
     @extend .btn-sm;
     @extend .d-block;
     @extend .d-md-none;
+
+    & > .notifications {
+      color: $danger;
+    }
   }
 }
 

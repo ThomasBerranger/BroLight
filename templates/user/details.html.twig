@@ -9,6 +9,7 @@
             <div id="avatar-container" class="text-center">
                 <img class="img-fluid" alt="{{ user }} avatar" src='{{ user.avatar|formatAvatarData }}'/>
             </div>
+            <span id="followerContainer-{{ user.id }}" class="ml-2">{{ include('user/_partials/_followingButton.html.twig') }}</span>
         </div>
 
         <div class="col-12 col-md-8">

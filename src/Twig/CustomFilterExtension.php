@@ -23,7 +23,6 @@ class CustomFilterExtension extends AbstractExtension
             new TwigFilter('textLimit', [$this, 'textLimit']),
             new TwigFilter('formatAvatarData', [$this, 'formatAvatarData']),
             new TwigFilter('customDateFormat', [$this, 'customDateFormat']),
-            new TwigFilter('associatedEmojiURL', [$this, 'associatedEmojiURL']),
         ];
     }
 
@@ -57,30 +56,5 @@ class CustomFilterExtension extends AbstractExtension
         } else {
             return $date->format('d/m/Y');
         }
-    }
-
-    public function associatedEmojiURL(int $rate): string
-    {
-        $url = "";
-
-        switch ($rate) {
-            case 1:
-                $url = $this->assetManager->getUrl('images/emojis/dizzy.svg');
-                break;
-            case 2:
-                $url = $this->assetManager->getUrl('images/emojis/sad.svg');
-                break;
-            case 3:
-                $url = $this->assetManager->getUrl('images/emojis/happy.svg');
-                break;
-            case 4:
-                $url = $this->assetManager->getUrl('images/emojis/3d-glasses.svg');
-                break;
-            case 5:
-                $url = $this->assetManager->getUrl('images/emojis/love.svg');
-                break;
-        }
-
-        return $url;
     }
 }

@@ -65,7 +65,7 @@
                         <a href="{{ path('user.show', {'slug': event.userSource.slug}) }}" class="btn-avatar">
                             <img class="avatar-small center-content-horizontally" src="{{ event.userSource.avatar|formatAvatarData }}" alt="{{ event.userSource }} avatar">
                         </a>
-                        <p class="ml-2 custom-font-text"><span class="font-weight-bold">{{ event.userSource }}</span> a commencé à vous suivre !</p>
+                        <p class="ml-2 custom-font-text"><span class="font-weight-bold"><a href="{{ path('user.show', {'slug': event.userSource.slug}) }}">{{ event.userSource }}</a></span> a commencé à vous suivre !</p>
                     </div>
                 </div>
             </div>

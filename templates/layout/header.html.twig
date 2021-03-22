@@ -3,7 +3,10 @@
         <img src="{{ asset('images/logo.svg') }}" alt="{{ project_title }} logo">
     </a>
 
-    <button class="btn-header-sidebar"><i class="fa fa-bars"></i></button>
+    <button class="btn-header-sidebar">
+        {% if notifications > 0 %}<i class="notifications fa fa-bell"></i>{% endif %}
+        <i class="fa fa-bars"></i>
+    </button>
 
     <input id="headerSearchInput" type="text" class="custom-font-text" autocomplete="off" placeholder="Recherche ..." data-url="{{ path('search.result', {'text': 'replaceMe'}) }}">
     <img src="{{ asset('images/reload-logo.png') }}" alt="reload logo">
@@ -13,6 +16,11 @@
         <a href="{{ path('user.edit') }}" id="headerAvatar" class="btn-avatar">
             <img class="avatar-small center-content-horizontally" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
         </a>
+        {% if notifications > 0 %}
+            <a href="{{ path('user.edit') }}">
+                <i class="notifications fa fa-bell"></i>
+            </a>
+        {% endif %}
     </div>
 
 </nav>
