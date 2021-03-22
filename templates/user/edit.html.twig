@@ -146,6 +146,8 @@
                 <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">
                     <img src="https://image.tmdb.org/t/p/w154{{ wish.movie.poster_path }}" alt="{{ wish.movie.title }} poster" class="img-fluid mb-1">
                 </a>
+            {% else %}
+                <p>Tu peux ajouter des films en cliquant sur le ticket présent dans les pages détails d'un film.</p>
             {% endfor %}
         </div>
     </div>
