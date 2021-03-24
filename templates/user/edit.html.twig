@@ -9,34 +9,15 @@
             <div id="avatar-container" class="text-center">
                 <img class="img-fluid" alt="{{ app.user }} avatar" src='{{ app.user.avatar|formatAvatarData }}'/>
                 <button class="btn btn-block btn-sm btn-primary mt-2" data-toggle="collapse" data-target="#collapseAvatarEdit" aria-expanded="false">Modifier mon avatar</button>
-                <button class="btn btn-block btn-sm btn-primary mt-2" data-toggle="collapse" data-target="#collapseUserEdit" aria-expanded="false">Modifier mes informations</button>
+                <button class="btn btn-block btn-sm btn-primary mt-2"
+                data-user-action="open-form"
+                data-title="Mes informations"
+                data-user-url="{{ path('user.form') }}">Modifier mes informations</button>
                 <a href="{{ path('app_logout') }}" class="btn btn-block btn-xs btn-danger text-white mt-2">Me déconnecter</a>
             </div>
         </div>
 
         <div class="col-12 col-md-8 order-4 order-md-1">
-            <div id="collapseUserEdit" class="mb-4 collapse custom-font-text custom-bold-600">
-                {{ form_start(form, {'attr': {'class': 'row'}}) }}
-                <div class="col-12 col-md-6">
-                    {{ form_label(form.firstname, 'Ton prénom :') }}
-                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-                <div class="col-12 col-md-6">
-                    {{ form_label(form.lastname, 'Ton nom :') }}
-                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                </div>
-                <div class="col-12 col-md-6">
-                    {{ form_label(form.email, 'Ton email :') }}
-                    {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                    <div class="alert-danger">
-                        {{ form_errors(form.email) }}
-                    </div>
-                </div>
-                <div class="w-100 text-center mt-4">
-                    <button class="btn btn-sm btn-primary">Sauvegarder mes informations</button>
-                </div>
-                {{ form_end(form) }}
-            </div>
             <div id="collapseAvatarEdit" class="mb-4 collapse custom-font-text custom-bold-600">
                 {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
                 <div class="col-6">
@@ -98,6 +79,7 @@
                 </div>
                 {{ form_end(avatarForm) }}
             </div>
+
             <div class="row relationship-container">
                 <div class="col-12 col-md-6">
                     <h5 class="custom-font-text custom-bold-600 text-center">{% if app.user.pendingFollowers|length > 0 %}<span id="pendingFollowerNumberBadge" class="badge badge-danger">{{ app.user.pendingFollowers|length }}</span> {% endif %}Tes abonnés:</h5>
@@ -121,6 +103,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-12 col-lg-6 order-2">
             <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Tes derniers avis:</h5>
             <hr class="w-75 mb-2">
@@ -138,6 +121,7 @@
                 </p>
             {% endfor %}
         </div>
+
         <div class="col-12 col-lg-6 list-container order-3">
             {{ source('@public_path'~asset('/images/ticket.svg')) }}
             <h5 class="custom-font-text d-inline-block">Ta liste:</h5>
@@ -150,6 +134,7 @@
                 <p>Tu peux ajouter des films en cliquant sur le ticket présent dans les pages détails d'un film.</p>
             {% endfor %}
         </div>
+
     </div>
 
 {% endblock %}

@@ -9,11 +9,14 @@ use App\Manager\UserManager;
 use App\Service\PopulateMovieService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("", name="user.")
@@ -24,13 +27,15 @@ class UserController extends AbstractController
     private PopulateMovieService $populateMovieService;
     private EntityManagerInterface $entityManager;
     private UserManager $userManager;
+    private SerializerInterface $serializer;
 
-    public function __construct(UserService $userService, PopulateMovieService $populateMovieService, EntityManagerInterface $entityManager, UserManager $userManager)
+    public function __construct(UserService $userService, PopulateMovieService $populateMovieService, EntityManagerInterface $entityManager, UserManager $userManager, SerializerInterface $serializer)
     {
         $this->userService = $userService;
         $this->populateMovieService = $populateMovieService;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -60,37 +65,57 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/my-account", name="edit", methods={"GET", "POST"})
+     * @Route("/my-account", name="edit", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function edit(): Response
+    {
+        $avatarForm = $this->createForm(AvatarType::class, $this->getUser()->getAvatar());
+
+        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($this->getUser());
+
+        return $this->render('user/edit.html.twig', [
+            'avatarForm' => $avatarForm->createView(),
+            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
+            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
+        ]);
+    }
+
+    /**
+     * @Route("/form", name="form", methods={"GET"})
      *
      * @param Request $request
      *
      * @return Response
      */
-    public function edit(Request $request): Response
+    public function form(Request $request): Response
     {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
+        $form = $this->createForm(UserType::class, $this->getUser());
 
-        $form = $this->createForm(UserType::class, $currentUser);
+        return $this->render('user/_partials/_form.html.twig', ['form' => $form->createView()]);
+    }
 
-        $avatarForm = $this->createForm(AvatarType::class, $this->getUser()->getAvatar());
+    /**
+     * @Route("/update", name="update", methods={"POST"})
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function update(Request $request): JsonResponse
+    {
+        try {
+            $data = $request->getContent();
 
-        $form->handleRequest($request);
+            $user = $this->serializer->deserialize($data, User::class, 'json', ['disable_type_enforcement' => true, AbstractNormalizer::OBJECT_TO_POPULATE => $this->getUser()]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentUser = $form->getData();
+            $this->userManager->save($user);
 
-            $this->userManager->save($currentUser);
+            return new JsonResponse(null, 204);
+        } catch (Exception $exception) {
+            return $this->json($exception->getMessage(), $exception->getCode());
         }
-
-        $currentUserPopulatedLastOpinionsAndWishes = $this->userService->moviePopulateLasOpinionsAndWishOf($currentUser);
-
-        return $this->render('user/edit.html.twig', [
-            'form' => $form->createView(),
-            'avatarForm' => $avatarForm->createView(),
-            'lastCurrentUserOpinions' => $currentUserPopulatedLastOpinionsAndWishes['opinions'],
-            'currentUserWishes' => $currentUserPopulatedLastOpinionsAndWishes['wishes']
-        ]);
     }
 
     /**

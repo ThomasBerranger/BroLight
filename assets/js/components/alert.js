@@ -10,7 +10,7 @@ $(document).ready(function(){
 
       switch (type) {
          case 'success':
-            alert.addClass('alert-primary bg-primary');
+            alert.addClass('alert-primary');
             break;
          case 'error':
             alert.addClass('alert-danger');

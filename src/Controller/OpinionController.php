@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Opinion;
-use App\Entity\User;
 use App\Form\OpinionType;
 use App\Manager\OpinionManager;
 use App\Service\TMDBService;

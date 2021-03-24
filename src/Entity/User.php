@@ -32,14 +32,24 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50)
+     * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage = "Ton prénom doit faire plus de 2 caractères.",
+     *     maxMessage = "Ton prénom doit faire moins de 50 caractères."
+     * )
      */
     private ?string $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50)
+     * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage = "Ton nom doit faire plus de 2 caractères.",
+     *     maxMessage = "Ton nom doit faire moins de 50 caractères."
+     * )
      */
     private ?string $lastname;
 

@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,16 +21,18 @@ class UserManager
         $this->security = $security;
     }
 
-    public function save(User $user): User
+    public function save(User $user)
     {
         $errors = $this->validator->validate($user);
 
         if ($this->security->isGranted('edit', $user) and count($errors) <= 0) {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+
+            return $user;
         }
 
-        return $user;
+        throw new Exception($errors[0]->getMessage(), 403);
     }
 
     public function delete(User $user): void

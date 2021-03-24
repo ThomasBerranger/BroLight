@@ -25,6 +25,22 @@ $(document).ready(function() {
         editInputsDisplay();
     });
 
+    $('body').on('keyup', 'form[name="user"] input', function () {
+        const firstName = $('#user_firstname');
+        const lastName = $('#user_lastname');
+        console.log(firstName.val().length);
+        if (firstName.val().length < 2 || firstName.val().length > 50) {
+            firstName.addClass('is-invalid');
+        } else {
+            firstName.removeClass('is-invalid');
+        }
+        if (lastName.val().length < 2 || lastName.val().length > 50) {
+            lastName.addClass('is-invalid');
+        } else {
+            lastName.removeClass('is-invalid');
+        }
+    });
+
     $("[id*='followerContainer-']").on("update-user-interface", function(event, type, button = null) {
         switch (type) {
             case 'accepted-as-follower':

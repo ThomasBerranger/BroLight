@@ -13,6 +13,7 @@ import './js/components/spoilerGuard';
 import './js/components/tooltip';
 
 import './js/requests/avatarRequest';
+import './js/requests/userRequest';
 import './js/requests/opinionRequest';
 import './js/requests/podiumRequest';
 import './js/requests/relationRequest';

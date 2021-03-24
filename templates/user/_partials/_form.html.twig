@@ -1,0 +1,20 @@
+{{ form_start(form, {'action': path('user.update'), 'attr': {'class': 'row'}}) }}
+<div class="col-12 col-md-6">
+    {{ form_label(form.firstname, 'Ton prénom :') }}
+    {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+</div>
+<div class="col-12 col-md-6">
+    {{ form_label(form.lastname, 'Ton nom :') }}
+    {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
+</div>
+<div class="col-12 col-md-6">
+    {{ form_label(form.email, 'Ton email :') }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm'}}) }}
+    <div class="alert-danger">
+        {{ form_errors(form.email) }}
+    </div>
+</div>
+<div class="w-100 text-center mt-4">
+    <button class="btn btn-sm btn-primary">Sauvegarder mes informations</button>
+</div>
+{{ form_end(form) }}
