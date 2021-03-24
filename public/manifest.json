@@ -2,24 +2,24 @@
   "name": "BroLight",
   "short_name": "BroLight",
   "icons": [{
-    "src": "./images/application-icons/brolight-icon-128.png",
+    "src": "images/application-icons/logo-128.svg",
     "sizes": "128x128",
     "type": "image/png"
   }, {
-    "src": "./images/application-icons/brolight-icon-144.png",
+    "src": "images/application-icons/logo-144.svg",
     "sizes": "144x144",
     "type": "image/png"
   }, {
-    "src": "./images/application-icons/brolight-icon-152.png",
+    "src": "./images/application-icons/logo-152.svg",
     "sizes": "152x152",
     "type": "image/png"
   }, {
-    "src": "./images/application-icons/brolight-icon-192.png",
+    "src": "./images/application-icons/logo-192.svg",
     "sizes": "192x192",
     "type": "image/png"
   }],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2"
+  "background_color": "#DCDCDC",
+  "theme_color": "#FF4F58"
 }

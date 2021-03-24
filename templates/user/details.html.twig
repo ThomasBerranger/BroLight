@@ -17,14 +17,14 @@
                 <div class="col-12 col-md-6">
                     <h5 class="custom-font-text custom-bold-600 text-center">Ses abonnés:</h5>
                     <hr class="w-75-centered">
-                    {% for user in user.followers %}
+                    {% for user in user.followers|reverse %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': false} %}
                     {% endfor %}
                 </div>
                 <div class="col-12 col-md-6">
                     <h5 class="custom-font-text custom-bold-600 text-center">Ses abonnements:</h5>
                     <hr class="w-75-centered">
-                    {% for user in user.followings %}
+                    {% for user in user.followings|reverse %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': false} %}
                     {% endfor %}
                 </div>

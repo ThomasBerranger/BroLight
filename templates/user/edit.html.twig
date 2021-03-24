@@ -22,7 +22,7 @@
                     {{ form_widget(form.firstname, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 </div>
                 <div class="col-12 col-md-6">
-                    {{ form_label(form.lastname, 'Ton prénom :') }}
+                    {{ form_label(form.lastname, 'Ton nom :') }}
                     {{ form_widget(form.lastname, {'attr': {'class': 'form-control form-control-sm'}}) }}
                 </div>
                 <div class="col-12 col-md-6">
@@ -105,7 +105,7 @@
                     {% for user in app.user.pendingFollowers %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
                     {% endfor %}
-                    {% for user in app.user.followers %}
+                    {% for user in app.user.followers|reverse %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
                     {% endfor %}
                 </div>
@@ -115,7 +115,7 @@
                     {% for user in app.user.pendingFollowings %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
                     {% endfor %}
-                    {% for user in app.user.followings %}
+                    {% for user in app.user.followings|reverse %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
                     {% endfor %}
                 </div>
