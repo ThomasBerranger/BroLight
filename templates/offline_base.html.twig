@@ -3,9 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ project_title }}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.svg') }}"/>
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <title>{% block title %}{{ project_title }}{% endblock %}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="{{ project_title }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/web-app/logo-128.png') }}" sizes="128x128">
+    <link rel="apple-touch-icon" href="{{ asset('images/web-app/logo-144.png') }}" sizes="144x144">
+    <link rel="apple-touch-icon" href="{{ asset('images/web-app/logo-152.png') }}" sizes="152x152">
+    <link rel="apple-touch-icon" href="{{ asset('images/web-app/logo-192.png') }}" sizes="192x192">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
