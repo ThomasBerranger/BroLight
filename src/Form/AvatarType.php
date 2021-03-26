@@ -62,7 +62,7 @@ class AvatarType extends AbstractType
                 'choices' => Avatar::SKIN_COLOR,
             ])
             ->add('topType', ChoiceType::class, [
-                'label' => 'Type de chapeau :',
+                'label' => 'Type de chapeau / cheveux :',
                 'choices' => Avatar::TOP_TYPE,
             ])
         ;

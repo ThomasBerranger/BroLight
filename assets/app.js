@@ -19,6 +19,9 @@ import './js/requests/podiumRequest';
 import './js/requests/relationRequest';
 import './js/requests/wishRequest';
 
+import splitbee from '../node_modules/@splitbee/web';
+splitbee.init()
+
 if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).then();
     navigator.serviceWorker.ready.then();
