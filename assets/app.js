@@ -23,6 +23,11 @@ import splitbee from '../node_modules/@splitbee/web';
 splitbee.init()
 
 if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' }).then();
-    navigator.serviceWorker.ready.then();
+    navigator.serviceWorker.register('/sw.js').then(function () {});
 }
+
+$('#installWebAppButton').click(function () {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+    }
+});
