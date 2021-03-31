@@ -4,8 +4,6 @@ self.addEventListener('install', function (event) {
             cache.addAll([
                 '/',
                 '/movie/trending',
-                '/login',
-                '/register',
                 '/build/app.css',
                 '/build/app.js',
                 '/images/logo.svg',
