@@ -1,15 +1,14 @@
+const STATIC_CACHE_NAME = 'static';
+
 self.addEventListener('install', function (event) {
-    event.waitUntil(caches.open('static')
+    event.waitUntil(caches.open(STATIC_CACHE_NAME)
         .then(function (cache) {
             cache.addAll([
-                '/',
-                '/movie/trending',
-                '/build/app.css',
-                '/build/app.js',
-                '/images/logo.svg',
-                '/images/popcorn.svg',
-                '/images/ticket.svg'
-            ]);
+                '/offline.html',
+                '/images/logo.svg'
+            ]).catch(function (err) {
+                console.log(err);
+            });
         })
     );
 });
@@ -20,9 +19,15 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request).catch(function (err) {});
-        })
+        caches.match(event.request)
+            .then(function(response) {
+                return response || fetch(event.request).catch(function (err) {
+                    return caches.open(STATIC_CACHE_NAME)
+                        .then(function (cache) {
+                            return cache.match('/offline.html');
+                        })
+                });
+            })
     );
 });
 
