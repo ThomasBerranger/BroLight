@@ -1,21 +1,21 @@
 <div id="sidebar">
     <div class="center-content text-center">
-        <a role="button" class="btn btn-sm px-4 btn-primary" href="{{ path('movie.trending') }}">Tendances</a>
-        <br>
-        <br>
-        <a role="button" class="btn btn-sm px-4 btn-primary" href="{{ path('search.index') }}">Recherche</a>
-        <br>
-        <br>
         <a href="{{ path('user.edit') }}">
             <img class="avatar-medium" src="{{ app.user.avatar|formatAvatarData }}" alt="{{ app.user }} avatar">
             {% if notifications > 0 %}<i class="notifications fa fa-bell"></i>{% endif %}
         </a>
         <br>
         <br>
-        <button id="installWebAppButton" class="btn btn-sm px-4 btn-info">Installer</button>
+        <a role="button" class="btn btn-sm px-4 btn-primary" href="{{ path('movie.trending') }}">Tendances</a>
         <br>
         <br>
+        <a role="button" class="btn btn-sm px-4 btn-primary" href="{{ path('search.index') }}">Recherche</a>
+        <br>
+        <br>
+        <button id="installWebAppButton" class="btn btn-sm px-4 btn-outline-danger">Installer</button>
         {% if is_granted('ROLE_ADMIN') %}
+            <br>
+            <br>
             <a role="button" class="btn btn-sm px-4 btn-outline-dark" href="{{ path('admin.home') }}">Admin</a>
         {% endif %}
     </div>
