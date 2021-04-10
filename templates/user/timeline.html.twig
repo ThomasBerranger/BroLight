@@ -4,21 +4,16 @@
 
 {% block body %}
 
-    {% if timelineEvents|length == 0 %}
-        <div class="text-center">
-            <p class="mb-2 custom-font-text custom-bold-600">Abonne toi à tes amis pour savoir quels films ils ont vus !</p>
-        </div>
-    {% else %}
-        <ul class="timeline">
-            {{ include('user/_timeline_events.html.twig') }}
-            <button id="loadTimelineEvents" class="timeline-load"
-                    data-offset=0
-                    data-limit={{ timelineDefaultLimit }}
-                    data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
-            </button>
-            <li class="timeline-end"></li> {# Timline end #}
-        </ul>
-    {% endif %}
+    <ul class="timeline">
+        {{ include('user/_timeline_events.html.twig') }}
+        <button id="loadTimelineEvents" class="timeline-load"
+                data-offset=0
+                data-limit={{ timelineDefaultLimit }}
+                data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
+        </button>
+        <li class="timeline-end"></li> {# Timline end #}
+    </ul>
+
 {% endblock %}
 
 {% block javascripts %}
