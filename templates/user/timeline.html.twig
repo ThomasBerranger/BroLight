@@ -4,16 +4,180 @@
 
 {% block body %}
 
-    <ul class="timeline">
-        {{ include('user/_timeline_events.html.twig') }}
-        <button id="loadTimelineEvents" class="timeline-load"
-                data-offset=0
-                data-limit={{ timelineDefaultLimit }}
-                data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
-        </button>
-        <li class="timeline-end"></li> {# Timline end #}
-    </ul>
+    {% if timelineEvents|length == 0 %}
+        <ul class="timeline">
+            <li>
+                <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+                <div class="timeline-panel">
+                    <div class="card-body row">
+                        <div class="col-12 d-sm-none d-md-block d-lg-none mb-3">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Smile&facialHairColor=Red&facialHairType=Blank&accessoriesType=Blank&hatColor=Red&clotheType=BlazerShirt&eyeType=Side&eyebrowType=UpDown&clotheColor=Pink&graphicType=Deer&skinColor=Pale&hairColor=Black" alt="OSS 117 avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Jean Dujardin</a><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <a href="{{ path('movie.details', {'tmdbId': 15152}) }}" class="timeline-movie-link">
+                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154/2hKDKww9Roh3JCFc9d44OR5DWKG.jpg" alt="OSS 117 poster">
+                                {% if 15152 in app.user.wishTmdbIds %}{{ source('@public_path'~asset('/images/ticket.svg')) }}{% endif %}
+                            </a>
+                            <div class="d-none d-sm-flex d-md-none d-lg-flex justify-content-start align-items-center mb-2">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Smile&facialHairColor=Red&facialHairType=Blank&accessoriesType=Blank&hatColor=Red&clotheType=BlazerShirt&eyeType=Side&eyebrowType=UpDown&clotheColor=Pink&graphicType=Deer&skinColor=Pale&hairColor=Black" alt="OSS 117 avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Jean Dujardin</a><br>
+                                </p>
+                            </div>
+                            <p class="custom-font-text mb-2 text-justify">
+                                <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': 15152}) }}">OSS 117 : Le Caire, Nid D’Espions</a> | </span>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="far fa-star"></i>
+                                <br>
+                                <span>Comment est vote blanquette ?</span>
+                                <br>
+                            </p>
+                        </div>
+                        <p class="card-date">10/04/2021</p>
+                    </div>
+                </div>
+            </li>
 
+            <li class="timeline-inverted">
+                <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+                <div class="timeline-panel">
+                    <div class="card-body row">
+                        <div class="col-12 d-sm-none d-md-block d-lg-none mb-3">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairCurvy&mouthType=Smile&facialHairColor=Platinum&facialHairType=Blank&accessoriesType=Blank&hatColor=Blue01&clotheType=BlazerSweater&eyeType=Happy&eyebrowType=RaisedExcited&clotheColor=PastelYellow&graphicType=Diamond&skinColor=Pale&hairColor=Blonde" alt="Emma Watson avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Emma Watson</a><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <a href="{{ path('movie.details', {'tmdbId': 671}) }}" class="timeline-movie-link">
+                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154/fbxQ44VRdM2PVzHSNajUseUteem.jpg" alt="OSS 117 poster">
+                                {% if 671 in app.user.wishTmdbIds %}{{ source('@public_path'~asset('/images/ticket.svg')) }}{% endif %}
+                            </a>
+                            <div class="d-none d-sm-flex d-md-none d-lg-flex justify-content-start align-items-center mb-2">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairCurvy&mouthType=Smile&facialHairColor=Platinum&facialHairType=Blank&accessoriesType=Blank&hatColor=Blue01&clotheType=BlazerSweater&eyeType=Happy&eyebrowType=RaisedExcited&clotheColor=PastelYellow&graphicType=Diamond&skinColor=Pale&hairColor=Blonde" alt="Emma Watson avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Emma Watson</a><br>
+                                </p>
+                            </div>
+                            <p class="custom-font-text mb-2 text-justify">
+                                <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': 671}) }}">Harry Potter à l'école des sorciers</a> | </span>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                <br>
+                                <span>Certains ne savent même pas le prononcer !<br>C’est leviOsa, pas leviosAAA !</span>
+                                <br>
+                            </p>
+                        </div>
+                        <p class="card-date">09/04/2021</p>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+                <div class="timeline-panel">
+                    <div class="card-body row">
+                        <div class="col-12 d-sm-none d-md-block d-lg-none mb-3">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Twinkle&facialHairColor=Blonde&facialHairType=Blank&accessoriesType=Wayfarers&hatColor=Black&clotheType=GraphicShirt&eyeType=Close&eyebrowType=Angry&clotheColor=Black&graphicType=Bat&skinColor=Pale&hairColor=Black" alt="Agent Smith avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Agent Smith</a><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <a href="{{ path('movie.details', {'tmdbId': 603}) }}" class="timeline-movie-link">
+                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154/pEoqbqtLc4CcwDUDqxmEDSWpWTZ.jpg" alt="Matrix poster">
+                                {% if 603 in app.user.wishTmdbIds %}{{ source('@public_path'~asset('/images/ticket.svg')) }}{% endif %}
+                            </a>
+                            <div class="d-none d-sm-flex d-md-none d-lg-flex justify-content-start align-items-center mb-2">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Twinkle&facialHairColor=Blonde&facialHairType=Blank&accessoriesType=Wayfarers&hatColor=Black&clotheType=GraphicShirt&eyeType=Close&eyebrowType=Angry&clotheColor=Black&graphicType=Bat&skinColor=Pale&hairColor=Black" alt="Agent Smith avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Agent Smith</a><br>
+                                </p>
+                            </div>
+                            <p class="custom-font-text mb-2 text-justify">
+                                <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': 603}) }}">Matrix</a> | </span>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                <br>
+                                <span>Plus on est de fou, plus on rit !</span>
+                                <br>
+                            </p>
+                        </div>
+                        <p class="card-date">09/04/2021</p>
+                    </div>
+                </div>
+            </li>
+
+            <li class="timeline-inverted">
+                <div class="timeline-badge"><i class="fa fa-circle"></i></div>
+                <div class="timeline-panel">
+                    <div class="card-body row">
+                        <div class="col-12 d-sm-none d-md-block d-lg-none mb-3">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Twinkle&facialHairColor=Blonde&facialHairType=Blank&accessoriesType=Wayfarers&hatColor=Black&clotheType=GraphicShirt&eyeType=Close&eyebrowType=Angry&clotheColor=Black&graphicType=Bat&skinColor=Pale&hairColor=Black" alt="Bruce Wayne avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Bruce Wayne</a><br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <a href="{{ path('movie.details', {'tmdbId': 141052}) }}" class="timeline-movie-link">
+                                <img class="timeline-poster" src="https://image.tmdb.org/t/p/w154/eMlVBnd5NPHDJ3DkhMzokfnymAB.jpg" alt="Justice League poster">
+                                {% if 141052 in app.user.wishTmdbIds %}{{ source('@public_path'~asset('/images/ticket.svg')) }}{% endif %}
+                            </a>
+                            <div class="d-none d-sm-flex d-md-none d-lg-flex justify-content-start align-items-center mb-2">
+                                <a href="#" class="btn-avatar">
+                                    <img class="avatar-small center-content-horizontally" src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&mouthType=Twinkle&facialHairColor=Blonde&facialHairType=Blank&accessoriesType=Wayfarers&hatColor=Black&clotheType=GraphicShirt&eyeType=Close&eyebrowType=Angry&clotheColor=Black&graphicType=Bat&skinColor=Pale&hairColor=Black" alt="Bruce Wayne avatar">
+                                </a>
+                                <p class="ml-2 custom-font-text font-weight-bold">
+                                    <a href="#">Bruce Wayne</a><br>
+                                </p>
+                            </div>
+                            <p class="custom-font-text mb-2 text-justify">
+                                <span class="text-danger"><a class="text-danger" href="{{ path('movie.details', {'tmdbId': 141052}) }}">Justice League</a> | </span>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="far fa-star"></i>
+                                <br>
+                                <span>Perso.. C'est Batman mon préféré !</span>
+                                <br>
+                            </p>
+                        </div>
+                        <p class="card-date">08/04/2021</p>
+                    </div>
+                </div>
+            </li>
+            <li class="timeline-end"></li> {# Timline end #}
+        </ul>
+    {% else %}
+        <ul class="timeline">
+            {{ include('user/_timeline_events.html.twig') }}
+            <button id="loadTimelineEvents" class="timeline-load"
+                    data-offset=0
+                    data-limit={{ timelineDefaultLimit }}
+                    data-url="{{ path('user.load_timeline_events') }}"><i class="fas fa-sync-alt"></i>
+            </button>
+            <li class="timeline-end"></li> {# Timline end #}
+        </ul>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
