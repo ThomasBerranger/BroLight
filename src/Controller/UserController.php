@@ -45,7 +45,7 @@ class UserController extends AbstractController
     {
         $timelineEvents = $this->userService->getTimelineEvents($this->getUser(), 0, User::DEFAULT_TIMELINE_LIMIT);
 
-        return $this->render('user/timeline.html.twig', ['timelineEvents' => [], 'timelineDefaultLimit' => User::DEFAULT_TIMELINE_LIMIT]);
+        return $this->render('user/timeline.html.twig', ['timelineEvents' => $timelineEvents, 'timelineDefaultLimit' => User::DEFAULT_TIMELINE_LIMIT]);
     }
 
     /**
