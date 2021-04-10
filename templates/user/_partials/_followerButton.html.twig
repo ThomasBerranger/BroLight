@@ -6,7 +6,8 @@
             "entity":"relationship",
             "action":"refuse",
             "url": "{{ path('relationship.refuse', {'id': user.id}) }}"
-            }'>
+            }'
+            data-custom-confirm-text="Es tu sûr de vouloir retirer {{ user }} de tes abonnés ?">
         <i class="fas fa-check"></i>
         <i class="fa fa-times"></i>
    </span>
@@ -18,7 +19,8 @@
             "entity":"relationship",
             "action":"refuse",
             "url": "{{ path('relationship.refuse', {'id': user.id}) }}"
-            }'>
+            }'
+          data-custom-confirm-text="Es tu sûr de ne pas accepter {{ user }} comme abonné(e) ?">
         <i class="fas fa-times"></i>
     </span>
 

@@ -2,7 +2,8 @@
 
     <span class="badge badge-danger change-icon"
           data-custom-confirm="open"
-          data-custom-confirm-configurations='{"entity":"relationship", "url": "{{ path('relationship.unfollow', {'id': user.id}) }}"}'>
+          data-custom-confirm-configurations='{"entity":"relationship", "url": "{{ path('relationship.unfollow', {'id': user.id}) }}"}'
+          data-custom-confirm-text="Es tu sûr de vouloir te désabonner de {{ user }} ?">
         <i class="fas fa-check"></i>
         <i class="fa fa-times"></i>
     </span>
@@ -10,8 +11,8 @@
 {% elseif user in app.user.pendingFollowings %}
 
     <span class="badge badge-danger change-icon"
-            data-relationship-action="delete"
-            data-relationship-url="{{ path('relationship.unfollow', {'id': user.id}) }}">
+          data-relationship-action="delete"
+          data-relationship-url="{{ path('relationship.unfollow', {'id': user.id}) }}">
         <i class="far fa-clock"></i>
         <i class="fa fa-times"></i>
     </span>

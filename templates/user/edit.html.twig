@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-8 order-4 order-md-1">
+        <div class="col-12 col-md-8">
             <div id="collapseAvatarEdit" class="mb-4 collapse custom-font-text custom-bold-600">
                 {{ form_start(avatarForm, {'action': path('avatar.edit'), 'attr': {'class': 'row'}}) }}
                 <div class="col-6">
@@ -82,7 +82,7 @@
 
             <div class="row relationship-container">
                 <div class="col-12 col-md-6">
-                    <h5 class="custom-font-text custom-bold-600 text-center">{% if app.user.pendingFollowers|length > 0 %}<span id="pendingFollowerNumberBadge" class="badge badge-danger">{{ app.user.pendingFollowers|length }}</span> {% endif %}Tes abonnés:</h5>
+                    <h5 class="custom-font-text custom-bold-600 text-center">{% if app.user.pendingFollowers|length > 0 %}<span id="pendingFollowerNumberBadge" class="badge badge-danger">{{ app.user.pendingFollowers|length }}</span> {% endif %}Mes abonnés:</h5>
                     <hr class="w-75-centered">
                     {% for user in app.user.pendingFollowers %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'follower', 'buttonDisplay': true} %}
@@ -92,7 +92,7 @@
                     {% endfor %}
                 </div>
                 <div class="col-12 col-md-6">
-                    <h5 class="custom-font-text custom-bold-600 text-center">Tes abonnements:</h5>
+                    <h5 class="custom-font-text custom-bold-600 text-center">Mes abonnements:</h5>
                     <hr class="w-75-centered">
                     {% for user in app.user.pendingFollowings %}
                         {% include 'user/_partials/_userPanel.html.twig' with {'context': 'following', 'buttonDisplay': true} %}
@@ -104,8 +104,8 @@
             </div>
         </div>
 
-        <div class="col-12 col-lg-6 order-2">
-            <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Tes derniers avis:</h5>
+        <div class="col-12 col-lg-6">
+            <h5 class="custom-font-text"><i class="fas fa-pencil-alt"></i> Mes derniers avis:</h5>
             <hr class="w-75 mb-2">
             {% for opinion in lastCurrentUserOpinions|reverse %}
                 <p class="custom-font-text text-justify">
@@ -122,9 +122,9 @@
             {% endfor %}
         </div>
 
-        <div class="col-12 col-lg-6 list-container order-3">
+        <div class="col-12 col-lg-6 list-container">
             {{ source('@public_path'~asset('/images/ticket.svg')) }}
-            <h5 class="custom-font-text d-inline-block">Ta liste:</h5>
+            <h5 class="custom-font-text d-inline-block">Ma liste:</h5>
             <hr class="w-75 mb-2">
             {% for wish in currentUserWishes|reverse %}
                 <a href="{{ path('movie.details', {'tmdbId': wish.tmdbId}) }}">

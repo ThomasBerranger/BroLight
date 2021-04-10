@@ -33,7 +33,7 @@ $(document).ready(function(){
         modal.trigger("trigger-custom-modal", [
             'Attention !',
             $('<div class="text-center">' +
-                '<p class="custom-font-text">Toute suppression est définitive ! <br>Tu es sûr de toi ?</p><br>' +
+                '<p class="custom-font-text">'+element.data('custom-confirm-text')+'</p><br>' +
                 '<button id="modalConfirmButton" class="btn btn-danger mx-2 px-4" data-opinion-action="" data-relationship-action="">Oui</button>' +
                 '<button class="btn btn-primary mx-2 px-4" data-dismiss="modal">Non</button>' +
                 '</div>'),
