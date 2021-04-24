@@ -1,0 +1,7 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'brolight.application@gmail.com'
+        headers:
+            from: 'BroLight <brolight.application@gmail.com>'
