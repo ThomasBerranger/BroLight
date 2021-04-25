@@ -28,11 +28,13 @@
             </div>
 
             <div class="row">
-                <div class="col-12 col-md-6 text-center text-md-left">
+                <div class="col-12 col-lg-6 text-center text-lg-left">
                     <button class="btn btn-md btn-dark" type="submit">Connexion</button>
+                    <br>
+                    <a class="underline mt-3" href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
                 </div>
-                <div class="col-12 col-md-6 text-center text-md-right pt-3">
-                    <a href="{{ path('app_register') }}">Pas encore de compte ?</a>
+                <div class="col-12 col-lg-6 text-center text-lg-right pt-2">
+                    <a href="{{ path('app_login') }}">Tu n'as pas encore de compte ?</a>
                 </div>
             </div>
         </form>

@@ -1,0 +1,32 @@
+{% extends 'offline_base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mot de passe{% endblock %}
+
+{% block body %}
+    <div class="row full-page-y center-container custom-font-text custom-bold-500">
+        <div class="col-10 col-sm-8 col-md-6 center-content security-form">
+
+            <h1 class="h3 mb-2 text-center display-4 custom-font-text">{{ project_title }}</h1>
+
+            {% for flashError in app.flashes('reset_password_error') %}
+                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+
+            {{ form_start(requestForm) }}
+
+            {{ form_label(requestForm.email, 'Ton email :', {'attr': {'class': 'mt-2'}}) }}
+            {{ form_widget(requestForm.email, {'attr': {'class': 'form-control'}}) }}
+            <div class="alert-danger">
+                {{ form_errors(requestForm.email) }}
+            </div>
+
+            <small>Un email te sera envoyé pour changer ton mot de passe.</small>
+
+            <div class="w-100 text-center">
+                <button class="btn btn-sm btn-primary mt-3 px-3">Envoyer</button>
+            </div>
+
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+{% endblock %}

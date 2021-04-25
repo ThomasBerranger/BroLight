@@ -1,0 +1,11 @@
+<h1>Salut {{ user.firstname }}</h1>
+
+<p>Alors comme ça on a oublié son mot de passe ?</p>
+
+<p>Clique sur le lien pour en choisir un nouveau !</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>A bientôt !</p>

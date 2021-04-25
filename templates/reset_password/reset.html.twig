@@ -1,0 +1,28 @@
+{% extends 'offline_base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mot de passe{% endblock %}
+
+{% block body %}
+    <div class="row full-page-y center-container custom-font-text custom-bold-500">
+        {{ form_start(resetForm, {'attr': {'class': 'col-10 col-sm-8 col-md-6 center-content security-form'}}) }}
+
+        <h1 class="h3 mb-2 text-center display-4 custom-font-text">{{ project_title }}</h1>
+
+        <p class="text-center">Choisi ton nouveau mot de passe</p>
+
+        {{ form_label(resetForm.plainPassword.first, 'Ton nouveau mot de passe :') }}
+        {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'form-control mb-2'}}) }}
+
+        {{ form_label(resetForm.plainPassword.second, 'Encore une fois :') }}
+        {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+        <div class="alert-danger">
+            {{ form_errors(resetForm.plainPassword.first) }}
+        </div>
+
+        <div class="w-100 text-center">
+            <button class="btn btn-primary mt-3">Valider</button>
+        </div>
+
+        {{ form_end(resetForm) }}
+    </div>
+{% endblock %}
